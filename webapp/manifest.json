@@ -15,7 +15,6 @@
 			"version": "1.40.12"
 		}
 	},
-
 	"sap.ui": {
 		"_version": "1.1.0",
 		"technology": "UI5",
@@ -32,17 +31,12 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": [
-			"sap_hcb",
-			"sap_belize"
-
-		]
+		"supportedThemes": ["sap_hcb", "sap_belize"]
 	},
-
 	"sap.ui5": {
 		"_version": "1.1.0",
 		"rootView": {
-			"viewName": "hnd.dpe.warranty.prior_work_approval.view.View1",
+			"viewName": "hnd.dpe.warranty.prior_work_approval.view.App",
 			"type": "XML"
 		},
 		"dependencies": {
@@ -69,6 +63,27 @@
 			"css": [{
 				"uri": "css/style.css"
 			}]
+		},
+		"routing": {
+			"config": {
+				"viewPath": "hnd.dpe.warranty.prior_work_approval.view",
+				"controlId": "app"
+			},
+			"routes": [{
+				"name": "PWAMain",
+				"pattern": "",
+				"target": ["PWAMain"]
+			}],
+			"targets": {
+				"PWAMain": {
+					"viewType": "XML",
+					"transition": "show",
+					"clearAggregation": true,
+					"viewName": "PWAObjectPage",
+					"viewLevel": 1,
+					"controlAggregation": "pages"
+				}
+			}
 		}
 	}
 }
