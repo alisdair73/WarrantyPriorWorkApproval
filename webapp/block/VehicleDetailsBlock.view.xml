@@ -1,4 +1,4 @@
-<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout">
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core">
 	<sap.ui.layout.form:Form xmlns:sap.ui.layout.form="sap.ui.layout.form" editable="true" objectBindings="{PWA>/}">
 		<sap.ui.layout.form:layout>
 	    	<sap.ui.layout.form:ResponsiveGridLayout/>
@@ -11,10 +11,6 @@
 							<l:Grid defaultSpan="L4 M6 S6">
 								<l:content>
 									<l:VerticalLayout width="100%">
-										<Label text="PWA Type" labelFor="PWAType"/>
-										<Input id="PWAType" value="{PWA>PWAType}" editable="{PWA>CanEdit}"/>
-									</l:VerticalLayout>
-									<l:VerticalLayout width="100%">
 										<Label text="VIN" labelFor="VIN"/>
 										<Input  id="VIN" value="{PWA>VIN}" editable="{PWA>CanEdit}"/>
 									</l:VerticalLayout>	
@@ -22,10 +18,21 @@
 										<Label text="Engine Number" labelFor="engineNumber"/>
 										<Input  id="engineNumber" value="{PWA>EngineNumber}" editable="{PWA>CanEdit}"/>
 									</l:VerticalLayout>
-									<l:VerticalLayout width="100%">
-										<Label text="Dealer Contact" labelFor="dealerContact"/>
-										<Input id="dealerContact" value="{PWA>DealerContact}" editable="{PWA>CanEdit}"/>
-									</l:VerticalLayout>								
+								<l:VerticalLayout width="100%">
+									<Label text="Dealer Contact" labelFor="dealerContact"/>
+									<ComboBox 
+										id="dealerContact"
+										width="100%"
+										showSecondaryValues= "true"
+										editable="{PWA>CanEdit}"
+										items="{
+											path: '/EmployeeSet',
+											sorter: { path: 'LastName' }
+										}"
+										selectedKey="{PWA>DealerContact}">
+										<core:ListItem key="{EmployeeNumber}" text="{FirstName} {LastName}" additionalText = "({EmployeeNumber})"/>
+									</ComboBox>		
+								</l:VerticalLayout>							
 									<l:VerticalLayout width="100%">
 										<Label text="Date of Failure" labelFor="dateOfFailure"/>
 										<DatePicker id="dateOfFailure" change="onChangeDatePicker"

@@ -11,6 +11,11 @@
       "templateId": "ui5template.basicSAPUI5ApplicationProject",
       "templateVersion": "1.40.12",
       "dateTimeStamp": "Thu, 23 Mar 2017 22:12:13 GMT"
+    },
+    {
+      "templateId": "servicecatalog.connectivityComponent",
+      "templateVersion": "0.0.0",
+      "dateTimeStamp": "Sun, 26 Mar 2017 22:56:21 GMT"
     }
   ],
   "codeCheckingTriggers": {
@@ -31,5 +36,12 @@
       "xml": "fioriXmlAnalysis",
       "js": "fioriJsValidator"
     }
+  },
+  "mockpreview": {
+    "mockUri": "/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV",
+    "metadataFilePath": "",
+    "loadJSONFiles": false,
+    "loadCustomRequests": false,
+    "mockRequestsFilePath": ""
   }
 }

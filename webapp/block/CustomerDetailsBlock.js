@@ -2,7 +2,7 @@ sap.ui.define(["sap/uxap/BlockBase"
 ], function (BlockBase) {
 	"use strict";
  
-	var vehicleDetailsBlock = BlockBase.extend("hnd.dpe.warranty.prior_work_approval.block.CustomerDetailsBlock", {
+	var customerDetailsBlock = BlockBase.extend("hnd.dpe.warranty.prior_work_approval.block.CustomerDetailsBlock", {
 		metadata: {
 			views: {
 				Collapsed: {
@@ -17,5 +17,5 @@ sap.ui.define(["sap/uxap/BlockBase"
 		}
 	});
  
-	return vehicleDetailsBlock;
+	return customerDetailsBlock;
 }, true);

@@ -1,6 +1,5 @@
 sap.ui.define([
-	"sap/ui/model/json/JSONModel",
-	"sap/ui/core/format/NumberFormat"
+	"sap/ui/model/json/JSONModel"
 ], function(JSONModel,NumberFormat) {
 	"use strict";
 
@@ -15,7 +14,7 @@ sap.ui.define([
 				"PWAType": "",
 				"PWATypeDescription": "",
 				"SubmittedOn": null,
-				"StatusDescription": "NEW CLAIM",
+				"StatusDescription": "NEW PWA",
 				"StatusIcon": "sap-icon://write-new-document",
 				"VIN": "",
 				"EngineNumber": "", 
@@ -34,7 +33,13 @@ sap.ui.define([
 				"HistoryComplete": false,
 				"OriginalOwner": false,
 				
+				"GoodwillReason": "",
+				"CustomerComplaint": "",
+				"Rectification": "",
+				"DealerComment": "",
 				
+				"AssessmentComments": "",
+				"AssessmentCodes": "",
 				
 				"CanEdit": true,
 				"VersionIdentifier": null,
@@ -98,19 +103,13 @@ sap.ui.define([
             this.resetChanges();
 		},
 		
-		updateWarrantyClaimFromOdata: function(oServerOData) {
+		updatePWAFromOdata: function(oServerOData) {
 			
 			var oSource = oServerOData.getSource ? oServerOData.getSource() : oServerOData;
 			var oODataModel = oSource.getModel();
 			var sPath = oSource.getPath();
 			var oWarrantyClaim = oODataModel.getObject(sPath);
-			
-			var formatOptions = {
-				minFractionDigits: 2,
-				maxFractionDigits: 2
-			};
-			var costFormat = NumberFormat.getFloatInstance(formatOptions);
-
+		
 			this.warrantyClaim.ClaimNumber = oWarrantyClaim.ClaimNumber;
 			this.warrantyClaim.ClaimType = oWarrantyClaim.ClaimType;
 			this.warrantyClaim.ClaimTypeDescription = oWarrantyClaim.ClaimTypeDescription;
@@ -121,7 +120,6 @@ sap.ui.define([
 			this.warrantyClaim.VIN = oWarrantyClaim.VIN;
 			this.warrantyClaim.RecallNumber = oWarrantyClaim.RecallNumber;
 			this.warrantyClaim.RepairOrderNumber = oWarrantyClaim.RepairOrderNumber;
-			this.warrantyClaim.TotalCostOfClaim = costFormat.format(oWarrantyClaim.TotalCostOfClaim);
 			this.warrantyClaim.ClaimCurrency = oWarrantyClaim.ClaimCurrency;
 			this.warrantyClaim.SubmittedOn = oWarrantyClaim.SubmittedOn;
 			this.warrantyClaim.DateOfRepair = oWarrantyClaim.DateOfRepair;
@@ -237,9 +235,9 @@ sap.ui.define([
 		}, */
 		
 		resetChanges: function() {
-			this.warrantyClaimOriginal = jQuery.extend(true, {}, this.warrantyClaim);
-			this.warrantyClaimOriginal.changed = false;
-			this.oDataModel.setData(this.warrantyClaim);			
+			this.PWAOriginal = jQuery.extend(true, {}, this.PWA);
+			this.PWAOriginal.changed = false;
+			this.oDataModel.setData(this.PWA);			
 		}
 	};
 });

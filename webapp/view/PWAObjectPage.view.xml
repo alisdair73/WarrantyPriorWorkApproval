@@ -11,11 +11,13 @@
 	<ObjectPageLayout id="PWA" enableLazyLoading="false" showFooter="true" showHeaderContent="true" 
 		busy="{ViewHelper>/busy}" busyIndicatorDelay="{ViewHelper>/delay}">
 		<headerTitle>
-			<ObjectPageHeader id="PWAHeader"
-							  objectTitle="Prior Work Approval"
-							  isObjectIconAlwaysVisible = "true"
-							  objectImageShape="Square"
-							  objectImageURI="sap-icon://approvals"/>
+			<ObjectPageHeader 
+				id="PWAHeader"
+				objectTitle="Prior Work Approval"
+				isObjectIconAlwaysVisible = "true"
+				objectImageShape="Square"
+				objectImageURI="sap-icon://approvals"
+			/>
 		</headerTitle>		
 		<headerContent>
 			<layout:VerticalLayout>
@@ -24,6 +26,7 @@
 				</layout:layoutData>					
 				<m:ObjectStatus text="{ViewHelper>/UI/dealerDescription}"/>
 				<m:ObjectAttribute title="PWA Number" text="{PWA>/PWANumber}"/>
+				<m:ObjectAttribute title="PWA Type" text="{PWA>/PWATypeDescription}"/>
 				<m:ObjectAttribute 
 					title="Submitted Date" 
 					text="{	path: 'PWA>/SubmittedOn', 
@@ -49,6 +52,33 @@
 					<ObjectPageSubSection id="customerDetails_sub1" title="CUSTOMER" mode="Expanded">
 						<blocks>
 							<claimBlocks:CustomerDetailsBlock/>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection id="repairCost" title="COSTS">
+				<subSections>
+					<ObjectPageSubSection id="repairCost_sub1" title="COSTS" mode="Expanded">
+						<blocks>
+							<claimBlocks:RepairCostsBlock/>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection id="comments" title="COMMENTS">
+				<subSections>
+					<ObjectPageSubSection id="comments_sub1" title="COMMENTS" mode="Expanded">
+						<blocks>
+							<claimBlocks:CommentsBlock/>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection id="results" title="RESULTS">
+				<subSections>
+					<ObjectPageSubSection id="results_sub1" title="RESULTS" mode="Expanded">
+						<blocks>
+							<claimBlocks:AssessmentResultsBlock/>
 						</blocks>
 					</ObjectPageSubSection>
 				</subSections>
