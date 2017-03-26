@@ -1,8 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
-	"hnd/dpe/warranty/prior_work_approval/model/models"
-], function(UIComponent, Device, models) {
+	"hnd/dpe/warranty/prior_work_approval/model/models",
+	"hnd/dpe/warranty/prior_work_approval/model/PWA"
+], function(UIComponent, Device, models,PWA) {
 	"use strict";
 
 	return UIComponent.extend("hnd.dpe.warranty.prior_work_approval.Component", {
@@ -22,6 +23,9 @@ sap.ui.define([
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
+			
+			//set the initial PWA Model
+			this.setModel(PWA.createPWAModel(),"PWA");		
 		
 			this.getRouter().initialize();			
 		}

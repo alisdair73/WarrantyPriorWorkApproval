@@ -1,8 +1,67 @@
-<mvc:View controllerName="hnd.dpe.warranty.prior_work_approval.controller.PWAObjectPage" 
+<mvc:View 
+    controllerName="hnd.dpe.warranty.prior_work_approval.controller.PWAObjectPage" 
+    xmlns="sap.uxap"
 	xmlns:html="http://www.w3.org/1999/xhtml"
-	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:m="sap.m"
+	xmlns:layout="sap.ui.layout"
+	xmlns:claimBlocks="hnd.dpe.warranty.prior_work_approval.block"
+	displayBlock="true" >
 	
-	<Label text="blah"/>
-	<Input type="Text"/>
-	
+	<ObjectPageLayout id="PWA" enableLazyLoading="false" showFooter="true" showHeaderContent="true" 
+		busy="{ViewHelper>/busy}" busyIndicatorDelay="{ViewHelper>/delay}">
+		<headerTitle>
+			<ObjectPageHeader id="PWAHeader"
+							  objectTitle="Prior Work Approval"
+							  isObjectIconAlwaysVisible = "true"
+							  objectImageShape="Square"
+							  objectImageURI="sap-icon://approvals"/>
+		</headerTitle>		
+		<headerContent>
+			<layout:VerticalLayout>
+				<layout:layoutData>
+					<ObjectPageHeaderLayoutData/>
+				</layout:layoutData>					
+				<m:ObjectStatus text="{ViewHelper>/UI/dealerDescription}"/>
+				<m:ObjectAttribute title="PWA Number" text="{PWA>/PWANumber}"/>
+				<m:ObjectAttribute 
+					title="Submitted Date" 
+					text="{	path: 'PWA>/SubmittedOn', 
+							type: 'sap.ui.model.type.Date'
+					}" 
+				/>
+				<m:ObjectStatus state="Success" text="{PWA>/StatusDescription}" icon="{PWA>/StatusIcon}" />
+			</layout:VerticalLayout>
+			<layout:VerticalLayout class="sapUiNoMargin" width="100%" id="messageArea"/>
+		</headerContent>
+		<sections>
+			<ObjectPageSection id="vehicleDetails" title="VEHICLE">
+				<subSections>
+					<ObjectPageSubSection id="vehicleDetails_sub1" title="VEHICLE" mode="Expanded">
+						<blocks>
+							<claimBlocks:VehicleDetailsBlock/>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection id="customerDetails" title="CUSTOMER">
+				<subSections>
+					<ObjectPageSubSection id="customerDetails_sub1" title="CUSTOMER" mode="Expanded">
+						<blocks>
+							<claimBlocks:CustomerDetailsBlock/>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+		<footer>
+			<m:OverflowToolbar>
+				<m:ToolbarSpacer/>
+				<m:Button text="Save Draft" press="onSaveDraft" visible="{PWA>/CanEdit}"/>
+				<m:Button text="Cancel" press="onCancel"/>
+				<m:Button text="Validate" press="onValidate" visible="{PWA>/CanEdit}"/>
+				<m:Button text="Submit" press="onSubmit" type="Emphasized" visible="{PWA>/CanEdit}"/>
+			</m:OverflowToolbar>
+		</footer>
+    </ObjectPageLayout>
 </mvc:View>

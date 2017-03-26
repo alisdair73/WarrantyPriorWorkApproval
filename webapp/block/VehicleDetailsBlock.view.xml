@@ -1,0 +1,52 @@
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout">
+	<sap.ui.layout.form:Form xmlns:sap.ui.layout.form="sap.ui.layout.form" editable="true" objectBindings="{PWA>/}">
+		<sap.ui.layout.form:layout>
+	    	<sap.ui.layout.form:ResponsiveGridLayout/>
+	    </sap.ui.layout.form:layout>
+		<sap.ui.layout.form:formContainers>
+			<sap.ui.layout.form:FormContainer id="__container0" title="Vehicle Details">
+				<sap.ui.layout.form:formElements>
+					<sap.ui.layout.form:FormElement id="__element0">
+						<sap.ui.layout.form:fields>
+							<l:Grid defaultSpan="L4 M6 S6">
+								<l:content>
+									<l:VerticalLayout width="100%">
+										<Label text="PWA Type" labelFor="PWAType"/>
+										<Input id="PWAType" value="{PWA>PWAType}" editable="{PWA>CanEdit}"/>
+									</l:VerticalLayout>
+									<l:VerticalLayout width="100%">
+										<Label text="VIN" labelFor="VIN"/>
+										<Input  id="VIN" value="{PWA>VIN}" editable="{PWA>CanEdit}"/>
+									</l:VerticalLayout>	
+									<l:VerticalLayout width="100%">
+										<Label text="Engine Number" labelFor="engineNumber"/>
+										<Input  id="engineNumber" value="{PWA>EngineNumber}" editable="{PWA>CanEdit}"/>
+									</l:VerticalLayout>
+									<l:VerticalLayout width="100%">
+										<Label text="Dealer Contact" labelFor="dealerContact"/>
+										<Input id="dealerContact" value="{PWA>DealerContact}" editable="{PWA>CanEdit}"/>
+									</l:VerticalLayout>								
+									<l:VerticalLayout width="100%">
+										<Label text="Date of Failure" labelFor="dateOfFailure"/>
+										<DatePicker id="dateOfFailure" change="onChangeDatePicker"
+											displayFormat="medium" dateValue="{PWA>DateOfFailure}" editable="{PWA>CanEdit}"/>
+									</l:VerticalLayout>
+									<l:VerticalLayout width="100%">
+										<Label text="Failure KM" labelFor="failureKM"/>
+										<Input id="failureKM" value="{PWA>FailureMeasure}" editable="{PWA>CanEdit}"/>
+									</l:VerticalLayout>
+									<l:VerticalLayout width="100%">
+										<Label text="Main Causal Part Number (MCPN)" labelFor="MCPN"/>
+										<Input id="MCPN" value="{PWA>MCPN}"	description="{PWA>MCPNDescription}"
+											editable="{WarrantyClaim>CanEdit}"
+											showValueHelp="true" valueHelpRequest="selectMCPN"/>
+									</l:VerticalLayout>								
+								</l:content>
+							</l:Grid>
+						</sap.ui.layout.form:fields>
+					</sap.ui.layout.form:FormElement>
+				</sap.ui.layout.form:formElements>
+			</sap.ui.layout.form:FormContainer>
+		</sap.ui.layout.form:formContainers>
+	</sap.ui.layout.form:Form>
+</mvc:View>
