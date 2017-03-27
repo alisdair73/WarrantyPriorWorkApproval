@@ -8,8 +8,8 @@
 		"applicationVersion": {
 			"version": "1.0.0"
 		},
-		"title": "{{appTitle}}",
-		"description": "{{appDescription}}",
+		"title": "Prior Work Approval",
+		"description": "Manage Prior Work Approvals for Warranty Claims",
 		"sourceTemplate": {
 			"id": "servicecatalog.connectivityComponent",
 			"version": "0.0.0"
@@ -41,7 +41,10 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": ["sap_hcb", "sap_belize"]
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_belize"
+		]
 	},
 	"sap.ui5": {
 		"_version": "1.1.0",
@@ -80,20 +83,26 @@
 			}
 		},
 		"resources": {
-			"css": [{
-				"uri": "css/style.css"
-			}]
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
 		},
 		"routing": {
 			"config": {
 				"viewPath": "hnd.dpe.warranty.prior_work_approval.view",
 				"controlId": "app"
 			},
-			"routes": [{
-				"name": "PWAMain",
-				"pattern": "",
-				"target": ["PWAMain"]
-			}],
+			"routes": [
+				{
+					"name": "PWAMain",
+					"pattern": "",
+					"target": [
+						"PWAMain"
+					]
+				}
+			],
 			"targets": {
 				"PWAMain": {
 					"viewType": "XML",
@@ -105,5 +114,9 @@
 				}
 			}
 		}
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/sap/zwty_pwa_maint/webapp",
+		"_version": "1.1.0"
 	}
 }

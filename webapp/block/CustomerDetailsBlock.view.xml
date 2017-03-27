@@ -12,7 +12,7 @@
 								<l:content>
 									<l:VerticalLayout width="100%">
 										<l:layoutData>
-											<l:GridData span="L2"/>
+											<l:GridData span="L8"/>
 										</l:layoutData>
 										<Label text="Owner Name" labelFor="owner"/>
 										<Input id="owner" value="{PWA>OwnerName}" editable="{PWA>CanEdit}"/>
