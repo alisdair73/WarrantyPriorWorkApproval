@@ -1,0 +1,44 @@
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+	controllerName="hnd.dpe.warranty.prior_work_approval.block.SupportingDocumentsBlockController">
+	<sap.ui.layout.form:Form xmlns:sap.ui.layout.form="sap.ui.layout.form" editable="true" objectBindings="{PWA>/}">
+		<sap.ui.layout.form:layout>
+	    	<sap.ui.layout.form:ResponsiveGridLayout/>
+	    </sap.ui.layout.form:layout>
+		<sap.ui.layout.form:formContainers>
+			<sap.ui.layout.form:FormContainer>
+				<sap.ui.layout.form:formElements>
+					<sap.ui.layout.form:FormElement>
+						<sap.ui.layout.form:fields>
+			<UploadCollection
+				id="UploadCollection"
+				multiple="false"
+				showSeparators="All"
+				fileDeleted="onFileDeleted"
+				uploadComplete="onUploadComplete"
+				beforeUploadStarts="onBeforeUploadStarts"
+				uploadTerminated="onUploadTerminated"
+				items="{path : 'PWA>/Attachments'}"
+				mode="SingleSelectMaster">
+				<toolbar>
+					<OverflowToolbar id="myId" >
+						<Title id="attachmentTitle"/>
+					</OverflowToolbar>
+				</toolbar>
+				<items>
+					<UploadCollectionItem
+						documentId="{PWA>documentId}"
+						fileName="{PWA>fileName}"
+						mimeType="{PWA>mimeType}"
+						url="{PWA>url}"
+						visibleEdit="false"
+						visibleDelete="{PWA>enableDelete}">
+					</UploadCollectionItem>
+				</items>
+			</UploadCollection>
+						</sap.ui.layout.form:fields>
+					</sap.ui.layout.form:FormElement>
+				</sap.ui.layout.form:formElements>
+			</sap.ui.layout.form:FormContainer>
+		</sap.ui.layout.form:formContainers>
+	</sap.ui.layout.form:Form>
+</mvc:View>

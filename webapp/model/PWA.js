@@ -12,41 +12,69 @@ sap.ui.define([
 			this.PWA = {
 				"PWANumber": "",
 				"PWAType": "",
-				"PWATypeDescription": "",
 				"SubmittedOn": null,
-				"StatusDescription": "NEW PWA",
-				"StatusIcon": "sap-icon://write-new-document",
 				"VIN": "",
-				"EngineNumber": "", 
+				"EngineNumber": "",
 				"DealerContact": "",
 				"DateOfFailure": null,
-				"FailureMeasure": 0,
+				"FailureMeasure": "",
 				"MCPN": "",
-				"MCPNDescription": "",
-				"CustomerTitle": "",
-				"GivenName": "",
-				"Surname": "",
-				"Company": "",
-				"Phone": "",
+				"OwnerName": "",
+				"CompanyName": "",
+				"PhoneNumber": "",
 				"SoldByDealer": false,
-				"ServicedByDealer": false,
 				"HistoryComplete": false,
+				"ServicedByDealer": false,
 				"OriginalOwner": false,
-				
+				"RequestedLabourHours": 0,
+				"RequestedLabourCost": 0,
+				"RequestedPartsCost": 0,
+				"RequestedSubletCost": 0,
+				"ApprovedLabourHours": 0,
+				"ApprovedLabourCost": 0,
+				"ApprovedPartsCost": 0,
+				"ApprovedSubletCost": 0,
+				"LaborSplitOwner": 0,
+				"LaborSplitDealer": 0,
+				"PartsSplitOwner": 0,
+				"PartsSplitDealer": 0,
+				"SubletSplitOwner": 0,
+				"SubletSplitDealer": 0,
 				"GoodwillReason": "",
-				"CustomerComplaint": "",
+				"CustomerConcern": "",
 				"Rectification": "",
 				"DealerComment": "",
-				
 				"AssessmentComments": "",
 				"AssessmentCodes": "",
-				
-				"CanEdit": true,
+				"PWATypeDescription": "",
+				"PWATypeGroup": "",
+				"StatusDescription": "NEW PWA",
+				"StatusIcon": "sap-icon://write-new-document",
+				"MCPNDescription": "",
 				"VersionIdentifier": null,
-				"CurrentVersionNumber":"",
-				"CurrentVersionCategory":"",
-				"changed": false
+				"CurrentVersionNumber": "",
+				"CurrentVersionCategory": "",
+				"CanEdit": true,
+				"changed": false,
+				"Attachments": [
+					{
+						"documentId": "12345",
+						"fileName": "test.pdf",
+						"mimeType": "application/pdf",
+						"url":"test.pdf",
+						"enableDelete": true
+					},
+					{
+						"documentId": "54321",
+						"fileName": "A new file.xls",
+						"mimeType": "application/msexcel",
+						"url":"test.pdf",
+						"enableDelete": true
+					}
+				]
 			};
+			
+
 			
 			this.oDataModel = new JSONModel(this.PWA);
 			this.oDataModel.setDefaultBindingMode("TwoWay");

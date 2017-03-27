@@ -83,6 +83,15 @@
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
+			<ObjectPageSection id="attachments" title="ATTACHMENTS">
+				<subSections>
+					<ObjectPageSubSection id="attachments_sub1" title="ATTACHMENTS" mode="Expanded">
+						<blocks>
+							<claimBlocks:SupportingDocumentsBlock/>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
 		</sections>
 		<footer>
 			<m:OverflowToolbar>

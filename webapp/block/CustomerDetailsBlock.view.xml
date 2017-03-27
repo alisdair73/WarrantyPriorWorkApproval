@@ -14,32 +14,18 @@
 										<l:layoutData>
 											<l:GridData span="L2"/>
 										</l:layoutData>
-										<Label text="Title" labelFor="customerTitle"/>
-										<Input id="customerTitle" value="{PWA>CustomerTitle}" editable="{PWA>CanEdit}"/>
-									</l:VerticalLayout>
-									<l:VerticalLayout width="100%">
-										<l:layoutData>
-											<l:GridData span="L5"/>
-										</l:layoutData>
-										<Label text="Given Name" labelFor="givenName"/>
-										<Input  id="givenName" value="{PWA>GivenName}" editable="{PWA>CanEdit}"/>
-									</l:VerticalLayout>	
-									<l:VerticalLayout width="100%">
-										<l:layoutData>
-											<l:GridData span="L5"/>
-										</l:layoutData>
-										<Label text="Surname" labelFor="surname"/>
-										<Input  id="surname" value="{PWA>Surname}" editable="{PWA>CanEdit}"/>
+										<Label text="Owner Name" labelFor="owner"/>
+										<Input id="owner" value="{PWA>OwnerName}" editable="{PWA>CanEdit}"/>
 									</l:VerticalLayout>
 									<l:VerticalLayout width="100%">
 										<l:layoutData>
 											<l:GridData span="L8"/>
 										</l:layoutData>
-										<Label text="Company" labelFor="company"/>
+										<Label text="Company Name" labelFor="company"/>
 										<Input id="company" value="{PWA>Company}" editable="{PWA>CanEdit}"/>
 									</l:VerticalLayout>								
 									<l:VerticalLayout width="100%">
-										<Label text="Phone" labelFor="phone"/>
+										<Label text="Phone Number" labelFor="phone"/>
 										<Input id="phone" value="{PWA>Phone}" editable="{PWA>CanEdit}" type="Tel"/>
 									</l:VerticalLayout>
 									<l:VerticalLayout width="100%">

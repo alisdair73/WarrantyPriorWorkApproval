@@ -24,9 +24,9 @@
 										<l:layoutData>
 											<l:GridData span="L12"/>
 										</l:layoutData>
-										<Label text="Customer Complaint" labelFor="customerComplaint"/>
-										<TextArea id="customerComplaint" rows="5" cols="120" 
-											value="{PWA>CustomerComplaint}"
+										<Label text="Customer Concern" labelFor="customerConcern"/>
+										<TextArea id="customerConcern" rows="5" cols="120" 
+											value="{PWA>CustomerConcern}"
 											editable="{PWA>CanEdit}"
 										/>
 									</l:VerticalLayout>
