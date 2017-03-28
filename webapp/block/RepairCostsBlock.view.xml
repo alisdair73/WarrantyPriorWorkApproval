@@ -1,77 +1,31 @@
-<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout">
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core">
 	<sap.ui.layout.form:Form xmlns:sap.ui.layout.form="sap.ui.layout.form" editable="true" objectBindings="{PWA>/}">
 		<sap.ui.layout.form:layout>
 	    	<sap.ui.layout.form:ResponsiveGridLayout/>
 	    </sap.ui.layout.form:layout>
 		<sap.ui.layout.form:formContainers>
-			<sap.ui.layout.form:FormContainer title="Repair Estimation">
+			<sap.ui.layout.form:FormContainer title="Repair Cost Estimation">
 				<sap.ui.layout.form:formElements>
 					<sap.ui.layout.form:FormElement>
 						<sap.ui.layout.form:fields>
-							<l:Grid defaultSpan="L4 M6 S6">
-								<l:content>
-									<l:VerticalLayout width="100%">
-										<l:layoutData>
-											<l:GridData span="L2"/>
-										</l:layoutData>
-										<Label text="Title" labelFor="customerTitle"/>
-										<Input id="customerTitle" value="{PWA>CustomerTitle}" editable="{PWA>CanEdit}"/>
-									</l:VerticalLayout>
-									<l:VerticalLayout width="100%">
-										<l:layoutData>
-											<l:GridData span="L5"/>
-										</l:layoutData>
-										<Label text="Given Name" labelFor="givenName"/>
-										<Input  id="givenName" value="{PWA>GivenName}" editable="{PWA>CanEdit}"/>
-									</l:VerticalLayout>	
-									<l:VerticalLayout width="100%">
-										<l:layoutData>
-											<l:GridData span="L5"/>
-										</l:layoutData>
-										<Label text="Surname" labelFor="surname"/>
-										<Input  id="surname" value="{PWA>Surname}" editable="{PWA>CanEdit}"/>
-									</l:VerticalLayout>
-									<l:VerticalLayout width="100%">
-										<l:layoutData>
-											<l:GridData span="L8"/>
-										</l:layoutData>
-										<Label text="Company" labelFor="company"/>
-										<Input id="company" value="{PWA>Company}" editable="{PWA>CanEdit}"/>
-									</l:VerticalLayout>								
-									<l:VerticalLayout width="100%">
-										<Label text="Phone" labelFor="phone"/>
-										<Input id="phone" value="{PWA>Phone}" editable="{PWA>CanEdit}" type="Tel"/>
-									</l:VerticalLayout>
-									<l:VerticalLayout width="100%">
-										<l:layoutData>
-											<l:GridData span="L3"/>
-										</l:layoutData>
-										<Label text="Sold by Dealer" labelFor="soldByDealer"/>
-										<Switch id="soldByDealer" customTextOn="Yes" customTextOff="No" state="{PWA>SoldByDealer}"/>
-									</l:VerticalLayout>	
-									<l:VerticalLayout width="100%">
-										<l:layoutData>
-											<l:GridData span="L3"/>
-										</l:layoutData>
-										<Label text="Serviced by Dealer" labelFor="servicedByDealer"/>
-										<Switch id="servicedByDealer" customTextOn="Yes" customTextOff="No" state="{PWA>ServicedByDealer}"/>
-									</l:VerticalLayout>	
-									<l:VerticalLayout width="100%">
-										<l:layoutData>
-											<l:GridData span="L3"/>
-										</l:layoutData>
-										<Label text="History Complete" labelFor="historyComplete"/>
-										<Switch id="historyComplete" customTextOn="Yes" customTextOff="No" state="{PWA>HistoryComplete}"/>
-									</l:VerticalLayout>	
-									<l:VerticalLayout width="100%">
-										<l:layoutData>
-											<l:GridData span="L3"/>
-										</l:layoutData>
-										<Label text="Original Owner" labelFor="originalOwner"/>
-										<Switch id="originalOwner" customTextOn="Yes" customTextOff="No" state="{PWA>OriginalOwner}"/>
-									</l:VerticalLayout>
-								</l:content>
-							</l:Grid>
+							<l:VerticalLayout width="100%">
+								<l:layoutData>
+									<l:GridData span="L12"/>
+								</l:layoutData>
+								<core:Fragment fragmentName="hnd.dpe.warranty.prior_work_approval.fragment.RepairCostsTable" type="XML"/>
+							</l:VerticalLayout>
+							<l:VerticalLayout width="100%" class="sapUiMediumMarginTop">
+								<l:layoutData>
+									<l:GridData span="L6"/>
+								</l:layoutData>
+								<core:Fragment fragmentName="hnd.dpe.warranty.prior_work_approval.fragment.RepairContributionRequestedTable" type="XML"/>
+							</l:VerticalLayout>
+							<l:VerticalLayout width="100%" class="sapUiMediumMarginTop">
+								<l:layoutData>
+									<l:GridData span="L6"/>
+								</l:layoutData>
+								<core:Fragment fragmentName="hnd.dpe.warranty.prior_work_approval.fragment.RepairContributionApprovedTable" type="XML"/>
+							</l:VerticalLayout>
 						</sap.ui.layout.form:fields>
 					</sap.ui.layout.form:FormElement>
 				</sap.ui.layout.form:formElements>

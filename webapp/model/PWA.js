@@ -34,8 +34,8 @@ sap.ui.define([
 				"ApprovedLabourCost": 0,
 				"ApprovedPartsCost": 0,
 				"ApprovedSubletCost": 0,
-				"LaborSplitOwner": 0,
-				"LaborSplitDealer": 0,
+				"LabourSplitOwner": 0,
+				"LabourSplitDealer": 0,
 				"PartsSplitOwner": 0,
 				"PartsSplitDealer": 0,
 				"SubletSplitOwner": 0,
@@ -56,8 +56,8 @@ sap.ui.define([
 				"CurrentVersionCategory": "",
 				"CanEdit": true,
 				"changed": false,
-				"Attachments": [
-					{
+				"Attachments": []
+/*					{
 						"documentId": "12345",
 						"fileName": "test.pdf",
 						"mimeType": "application/pdf",
@@ -71,10 +71,8 @@ sap.ui.define([
 						"url":"test.pdf",
 						"enableDelete": true
 					}
-				]
+				]*/
 			};
-			
-
 			
 			this.oDataModel = new JSONModel(this.PWA);
 			this.oDataModel.setDefaultBindingMode("TwoWay");
@@ -129,82 +127,65 @@ sap.ui.define([
             }
             
             this.resetChanges();
-		},
+		}, */
 		
 		updatePWAFromOdata: function(oServerOData) {
 			
 			var oSource = oServerOData.getSource ? oServerOData.getSource() : oServerOData;
 			var oODataModel = oSource.getModel();
 			var sPath = oSource.getPath();
-			var oWarrantyClaim = oODataModel.getObject(sPath);
+			var oPWA = oODataModel.getObject(sPath);
 		
-			this.warrantyClaim.ClaimNumber = oWarrantyClaim.ClaimNumber;
-			this.warrantyClaim.ClaimType = oWarrantyClaim.ClaimType;
-			this.warrantyClaim.ClaimTypeDescription = oWarrantyClaim.ClaimTypeDescription;
-			this.warrantyClaim.ClaimTypeGroup = oWarrantyClaim.ClaimTypeGroup;
-			this.warrantyClaim.DealerContact = oWarrantyClaim.DealerContact;
-			this.warrantyClaim.EngineNumber = oWarrantyClaim.EngineNumber;
-			this.warrantyClaim.AuthorisationNumber = oWarrantyClaim.AuthorisationNumber;
-			this.warrantyClaim.VIN = oWarrantyClaim.VIN;
-			this.warrantyClaim.RecallNumber = oWarrantyClaim.RecallNumber;
-			this.warrantyClaim.RepairOrderNumber = oWarrantyClaim.RepairOrderNumber;
-			this.warrantyClaim.ClaimCurrency = oWarrantyClaim.ClaimCurrency;
-			this.warrantyClaim.SubmittedOn = oWarrantyClaim.SubmittedOn;
-			this.warrantyClaim.DateOfRepair = oWarrantyClaim.DateOfRepair;
-			this.warrantyClaim.DateOfFailure = oWarrantyClaim.DateOfFailure;
-			this.warrantyClaim.FailureMeasure = oWarrantyClaim.FailureMeasure;
-			this.warrantyClaim.MilIndicator = oWarrantyClaim.MilIndicator;
-			this.warrantyClaim.DTC1 = oWarrantyClaim.DTC1;
-			this.warrantyClaim.DTC2 = oWarrantyClaim.DTC2;
-			this.warrantyClaim.DTC3 = oWarrantyClaim.DTC3;
-			this.warrantyClaim.Technician = oWarrantyClaim.Technician;
-			this.warrantyClaim.ServiceAdvisor = oWarrantyClaim.ServiceAdvisor;
-			this.warrantyClaim.OldSerialNumber = oWarrantyClaim.OldSerialNumber;
-			this.warrantyClaim.NewSerialNumber = oWarrantyClaim.NewSerialNumber;
-			this.warrantyClaim.PartsInstallDate = oWarrantyClaim.PartsInstallDate;
-			this.warrantyClaim.PartsInstallKm = oWarrantyClaim.PartsInstallKm;
-			this.warrantyClaim.OriginalInvoiceNumber = oWarrantyClaim.OriginalInvoiceNumber;
-			this.warrantyClaim.DealerComments = oWarrantyClaim.DealerComments;
-			this.warrantyClaim.DefectCode = oWarrantyClaim.DefectCode;
-			this.warrantyClaim.CustomerConcern = oWarrantyClaim.CustomerConcern;
-			this.warrantyClaim.SymptomCode = oWarrantyClaim.SymptomCode;
-			this.warrantyClaim.AssessmentComments = oWarrantyClaim.AssessmentComments;
-			this.warrantyClaim.AssessmentResults = oWarrantyClaim.AssessmentResults;
-			this.warrantyClaim.CurrentVersionNumber = oWarrantyClaim.CurrentVersionNumber;
-			this.warrantyClaim.CurrentVersionCategory = oWarrantyClaim.CurrentVersionCategory;
-			this.warrantyClaim.TotalMaterial = oWarrantyClaim.TotalMaterial;
-			this.warrantyClaim.TotalExternalServices = oWarrantyClaim.TotalExternalServices;
-			this.warrantyClaim.TotalLabour = oWarrantyClaim.TotalLabour;
-			this.warrantyClaim.StatusDescription = oWarrantyClaim.StatusDescription;
-			this.warrantyClaim.StatusIcon = oWarrantyClaim.StatusIcon;
-			this.warrantyClaim.CanEdit = oWarrantyClaim.CanEdit;
-			this.warrantyClaim.VersionIdentifier = oWarrantyClaim.VersionIdentifier;
-			
-			var oWarrantyClaimItems = oODataModel.getObject(sPath + "/WarrantyClaimItems");
-			if (oWarrantyClaimItems){
-				for (var i = 0; i < oWarrantyClaimItems.length; i++) {
-					var oWarrantyClaimItem = oODataModel.getObject("/" + oWarrantyClaimItems[i]);
-					switch(oWarrantyClaimItem.ItemType) {
-    					case "MAT":
-    						if(this.warrantyClaim.Parts.length === 0){
-    							oWarrantyClaimItem.isMCPN = true;
-    						}
-    						this.warrantyClaim.Parts.push(oWarrantyClaimItem);
-				        	break;
-				    	case "FR":
-				    		this.warrantyClaim.Labour.push(oWarrantyClaimItem);
-				    	  break;
-				    	case "SUBL":
-				    		this.warrantyClaim.Sublet.push(oWarrantyClaimItem);
-				    	 break;
-					}
-				} 
-			}
-			
+			this.PWA.PWANumber = oPWA.PWANumber;
+			this.PWA.PWAType = oPWA.PWAType;
+			this.PWA.SubmittedOn = oPWA.SubmittedOn;
+			this.PWA.VIN = oPWA.VIN;
+			this.PWA.EngineNumber = oPWA.EngineNumber;
+			this.PWA.DealerContact = oPWA.DealerContact;
+			this.PWA.DateOfFailure = oPWA.DateOfFailure;
+			this.PWA.FailureMeasure = oPWA.FailureMeasure;
+			this.PWA.MCPN = oPWA.MCPN;
+			this.PWA.OwnerName = oPWA.OwnerName;
+			this.PWA.CompanyName = oPWA.CompanyName;
+			this.PWA.PhoneNumber = oPWA.PhoneNumber;
+			this.PWA.SoldByDealer = oPWA.SoldByDealer;
+			this.PWA.HistoryComplete = oPWA.HistoryComplete;
+			this.PWA.ServicedByDealer = oPWA.ServicedByDealer;
+			this.PWA.OriginalOwner = oPWA.OriginalOwner;
+			this.PWA.RequestedLabourHours = oPWA.RequestedLabourHours;
+			this.PWA.RequestedLabourCost = oPWA.RequestedLabourCost;
+			this.PWA.RequestedPartsCost = oPWA.RequestedPartsCost;
+			this.PWA.RequestedSubletCost = oPWA.RequestedSubletCost;
+			this.PWA.ApprovedLabourHours = oPWA.ApprovedLabourHours;
+			this.PWA.ApprovedLabourCost = oPWA.ApprovedLabourCost;
+			this.PWA.ApprovedPartsCost = oPWA.ApprovedPartsCost;
+			this.PWA.ApprovedSubletCost = oPWA.ApprovedSubletCost;
+			this.PWA.LabourSplitOwner = oPWA.LabourSplitOwner;
+			this.PWA.LabourSplitDealer = oPWA.LabourSplitDealer;
+			this.PWA.PartsSplitOwner = oPWA.PartsSplitOwner;
+			this.PWA.PartsSplitDealer = oPWA.PartsSplitDealer;
+			this.PWA.SubletSplitOwner = oPWA.SubletSplitOwner;
+			this.PWA.SubletSplitDealer = oPWA.SubletSplitDealer;
+			this.PWA.GoodwillReason = oPWA.GoodwillReason;
+			this.PWA.CustomerConcern = oPWA.CustomerConcern;
+			this.PWA.Rectification = oPWA.Rectification;
+			this.PWA.DealerComment = oPWA.DealerComment;
+			this.PWA.AssessmentComments = oPWA.AssessmentComments;
+			this.PWA.AssessmentCodes = oPWA.AssessmentCodes;
+			this.PWA.PWATypeDescription = oPWA.PWATypeDescription;
+			this.PWA.PWATypeGroup = oPWA.PWATypeGroup;
+			this.PWA.StatusDescription = oPWA.StatusDescription;
+			this.PWA.StatusIcon = oPWA.StatusIcon;
+			this.PWA.MCPNDescription = oPWA.MCPNDescription;
+			this.PWA.VersionIdentifier = oPWA.VersionIdentifier;
+			this.PWA.CurrentVersionNumber = oPWA.CurrentVersionNumber;
+			this.PWA.CurrentVersionCategory = oPWA.CurrentVersionCategory;
+			this.PWA.CanEdit = oPWA.CanEdit;
+	
 			this.resetChanges();
 		},
 		
-		convertToODataForUpdate: function() {
+/*		convertToODataForUpdate: function() {
 			var warrantyClaim = {
 				"WarrantyClaimItems" : []
 			};

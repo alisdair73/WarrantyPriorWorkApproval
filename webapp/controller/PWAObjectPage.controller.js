@@ -16,11 +16,12 @@ sap.ui.define([
 				"readOnly": false,
 				"UI": {
 					"dealerNumber":"",
-					"dealerDescription":""
+					"dealerDescription":"",
+					"requestedTotal": 0,
+					"approvedTotal": 0
 				}
 			});
 			this.setModel(oViewModel, "ViewHelper");
-    		
 			this.getRouter().getRoute("PWAMain").attachPatternMatched(this._onPWAMainMatched, this);
     	},
       
@@ -35,13 +36,13 @@ sap.ui.define([
 		
 		onPWATypeListSelect: function(oEvent){
 			
-/*			var claimType = oEvent.getParameter("listItem").getBindingContext().getObject().Code;
-			var claimTypeDescription = oEvent.getParameter("listItem").getBindingContext().getObject().Description;
-			var claimTypeGroup = oEvent.getParameter("listItem").getBindingContext().getObject().Group;
+			var PWAType = oEvent.getParameter("listItem").getBindingContext().getObject().Code;
+			var PWATypeDescription = oEvent.getParameter("listItem").getBindingContext().getObject().Description;
+			var PWATypeGroup = oEvent.getParameter("listItem").getBindingContext().getObject().Group;
 			
-			this.getModel("WarrantyClaim").setProperty("/ClaimType",claimType);
-			this.getModel("WarrantyClaim").setProperty("/ClaimTypeDescription", claimTypeDescription);
-			this.getModel("WarrantyClaim").setProperty("/ClaimTypeGroup", claimTypeGroup);*/
+			this.getModel("PWA").setProperty("/PWAType",PWAType);
+			this.getModel("PWA").setProperty("/PWATypeDescription", PWATypeDescription);
+			this.getModel("PWA").setProperty("/PWATypeGroup", PWATypeGroup);
 			
 			this.getModel("ViewHelper").setProperty("/busy", false);
 			this._PWATypeSelection.close();
@@ -81,7 +82,8 @@ sap.ui.define([
 			}
 			
 			//Testing
-			//PWANumber = '100000000651';
+			//PWANumber = '200000000192';
+			PWANumber = "200000000069";
 				
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";
@@ -94,14 +96,17 @@ sap.ui.define([
 		_bindView: function(entityPath) {
 			this.getView().bindElement({
 				path: entityPath,
+				parameters: {
+					expand: "Attachments"
+				},
 				events: {
 					change: this._onBindingChange.bind(this),
 					dataRequested: function() {
 						this.getModel("ViewHelper").setProperty("/busy", true);
-					},
+					}.bind(this),
 					dataReceived: function() {
 						this.getModel("ViewHelper").setProperty("/busy", false);
-					}
+					}.bind(this)
 				}
 			});
 		},

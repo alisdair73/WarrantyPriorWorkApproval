@@ -1,0 +1,154 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Table >
+	    <items>
+	    	<ColumnListItem id="requestedCosts" visible="true">
+	    		<cells>
+	        		<Text text="REQUESTED"/>
+					<Input 
+						value="{
+							path: 'PWA>RequestedLabourHours',
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								minFractionDigits: 1,
+								maxFractionDigits: 1
+							}
+						}"						
+						type="Number"
+						editable="{PWA>CanEdit}"/>
+		        	<Input 
+		        		value="{
+							path: 'PWA>RequestedLabourCost',
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								minFractionDigits: 2,
+								maxFractionDigits: 2
+							}
+						}"
+		        		type="Number"
+		        		editable="{PWA>CanEdit}"/>
+	    	    	<Input  
+	    	    		value="{
+							path: 'PWA>RequestedPartsCost',
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								minFractionDigits: 2,
+								maxFractionDigits: 2
+							}
+						}"
+	    	    		type="Number"
+	    	    		editable="{PWA>CanEdit}"/>
+	    	    	<Input
+	    	    		value="{
+							path: 'PWA>RequestedSubletCost',
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								minFractionDigits: 2,
+								maxFractionDigits: 2
+							}
+						}"
+	    	    		type="Number"
+	    	    		editable="{PWA>CanEdit}"/>
+	            	<Input
+	            		value="{
+							path: 'ViewHelper>/UI/requestedTotal',
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								minFractionDigits: 2,
+								maxFractionDigits: 2
+							}
+						}"
+	            		type="Number" 
+	            		editable="false"/>
+	        	</cells>
+			</ColumnListItem>
+	    	<ColumnListItem id="approvedCosts" visible="true">
+	    		<cells>
+	        		<Text text="APPROVED"/>
+					<Input 
+						value="{
+							path: 'PWA>ApprovedLabourHours',
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								minFractionDigits: 1,
+								maxFractionDigits: 1
+							}
+						}"	
+						editable="false"
+						type="Number"/>
+		        	<Input 
+		        		value="{
+							path: 'PWA>ApprovedLabourCost',
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								minFractionDigits: 2,
+								maxFractionDigits: 2
+							}
+						}"
+						editable="false"
+		        		type="Number"/>
+	    	    	<Input  
+	    	    		value="{
+							path: 'PWA>ApprovedPartsCost',
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								minFractionDigits: 2,
+								maxFractionDigits: 2
+							}
+						}"
+						editable="false"
+	    	    		type="Number"/>
+	    	    	<Input
+	    	    		value="{
+							path: 'PWA>ApprovedSubletCost',
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								minFractionDigits: 2,
+								maxFractionDigits: 2
+							}
+						}"
+						editable="false"
+	    	    		type="Number"/>
+	            	<Input
+	            		value="{
+							path: 'ViewHelper>/UI/approvedTotal',
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								minFractionDigits: 2,
+								maxFractionDigits: 2
+							}
+						}"
+						editable="false"
+	            		type="Number"/>
+	        	</cells>
+	    	</ColumnListItem>	        						
+	    </items>
+	    <columns>
+	    	<Column/>
+	        <Column>
+	        	<header>
+	            	<Label text="Labour Hours"/>
+	            </header>
+	        </Column>
+	        <Column>
+	        	<header>
+	            	<Label text="Labour $"/>
+	            </header>
+	        </Column>
+	        <Column>
+	        	<header>
+	            	<Label text="Parts $"/>
+	            </header>
+	        </Column>
+	        <Column>
+	        	<header>
+	            	<Label text="Sublet $"/>
+	            </header>
+	        </Column>
+	        <Column>
+	        	<header>
+	            	<Label text="Total $"/>
+	            </header>
+	        </Column>
+		</columns>
+	</Table>
+</core:FragmentDefinition>

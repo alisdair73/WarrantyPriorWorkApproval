@@ -9,19 +9,23 @@
 				<sap.ui.layout.form:formElements>
 					<sap.ui.layout.form:FormElement>
 						<sap.ui.layout.form:fields>
-			<UploadCollection
+							<UploadCollection
 				id="UploadCollection"
+				uploadUrl="/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/Attachment"
 				multiple="false"
 				showSeparators="All"
 				fileDeleted="onFileDeleted"
 				uploadComplete="onUploadComplete"
 				beforeUploadStarts="onBeforeUploadStarts"
 				uploadTerminated="onUploadTerminated"
+				noDataText="{= ${PWA>PWANumber} === '' ? 'PWA must be saved before adding files' : 'No Attachments' }"
 				items="{path : 'PWA>/Attachments'}"
 				mode="SingleSelectMaster">
 				<toolbar>
 					<OverflowToolbar id="myId" >
 						<Title id="attachmentTitle"/>
+												<ToolbarSpacer/>
+						<UploadCollectionToolbarPlaceholder/>
 					</OverflowToolbar>
 				</toolbar>
 				<items>
@@ -34,7 +38,8 @@
 						visibleDelete="{PWA>enableDelete}">
 					</UploadCollectionItem>
 				</items>
-			</UploadCollection>
+			</UploadCollection>			
+
 						</sap.ui.layout.form:fields>
 					</sap.ui.layout.form:FormElement>
 				</sap.ui.layout.form:formElements>

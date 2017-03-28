@@ -22,11 +22,11 @@
 											<l:GridData span="L8"/>
 										</l:layoutData>
 										<Label text="Company Name" labelFor="company"/>
-										<Input id="company" value="{PWA>Company}" editable="{PWA>CanEdit}"/>
+										<Input id="company" value="{PWA>CompanyName}" editable="{PWA>CanEdit}"/>
 									</l:VerticalLayout>								
 									<l:VerticalLayout width="100%">
 										<Label text="Phone Number" labelFor="phone"/>
-										<Input id="phone" value="{PWA>Phone}" editable="{PWA>CanEdit}" type="Tel"/>
+										<Input id="phone" value="{PWA>PhoneNumber}" editable="{PWA>CanEdit}" type="Tel"/>
 									</l:VerticalLayout>
 									<l:VerticalLayout width="100%">
 										<l:layoutData>

@@ -42,10 +42,13 @@
 										<Label text="Failure KM" labelFor="failureKM"/>
 										<Input id="failureKM" value="{PWA>FailureMeasure}" editable="{PWA>CanEdit}"/>
 									</l:VerticalLayout>
-									<l:VerticalLayout width="100%">
+									<l:VerticalLayout width="auto">
+										<l:layoutData>
+											<l:GridData span="L8"/>
+										</l:layoutData>
 										<Label text="Main Causal Part Number (MCPN)" labelFor="MCPN"/>
 										<Input id="MCPN" value="{PWA>MCPN}"	description="{PWA>MCPNDescription}"
-											editable="{WarrantyClaim>CanEdit}"
+											editable="{PWA>CanEdit}" 
 											showValueHelp="true" valueHelpRequest="selectMCPN"/>
 									</l:VerticalLayout>								
 								</l:content>

@@ -1,0 +1,53 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Table>
+		<headerToolbar>
+			<Toolbar>
+				<Title text="Requested Repair Contribution" level="H2"/>
+			</Toolbar>
+		</headerToolbar>
+		<items>
+	    	<ColumnListItem id="requestedContributionParts">
+	        	<cells>
+	            	<Text text="PARTS"/>
+					<Input value="{PWA>PartsSplitOwner}" type="Number" editable="{PWA>CanEdit}"/>
+		            <Input value="{PWA>PartsSplitDealer}" type="Number" editable="{PWA>CanEdit}"/>
+	    	    	<Input value="0" type="Number" editable="false"/>
+	    		</cells>
+	        </ColumnListItem>
+	    	<ColumnListItem id="requestedContributionLabour">
+	        	<cells>
+	            	<Text text="LABOUR"/>
+					<Input value="{PWA>LabourSplitOwner}" type="Number" editable="{PWA>CanEdit}"/>
+		            <Input value="{PWA>LabourSplitDealer}" type="Number" editable="{PWA>CanEdit}"/>
+	    	    	<Input value="0" type="Number" editable="false"/>
+	    		</cells>
+	        </ColumnListItem>
+	    	<ColumnListItem id="requestedContributionSublet">
+	        	<cells>
+	            	<Text text="SUBLET"/>
+					<Input value="{PWA>SubletSplitOwner}" type="Number" editable="{PWA>CanEdit}"/>
+		            <Input value="{PWA>SubletSplitDealer}" type="Number" editable="{PWA>CanEdit}"/>
+	    	    	<Input value="0" type="Number" editable="false"/>
+	    		</cells>
+	        </ColumnListItem>
+		</items>
+	    <columns>
+	    	<Column/>
+	        <Column>
+	        	<header>
+	            	<Label text="% Owner"/>
+	            </header>
+	        </Column>
+	        <Column>
+	        	<header>
+	            	<Label text="% Dealer"/>
+	            </header>
+	        </Column>
+	        <Column>
+	        	<header>
+	            	<Label text="% Honda"/>
+	            </header>
+	        </Column>
+		</columns>
+	</Table>
+</core:FragmentDefinition>
