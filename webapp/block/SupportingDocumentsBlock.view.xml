@@ -11,13 +11,14 @@
 						<sap.ui.layout.form:fields>
 							<UploadCollection
 				id="UploadCollection"
-				uploadUrl="/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/Attachment"
+				uploadUrl="/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('{PWA>PWANumber}')/Attachments"
 				multiple="false"
 				showSeparators="All"
 				fileDeleted="onFileDeleted"
 				uploadComplete="onUploadComplete"
 				beforeUploadStarts="onBeforeUploadStarts"
 				uploadTerminated="onUploadTerminated"
+				change="onChange"
 				noDataText="{= ${PWA>PWANumber} === '' ? 'PWA must be saved before adding files' : 'No Attachments' }"
 				items="{path : 'PWA>/Attachments'}"
 				mode="SingleSelectMaster">
