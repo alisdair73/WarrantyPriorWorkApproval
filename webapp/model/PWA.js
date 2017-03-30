@@ -57,21 +57,6 @@ sap.ui.define([
 				"CanEdit": true,
 				"changed": false,
 				"Attachments": []
-/*					{
-						"documentId": "12345",
-						"fileName": "test.pdf",
-						"mimeType": "application/pdf",
-						"url":"test.pdf",
-						"enableDelete": true
-					},
-					{
-						"documentId": "54321",
-						"fileName": "A new file.xls",
-						"mimeType": "application/msexcel",
-						"url":"test.pdf",
-						"enableDelete": true
-					}
-				]*/
 			};
 			
 			this.oDataModel = new JSONModel(this.PWA);
@@ -182,6 +167,15 @@ sap.ui.define([
 			this.PWA.CurrentVersionCategory = oPWA.CurrentVersionCategory;
 			this.PWA.CanEdit = oPWA.CanEdit;
 	
+			var oAttachments = oODataModel.getObject(sPath + "/Attachments");
+			if (oAttachments){
+				for (var i = 0; i < oAttachments.length; i++) {
+					var oAttachment = oODataModel.getObject("/" + oAttachments[i]);
+					oAttachment.URL = "/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('" + this.PWA.PWANumber + "')/Attachments('" + oAttachment.DocumentID + "')/$value";
+					this.PWA.Attachments.push(oAttachment);
+				}
+			}
+			
 			this.resetChanges();
 		},
 		
