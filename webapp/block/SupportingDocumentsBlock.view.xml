@@ -21,7 +21,7 @@
 								filenameLengthExceed="onFileSizeExceed"
 								change="onChange"
 								maximumFileSize="10"
-								noDataText="{= ${PWA>PWANumber} === '' ? 'PWA must be saved before adding files' : 'No Attachments' }"
+								noDataText="{= ${PWA>PWANumber} === '' ? 'PWA must be saved before adding attachments' : 'No Attachments' }"
 								items="{path : 'PWA>/Attachments'}"
 								mode="SingleSelectMaster">
 								<toolbar>
@@ -38,7 +38,7 @@
 										mimeType="{PWA>MimeType}"
 										url="{PWA>URL}"
 										visibleEdit="false"
-										visibleDelete="{PWA>enableDelete}">
+										visibleDelete="{PWA>CanEdit}">
 									</UploadCollectionItem>
 								</items>
 							</UploadCollection>			
