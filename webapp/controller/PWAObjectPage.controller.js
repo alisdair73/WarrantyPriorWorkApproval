@@ -75,15 +75,15 @@ sap.ui.define([
 			//See if PWA Number is passed in the Startup Parameters
 			var PWANumber = "";
 			if (this.getOwnerComponent().getComponentData() &&
-				this.getOwnerComponent().getComponentData().startupParameters.PWA &&
-				this.getOwnerComponent().getComponentData().startupParameters.PWA[0]) {
+				this.getOwnerComponent().getComponentData().startupParameters.PriorWorkApproval &&
+				this.getOwnerComponent().getComponentData().startupParameters.PriorWorkApproval[0]) {
 				
-				PWANumber = this.getOwnerComponent().getComponentData().startupParameters.PWA[0];
+				PWANumber = this.getOwnerComponent().getComponentData().startupParameters.PriorWorkApproval[0];
 			}
 			
 			//Testing
 			//PWANumber = '200000000192';
-			PWANumber = "200000000069";
+			//PWANumber = "200000000069";
 				
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";

@@ -1,7 +1,8 @@
 sap.ui.define(["sap/ui/core/mvc/Controller",
 "sap/m/MessageToast",
+"sap/ui/model/Filter",
 "sap/m/UploadCollectionParameter"
-], function(Controller, MessageToast, UploadCollectionParameter) {
+], function(Controller, MessageToast, Filter, UploadCollectionParameter) {
 	"use strict";
 
 	return Controller.extend("hnd.dpe.warranty.prior_work_approval.block.SupportingDocumentsBlockController", {
@@ -59,10 +60,20 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
  
 		onFileDeleted: function(oEvent) {
+		
+			var path = oEvent.getParameter("item").getBindingContext("PWA").getPath();
+			this.getView().getModel("PWA").setProperty(path + "/deleted", true);
+
+           	var filters = [];
+
+			filters.push(new Filter(
+				"deleted",
+				sap.ui.model.FilterOperator.EQ, 
+				false
+			));
 			
-			var attachments = this.getView().getModel("PWA").getProperty("/Attachments");
-		    attachments.splice(oEvent.getParameter("item")._iLineNumber,1);
-		    this.getView().getModel("PWA").setProperty("/Attachments", attachments);
+			this.getView().byId("UploadCollection").getBinding("items").filter(filters);
+		    
 		},		
 		
 		onFileSizeExceed : function(oEvent) {

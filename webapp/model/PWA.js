@@ -172,6 +172,7 @@ sap.ui.define([
 				for (var i = 0; i < oAttachments.length; i++) {
 					var oAttachment = oODataModel.getObject("/" + oAttachments[i]);
 					oAttachment.URL = "/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('" + this.PWA.PWANumber + "')/Attachments('" + oAttachment.DocumentID + "')/$value";
+					oAttachment.deleted = false;
 					this.PWA.Attachments.push(oAttachment);
 				}
 			}

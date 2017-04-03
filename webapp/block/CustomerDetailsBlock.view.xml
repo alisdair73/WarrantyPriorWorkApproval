@@ -33,28 +33,32 @@
 											<l:GridData span="L3"/>
 										</l:layoutData>
 										<Label text="Sold by Dealer" labelFor="soldByDealer"/>
-										<Switch id="soldByDealer" customTextOn="Yes" customTextOff="No" state="{PWA>SoldByDealer}"/>
+										<Switch id="soldByDealer" customTextOn="Yes" customTextOff="No" 
+											state="{PWA>SoldByDealer}" enabled="{PWA>CanEdit}"/>
 									</l:VerticalLayout>	
 									<l:VerticalLayout width="100%">
 										<l:layoutData>
 											<l:GridData span="L3"/>
 										</l:layoutData>
 										<Label text="Serviced by Dealer" labelFor="servicedByDealer"/>
-										<Switch id="servicedByDealer" customTextOn="Yes" customTextOff="No" state="{PWA>ServicedByDealer}"/>
+										<Switch id="servicedByDealer" customTextOn="Yes" customTextOff="No" 
+											state="{PWA>ServicedByDealer}" enabled="{PWA>CanEdit}"/>
 									</l:VerticalLayout>	
 									<l:VerticalLayout width="100%">
 										<l:layoutData>
 											<l:GridData span="L3"/>
 										</l:layoutData>
 										<Label text="History Complete" labelFor="historyComplete"/>
-										<Switch id="historyComplete" customTextOn="Yes" customTextOff="No" state="{PWA>HistoryComplete}"/>
+										<Switch id="historyComplete" customTextOn="Yes" customTextOff="No" 
+											state="{PWA>HistoryComplete}" enabled="{PWA>CanEdit}"/>
 									</l:VerticalLayout>	
 									<l:VerticalLayout width="100%">
 										<l:layoutData>
 											<l:GridData span="L3"/>
 										</l:layoutData>
 										<Label text="Original Owner" labelFor="originalOwner"/>
-										<Switch id="originalOwner" customTextOn="Yes" customTextOff="No" state="{PWA>OriginalOwner}"/>
+										<Switch id="originalOwner" customTextOn="Yes" customTextOff="No" 
+											state="{PWA>OriginalOwner}" enabled="{PWA>CanEdit}"/>
 									</l:VerticalLayout>
 								</l:content>
 							</l:Grid>
