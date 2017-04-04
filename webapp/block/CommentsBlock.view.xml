@@ -10,7 +10,7 @@
 						<sap.ui.layout.form:fields>
 							<l:Grid defaultSpan="L4 M6 S6">
 								<l:content>
-									<l:VerticalLayout width="100%">
+									<l:VerticalLayout width="100%" visible="{= ${PWA>PWATypeGroup} === 'GOODWILL' }">
 										<l:layoutData>
 											<l:GridData span="L12"/>
 										</l:layoutData>

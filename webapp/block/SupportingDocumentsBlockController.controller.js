@@ -77,7 +77,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},		
 		
 		onFileSizeExceed : function(oEvent) {
-			MessageToast.show("The maximum allowed size for file attachments is 10MB.");
+			MessageToast.show("The maximum allowed size for file attachments is 25MB.");
 		},
 
 		_getAttachmentTitleText: function(){

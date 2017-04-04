@@ -8,60 +8,42 @@
 				<sap.ui.layout.form:formElements>
 					<sap.ui.layout.form:FormElement>
 						<sap.ui.layout.form:fields>
-							<l:Grid defaultSpan="L4 M6 S6">
-								<l:content>
-									<l:VerticalLayout width="100%">
-										<l:layoutData>
-											<l:GridData span="L8"/>
-										</l:layoutData>
-										<Label text="Owner Name" labelFor="owner"/>
-										<Input id="owner" value="{PWA>OwnerName}" editable="{PWA>CanEdit}"/>
-									</l:VerticalLayout>
-									<l:VerticalLayout width="100%">
-										<l:layoutData>
-											<l:GridData span="L8"/>
-										</l:layoutData>
-										<Label text="Company Name" labelFor="company"/>
-										<Input id="company" value="{PWA>CompanyName}" editable="{PWA>CanEdit}"/>
-									</l:VerticalLayout>								
-									<l:VerticalLayout width="100%">
-										<Label text="Phone Number" labelFor="phone"/>
-										<Input id="phone" value="{PWA>PhoneNumber}" editable="{PWA>CanEdit}" type="Tel"/>
-									</l:VerticalLayout>
-									<l:VerticalLayout width="100%">
-										<l:layoutData>
-											<l:GridData span="L3"/>
-										</l:layoutData>
+							<l:VerticalLayout width="100%">
+								<l:VerticalLayout width="100%">
+									<Label text="Owner Name" labelFor="owner"/>
+									<Input id="owner" value="{PWA>OwnerName}" editable="{PWA>CanEdit}" width="100%"/>
+								</l:VerticalLayout>
+								<l:VerticalLayout width="100%">
+									<Label text="Company Name" labelFor="company"/>
+									<Input id="company" value="{PWA>CompanyName}" editable="{PWA>CanEdit}"/>
+								</l:VerticalLayout>								
+								<l:VerticalLayout>
+									<Label text="Phone Number" labelFor="phone"/>
+									<Input id="phone" value="{PWA>PhoneNumber}" editable="{PWA>CanEdit}" type="Tel"/>
+								</l:VerticalLayout>
+								<l:HorizontalLayout >
+									<l:VerticalLayout width="100%" class="sapUiLargeMarginTop sapUiLargeMarginEnd">
 										<Label text="Sold by Dealer" labelFor="soldByDealer"/>
 										<Switch id="soldByDealer" customTextOn="Yes" customTextOff="No" 
 											state="{PWA>SoldByDealer}" enabled="{PWA>CanEdit}"/>
 									</l:VerticalLayout>	
-									<l:VerticalLayout width="100%">
-										<l:layoutData>
-											<l:GridData span="L3"/>
-										</l:layoutData>
+									<l:VerticalLayout width="100%" class="sapUiLargeMarginTop sapUiLargeMarginEnd">
 										<Label text="Serviced by Dealer" labelFor="servicedByDealer"/>
 										<Switch id="servicedByDealer" customTextOn="Yes" customTextOff="No" 
 											state="{PWA>ServicedByDealer}" enabled="{PWA>CanEdit}"/>
 									</l:VerticalLayout>	
-									<l:VerticalLayout width="100%">
-										<l:layoutData>
-											<l:GridData span="L3"/>
-										</l:layoutData>
+									<l:VerticalLayout width="100%" class="sapUiLargeMarginTop sapUiLargeMarginEnd">
 										<Label text="History Complete" labelFor="historyComplete"/>
 										<Switch id="historyComplete" customTextOn="Yes" customTextOff="No" 
 											state="{PWA>HistoryComplete}" enabled="{PWA>CanEdit}"/>
 									</l:VerticalLayout>	
-									<l:VerticalLayout width="100%">
-										<l:layoutData>
-											<l:GridData span="L3"/>
-										</l:layoutData>
+									<l:VerticalLayout width="100%" class="sapUiLargeMarginTop">
 										<Label text="Original Owner" labelFor="originalOwner"/>
 										<Switch id="originalOwner" customTextOn="Yes" customTextOff="No" 
 											state="{PWA>OriginalOwner}" enabled="{PWA>CanEdit}"/>
 									</l:VerticalLayout>
-								</l:content>
-							</l:Grid>
+								</l:HorizontalLayout>
+							</l:VerticalLayout>
 						</sap.ui.layout.form:fields>
 					</sap.ui.layout.form:FormElement>
 				</sap.ui.layout.form:formElements>

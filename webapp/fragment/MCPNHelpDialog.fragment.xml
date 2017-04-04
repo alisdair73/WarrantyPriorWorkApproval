@@ -1,0 +1,15 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:vh="sap.ui.comp.valuehelpdialog">
+	<SelectDialog 
+		noDataText="{i18n>noPartsFoundTableText}"	
+		title="{i18n>addItems}"
+		class="sapUiPopupWithPadding"
+		items="{path: '/PartSet' }"
+		search="onValueHelpSearch"
+		confirm="onMCPNSelected"
+		cancel="onValueHelpClose"
+		multiSelect="false">
+		<StandardListItem
+			title="{PartNumber}"
+			description="{Description}" />
+	</SelectDialog>
+</core:FragmentDefinition>

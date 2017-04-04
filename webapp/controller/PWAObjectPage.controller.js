@@ -83,7 +83,7 @@ sap.ui.define([
 			
 			//Testing
 			//PWANumber = '200000000192';
-			//PWANumber = "200000000069";
+			PWANumber = "200000000069";
 				
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";

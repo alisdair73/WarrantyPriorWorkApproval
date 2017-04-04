@@ -20,7 +20,7 @@
 								uploadTerminated="onUploadTerminated"
 								filenameLengthExceed="onFileSizeExceed"
 								change="onChange"
-								maximumFileSize="10"
+								maximumFileSize="25"
 								noDataText="{= ${PWA>PWANumber} === '' ? 'PWA must be saved before adding attachments' : 'No Attachments' }"
 								items="{path : 'PWA>/Attachments'}"
 								mode="SingleSelectMaster">

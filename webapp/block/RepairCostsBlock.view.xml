@@ -14,13 +14,13 @@
 								</l:layoutData>
 								<core:Fragment fragmentName="hnd.dpe.warranty.prior_work_approval.fragment.RepairCostsTable" type="XML"/>
 							</l:VerticalLayout>
-							<l:VerticalLayout width="100%" class="sapUiMediumMarginTop">
+							<l:VerticalLayout width="100%" class="sapUiMediumMarginTop" visible="{= ${PWA>PWATypeGroup} === 'GOODWILL' }">
 								<l:layoutData>
 									<l:GridData span="L6"/>
 								</l:layoutData>
 								<core:Fragment fragmentName="hnd.dpe.warranty.prior_work_approval.fragment.RepairContributionRequestedTable" type="XML"/>
 							</l:VerticalLayout>
-							<l:VerticalLayout width="100%" class="sapUiMediumMarginTop">
+							<l:VerticalLayout width="100%" class="sapUiMediumMarginTop" visible="{= ${PWA>PWATypeGroup} === 'GOODWILL' }">
 								<l:layoutData>
 									<l:GridData span="L6"/>
 								</l:layoutData>
