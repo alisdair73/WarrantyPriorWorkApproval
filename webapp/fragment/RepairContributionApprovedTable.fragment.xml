@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-	<Table showOverlay="true">
+	<Table showOverlay="{${PWA>CurrentVersionCategory}='IC'}">
 		<headerToolbar>
 			<Toolbar>
 				<Title text="Approved Repair Contribution" level="H2"/>

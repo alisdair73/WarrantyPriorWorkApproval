@@ -2,8 +2,9 @@ sap.ui.define([
 	"hnd/dpe/warranty/prior_work_approval/controller/BaseController",
 	"sap/ui/model/json/JSONModel",
 	"hnd/dpe/warranty/prior_work_approval/model/PWA",
-	"sap/ui/model/Filter"
-], function(BaseController, JSONModel, PWA, Filter) {
+	"sap/ui/model/Filter",
+	"sap/m/MessageStrip"
+], function(BaseController, JSONModel, PWA, Filter, MessageStrip) {
 	"use strict";
 
 	return BaseController.extend("hnd.dpe.warranty.prior_work_approval.controller.PWAObjectPage", {
@@ -46,8 +47,63 @@ sap.ui.define([
 			
 			this.getModel("ViewHelper").setProperty("/busy", false);
 			this._PWATypeSelection.close();
-		},		
-      
+		},	
+		
+		onDraft: function(){
+			this._doPWAAction("SavePWA");
+		},
+		
+		onSubmit: function(){
+			this._doPWAAction("SubmitPWA");
+		},
+		
+		onValidate: function(){
+			this._doPWAAction("ValidatePWA");
+		},
+		
+		onCancel: function(){
+			this.navigateToLaunchpad();
+		},
+		
+/*      
+			Private Functions 
+*/		
+
+		_doPWAAction: function(actionName){
+			this.getModel("ViewHelper").setProperty("/busy", true);
+			this._clearHeaderMessages();
+			
+			this.getView().getModel().create("/PriorWorkApprovalSet",
+				PWA.convertToODataForUpdate(), 
+				{
+					"success": this._onActionSuccess.bind(this),
+					"error": this._onActionError.bind(this),
+					"headers": { "pwaaction": actionName },
+					"async": true
+				}
+			);
+		},
+
+		_onActionSuccess: function(response){
+			this.getModel("ViewHelper").setProperty("/busy", false);
+			//Get Header Message
+			//MessageToast.show("Success");
+			//PWA.updatePWAFromJSONModel(result);
+		},
+		
+		_onActionError: function(error){
+			switch(error.statusCode){
+				case "400":
+					var errorDetail = JSON.parse(error.responseText);
+					this._addMessagesToHeader(errorDetail.error.innererror.errordetails);
+					break;
+				case "500":
+					//Technical Error
+					break;
+			}
+			this.getModel("ViewHelper").setProperty("/busy", false);
+		},
+
 		_onPWAMainMatched: function(oEvent) {
 			
 			this.getModel().metadataLoaded().then(function() {
@@ -83,7 +139,7 @@ sap.ui.define([
 			
 			//Testing
 			//PWANumber = '200000000192';
-			PWANumber = "200000000069";
+			//PWANumber = "200000000069";
 				
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";
@@ -168,6 +224,29 @@ sap.ui.define([
 			));
 			
 			sap.ui.getCore().byId("PWATypeList").getBinding("items").filter(filters);	
+		},
+		
+		_clearHeaderMessages: function(){
+			this.getView().byId("messageArea").destroyContent();
+		},
+		
+		_addMessagesToHeader: function(messages){
+		
+			var messageArea = this.getView().byId("messageArea");
+			messageArea.destroyContent();
+			
+			for (var i = 0; i < messages.length; i++) {
+				var messageStrip = new MessageStrip("msgStrip" + i, {
+					text: messages[i].message,
+					showCloseButton: false,
+					showIcon: true,
+					type: "Error"
+				});
+				messageArea.addContent(messageStrip);
+			}
+			//Scroll to the top of the page so messages are visible
+			var objectLayout = this.getView().byId("PWA");
+			objectLayout.scrollToSection(this.getView().byId("vehicleDetails_sub1").getId(), 0, -200);
 		}
 	});
 });

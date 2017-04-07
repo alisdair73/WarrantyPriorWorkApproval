@@ -1,6 +1,6 @@
 sap.ui.define([
 	"sap/ui/model/json/JSONModel"
-], function(JSONModel,NumberFormat) {
+], function(JSONModel) {
 	"use strict";
 
 	return {
@@ -64,55 +64,22 @@ sap.ui.define([
 			return this.oDataModel;
 		},
 		
-/*		updateWarrantyClaimFromJSONModel: function(jsonModel){
+		updatePWAFromJSONModel: function(jsonModel){
 		
-			var formatOptions = {
-				minFractionDigits: 2,
-				maxFractionDigits: 2
-			};
-			var costFormat = NumberFormat.getFloatInstance(formatOptions);
-			
-			this.warrantyClaim.ClaimNumber = jsonModel.ClaimNumber;
-			
-			this.warrantyClaim.OCTotal = parseFloat(jsonModel.OCTotal);
-			this.warrantyClaim.OVTotal = parseFloat(jsonModel.OVTotal);
-			this.warrantyClaim.ICTotal = parseFloat(jsonModel.ICTotal);
-			this.warrantyClaim.IVTotal = parseFloat(jsonModel.IVTotal);
-			
-			this.warrantyClaim.TotalCostOfClaim = costFormat.format(jsonModel.TotalCostOfClaim);
-			this.warrantyClaim.StatusDescription = jsonModel.StatusDescription;
-			this.warrantyClaim.StatusIcon = jsonModel.StatusIcon;
-			this.warrantyClaim.CanEdit = jsonModel.CanEdit;
-			this.warrantyClaim.VersionIdentifier = jsonModel.VersionIdentifier;
-			this.warrantyClaim.CurrentVersionNumber = jsonModel.CurrentVersionNumber;
-			this.warrantyClaim.CurrentVersionCategory = jsonModel.CurrentVersionCategory;
-			
-			this.warrantyClaim.Parts = [];
-			this.warrantyClaim.Labour = [];
-			this.warrantyClaim.Sublet = [];
 
-            if(jsonModel.WarrantyClaimItems){
-				for (var i = 0; i < jsonModel.WarrantyClaimItems.results.length; i++) {
-					var warrantyClaimItem = jsonModel.WarrantyClaimItems.results[i];
-					switch(warrantyClaimItem.ItemType) {
-    					case "MAT":
-    						if(this.warrantyClaim.Parts.length === 0){
-    							warrantyClaimItem.isMCPN = true;
-    						}
-    						this.warrantyClaim.Parts.push(warrantyClaimItem);
-				        	break;
-				    	case "FR":
-				   			this.warrantyClaim.Labour.push(warrantyClaimItem);
-				   			break;
-				   		case "SUBL":
-				   			this.warrantyClaim.Sublet.push(warrantyClaimItem);
-			    			break;
-					}
-				}
-            }
-            
-            this.resetChanges();
-		}, */
+			this.PWA.PWANumber = jsonModel.PWANumber;
+			this.PWA.SubmittedOn = jsonModel.SubmittedOn;
+			this.PWA.StatusDescription = jsonModel.StatusDescription;
+			this.PWA.StatusIcon = jsonModel.StatusIcon;
+			this.PWA.VersionIdentifier = jsonModel.VersionIdentifier;
+			this.PWA.CurrentVersionNumber = jsonModel.CurrentVersionNumber;
+			this.PWA.CurrentVersionCategory = jsonModel.CurrentVersionCategory;
+			this.PWA.CanEdit = jsonModel.CanEdit;
+			
+			this.PWA.Attachments = jsonModel.Attachments;
+			
+			this.resetChanges();
+		}, 
 		
 		updatePWAFromOdata: function(oServerOData) {
 			
@@ -176,67 +143,53 @@ sap.ui.define([
 					this.PWA.Attachments.push(oAttachment);
 				}
 			}
-			
 			this.resetChanges();
 		},
 		
-/*		convertToODataForUpdate: function() {
-			var warrantyClaim = {
-				"WarrantyClaimItems" : []
+		convertToODataForUpdate: function() {
+			var PWA = {
+				"Attachments" : []
 			};
-			warrantyClaim.ClaimNumber = this.warrantyClaim.ClaimNumber;
-			warrantyClaim.ClaimType = this.warrantyClaim.ClaimType;
-			warrantyClaim.DealerContact = this.warrantyClaim.DealerContact;
-			warrantyClaim.EngineNumber = this.warrantyClaim.EngineNumber;
-			warrantyClaim.AuthorisationNumber = this.warrantyClaim.AuthorisationNumber;
-			warrantyClaim.VIN = this.warrantyClaim.VIN;
-			warrantyClaim.RecallNumber = this.warrantyClaim.RecallNumber;
-			warrantyClaim.RepairOrderNumber = this.warrantyClaim.RepairOrderNumber;
-			warrantyClaim.DateOfRepair = this.warrantyClaim.DateOfRepair;
-			warrantyClaim.DateOfFailure = this.warrantyClaim.DateOfFailure;
-			warrantyClaim.FailureMeasure = this.warrantyClaim.FailureMeasure;
-			warrantyClaim.MilIndicator = this.warrantyClaim.MilIndicator;
-			warrantyClaim.DTC1 = this.warrantyClaim.DTC1;
-			warrantyClaim.DTC2 = this.warrantyClaim.DTC2;
-			warrantyClaim.DTC3 = this.warrantyClaim.DTC3;
-			warrantyClaim.Technician = this.warrantyClaim.Technician;
-			warrantyClaim.ServiceAdvisor = this.warrantyClaim.ServiceAdvisor;
-			warrantyClaim.OldSerialNumber = this.warrantyClaim.OldSerialNumber;
-			warrantyClaim.NewSerialNumber = this.warrantyClaim.NewSerialNumber;
-			warrantyClaim.PartsInstallDate = this.warrantyClaim.PartsInstallDate;
-			warrantyClaim.PartsInstallKm = this.warrantyClaim.PartsInstallKm;
-			warrantyClaim.OriginalInvoiceNumber = this.warrantyClaim.OriginalInvoiceNumber;
-			warrantyClaim.DealerComments = this.warrantyClaim.DealerComments;
-			warrantyClaim.DefectCode = this.warrantyClaim.DefectCode;
-			warrantyClaim.CustomerConcern = this.warrantyClaim.CustomerConcern;
-			warrantyClaim.SymptomCode = this.warrantyClaim.SymptomCode;
-			warrantyClaim.VersionIdentifier = this.warrantyClaim.VersionIdentifier;
-			warrantyClaim.CurrentVersionNumber = this.warrantyClaim.CurrentVersionNumber;
-			warrantyClaim.CurrentVersionCategory = this.warrantyClaim.CurrentVersionCategory;
 			
-			var warrantyClaimItem = null;
-			
-			for (var i = 0; i < this.warrantyClaim.Parts.length; i++) {
-				warrantyClaimItem = this.warrantyClaim.Parts[i];
-				warrantyClaimItem.Quantity = warrantyClaimItem.Quantity.toString();
-				delete warrantyClaimItem.isMCPN;
-				
-				warrantyClaim.WarrantyClaimItems.push(warrantyClaimItem);
-			}
-
-			for (var i = 0; i < this.warrantyClaim.Labour.length; i++) {
-				warrantyClaimItem = this.warrantyClaim.Labour[i];
-				delete warrantyClaimItem.isMCPN;
-				warrantyClaim.WarrantyClaimItems.push(warrantyClaimItem);
+			PWA.PWAType = this.PWA.PWAType;
+			PWA.VIN = this.PWA.VIN;
+			PWA.EngineNumber = this.PWA.EngineNumber;
+			PWA.DealerContact = this.PWA.DealerContact;
+			PWA.DateOfFailure = this.PWA.DateOfFailure;
+			PWA.FailureMeasure = this.PWA.FailureMeasure;
+			PWA.MCPN = this.PWA.MCPN;
+			PWA.OwnerName = this.PWA.OwnerName;
+			PWA.CompanyName = this.PWA.CompanyName;
+			PWA.PhoneNumber = this.PWA.PhoneNumber;
+			PWA.SoldByDealer = this.PWA.SoldByDealer;
+			PWA.HistoryComplete = this.PWA.HistoryComplete;
+			PWA.ServicedByDealer = this.PWA.ServicedByDealer;
+			PWA.OriginalOwner = this.PWA.OriginalOwner;
+			PWA.RequestedLabourHours = this.PWA.RequestedLabourHours.toString();
+			PWA.RequestedLabourCost = this.PWA.RequestedLabourCost.toString();
+			PWA.RequestedPartsCost = this.PWA.RequestedPartsCost.toString();
+			PWA.RequestedSubletCost = this.PWA.RequestedSubletCost.toString();
+			PWA.LabourSplitOwner = this.PWA.LabourSplitOwner.toString();
+			PWA.LabourSplitDealer = this.PWA.LabourSplitDealer.toString();
+			PWA.PartsSplitOwner = this.PWA.PartsSplitOwner.toString();
+			PWA.PartsSplitDealer = this.PWA.PartsSplitDealer.toString();
+			PWA.SubletSplitOwner = this.PWA.SubletSplitOwner.toString();
+			PWA.SubletSplitDealer = this.PWA.SubletSplitDealer.toString();
+			PWA.GoodwillReason = this.PWA.GoodwillReason;
+			PWA.CustomerConcern = this.PWA.CustomerConcern;
+			PWA.Rectification = this.PWA.Rectification;
+			PWA.DealerComment = this.PWA.DealerComment;
+			PWA.VersionIdentifier = this.PWA.VersionIdentifier;
+		
+			for (var i = 0; i < this.PWA.Attachments.length; i++) {
+				var attachment = this.PWA.Attachments[i];
+				delete attachment.__metadata;
+				delete attachment.URL;
+				PWA.Attachments.push(attachment);
 			}
 			
-			for (var i = 0; i < this.warrantyClaim.Sublet.length; i++) {
-				warrantyClaimItem = this.warrantyClaim.Sublet[i];
-				delete warrantyClaimItem.isMCPN;
-				warrantyClaim.WarrantyClaimItems.push(warrantyClaimItem);
-			}
-			return warrantyClaim;
-		}, */
+			return PWA;
+		}, 
 		
 		resetChanges: function() {
 			this.PWAOriginal = jQuery.extend(true, {}, this.PWA);
