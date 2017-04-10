@@ -65,7 +65,6 @@ sap.ui.define([
 		},
 		
 		updatePWAFromJSONModel: function(jsonModel){
-		
 
 			this.PWA.PWANumber = jsonModel.PWANumber;
 			this.PWA.SubmittedOn = jsonModel.SubmittedOn;
@@ -77,7 +76,6 @@ sap.ui.define([
 			this.PWA.CanEdit = jsonModel.CanEdit;
 			
 			this.PWA.Attachments = jsonModel.Attachments;
-			
 			this.resetChanges();
 		}, 
 		
@@ -181,12 +179,14 @@ sap.ui.define([
 			PWA.DealerComment = this.PWA.DealerComment;
 			PWA.VersionIdentifier = this.PWA.VersionIdentifier;
 		
-			for (var i = 0; i < this.PWA.Attachments.length; i++) {
-				var attachment = this.PWA.Attachments[i];
-				delete attachment.__metadata;
-				delete attachment.URL;
-				PWA.Attachments.push(attachment);
-			}
+		    if (this.PWA.Attachments){
+				for (var i = 0; i < this.PWA.Attachments.length; i++) {
+			  		var attachment = this.PWA.Attachments[i];
+					delete attachment.__metadata;
+					delete attachment.URL;
+					PWA.Attachments.push(attachment);
+				}	
+		    }
 			
 			return PWA;
 		}, 

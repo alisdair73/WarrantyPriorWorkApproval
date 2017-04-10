@@ -3,8 +3,9 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"hnd/dpe/warranty/prior_work_approval/model/PWA",
 	"sap/ui/model/Filter",
-	"sap/m/MessageStrip"
-], function(BaseController, JSONModel, PWA, Filter, MessageStrip) {
+	"sap/m/MessageStrip",
+	"sap/m/MessageToast"
+], function(BaseController, JSONModel, PWA, Filter, MessageStrip, MessageToast) {
 	"use strict";
 
 	return BaseController.extend("hnd.dpe.warranty.prior_work_approval.controller.PWAObjectPage", {
@@ -84,11 +85,20 @@ sap.ui.define([
 			);
 		},
 
-		_onActionSuccess: function(response){
+		_onActionSuccess: function(responseData,response){
+			
+			var leadingMessage = JSON.parse(response.headers['sap-message']);
+			MessageToast.show(leadingMessage.message);
+			
+			this._addMessagesToHeader(leadingMessage.details);
+			PWA.updatePWAFromJSONModel(responseData);
+			
+			this.getView().getModel("ViewHelper").setProperty("/UI/requestedTotal",
+				this.getView().getModel("PWA").getProperty("/RequestedLabourCost") +
+				this.getView().getModel("PWA").getProperty("/RequestedPartsCost") +
+				this.getView().getModel("PWA").getProperty("/RequestedSubletCost")
+			);
 			this.getModel("ViewHelper").setProperty("/busy", false);
-			//Get Header Message
-			//MessageToast.show("Success");
-			//PWA.updatePWAFromJSONModel(result);
 		},
 		
 		_onActionError: function(error){
@@ -240,7 +250,7 @@ sap.ui.define([
 					text: messages[i].message,
 					showCloseButton: false,
 					showIcon: true,
-					type: "Error"
+					type: messages[i].severity === "error" ? "Error" : "Warning"
 				});
 				messageArea.addContent(messageStrip);
 			}

@@ -25,7 +25,9 @@
 							}
 						}"
 		        		type="Number"
-		        		editable="{PWA>CanEdit}"/>
+		        		editable="false"
+		        		visible="{= !${PWA>CanEdit}}"
+		        		change="calculateTotalCost"/>
 	    	    	<Input  
 	    	    		value="{
 							path: 'PWA>RequestedPartsCost',
@@ -36,7 +38,8 @@
 							}
 						}"
 	    	    		type="Number"
-	    	    		editable="{PWA>CanEdit}"/>
+	    	    		editable="{PWA>CanEdit}"
+	    	    		change="calculateTotalCost"/>
 	    	    	<Input
 	    	    		value="{
 							path: 'PWA>RequestedSubletCost',
@@ -47,7 +50,8 @@
 							}
 						}"
 	    	    		type="Number"
-	    	    		editable="{PWA>CanEdit}"/>
+	    	    		editable="{PWA>CanEdit}"
+	    	    		change="calculateTotalCost"/>
 	            	<Input
 	            		value="{
 							path: 'ViewHelper>/UI/requestedTotal',
@@ -61,7 +65,7 @@
 	            		editable="false"/>
 	        	</cells>
 			</ColumnListItem>
-	    	<ColumnListItem id="approvedCosts" visible="true">
+	    	<ColumnListItem id="approvedCosts" visible="{= !${PWA>CanEdit} &amp;&amp; ${PWA>CurrentVersionCategory} === 'OC' }">
 	    		<cells>
 	        		<Text text="APPROVED"/>
 					<Input 
@@ -129,7 +133,7 @@
 	            	<Label text="Labour Hours"/>
 	            </header>
 	        </Column>
-	        <Column>
+	        <Column visible="{= !${PWA>CanEdit}}">
 	        	<header>
 	            	<Label text="Labour $"/>
 	            </header>
