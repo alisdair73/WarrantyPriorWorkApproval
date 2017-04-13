@@ -26,7 +26,6 @@
 						}"
 		        		type="Number"
 		        		editable="false"
-		        		visible="{= !${PWA>CanEdit}}"
 		        		change="calculateTotalCost"/>
 	    	    	<Input  
 	    	    		value="{
@@ -133,7 +132,7 @@
 	            	<Label text="Labour Hours"/>
 	            </header>
 	        </Column>
-	        <Column visible="{= !${PWA>CanEdit}}">
+	        <Column>
 	        	<header>
 	            	<Label text="Labour $"/>
 	            </header>

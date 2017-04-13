@@ -9,25 +9,80 @@
 	    	<ColumnListItem id="requestedContributionParts">
 	        	<cells>
 	            	<Text text="PARTS"/>
-					<Input value="{PWA>PartsSplitOwner}" type="Number" editable="{PWA>CanEdit}"/>
-		            <Input value="{PWA>PartsSplitDealer}" type="Number" editable="{PWA>CanEdit}"/>
-	    	    	<Input value="0" type="Number" editable="false"/>
+					<Input 
+						value="{
+							path: 'PWA>PartsSplitOwner',
+							type: 'sap.ui.model.type.Integer'
+						}"
+						type="Number" editable="{PWA>CanEdit}" 
+						valueState="{= ${PWA>PartsSplitOwner} + ${PWA>PartsSplitDealer} + ${CostsHelper>PartsSplitHonda} > 100 ? 'Error' : 'None' }"
+						valueStateText="Total Parts Split must not exceed 100%"/>
+		            <Input 
+		            	value="{
+							path: 'PWA>PartsSplitDealer',
+							type: 'sap.ui.model.type.Integer'
+						}"
+						type="Number" editable="{PWA>CanEdit}" 
+						valueState="{= ${PWA>PartsSplitOwner} + ${PWA>PartsSplitDealer} + ${CostsHelper>PartsSplitHonda} > 100 ? 'Error' : 'None' }"
+						valueStateText="Total Parts Split must not exceed 100%"/>
+		            <Input 
+		            	value="{= 100 - ${PWA>PartsSplitOwner} - ${PWA>PartsSplitDealer}}"
+						type="Number" editable="false" 
+					/>						
 	    		</cells>
 	        </ColumnListItem>
 	    	<ColumnListItem id="requestedContributionLabour">
 	        	<cells>
 	            	<Text text="LABOUR"/>
-					<Input value="{PWA>LabourSplitOwner}" type="Number" editable="{PWA>CanEdit}"/>
-		            <Input value="{PWA>LabourSplitDealer}" type="Number" editable="{PWA>CanEdit}"/>
-	    	    	<Input value="0" type="Number" editable="false"/>
+					<Input 
+						value="{
+							path: 'PWA>LabourSplitOwner',
+							type: 'sap.ui.model.type.Integer'
+						}"
+						type="Number" editable="{PWA>CanEdit}" 
+						valueState="{= ${PWA>LabourSplitOwner} + ${PWA>LabourSplitDealer} + ${CostsHelper>LabourSplitHonda} > 100 ? 'Error' : 'None' }"
+						valueStateText="Total Labour Split must not exceed 100%"
+					/>
+		            <Input 
+		            	value="{
+							path: 'PWA>LabourSplitDealer',
+							type: 'sap.ui.model.type.Integer'
+						}"
+						type="Number" editable="{PWA>CanEdit}" 
+						valueState="{= ${PWA>LabourSplitOwner} + ${PWA>LabourSplitDealer} + ${CostsHelper>LabourSplitHonda} > 100 ? 'Error' : 'None' }"
+						valueStateText="Total Labour Split must not exceed 100%"
+					/>		            
+	    	    	<Input 
+		            	value="{= 100 - ${PWA>LabourSplitOwner} - ${PWA>LabourSplitDealer}}"
+						type="Number" editable="false" 
+					/>	
 	    		</cells>
 	        </ColumnListItem>
 	    	<ColumnListItem id="requestedContributionSublet">
 	        	<cells>
 	            	<Text text="SUBLET"/>
-					<Input value="{PWA>SubletSplitOwner}" type="Number" editable="{PWA>CanEdit}"/>
-		            <Input value="{PWA>SubletSplitDealer}" type="Number" editable="{PWA>CanEdit}"/>
-	    	    	<Input value="0" type="Number" editable="false"/>
+					<Input 
+						value="{
+							path: 'PWA>SubletSplitOwner',
+							type: 'sap.ui.model.type.Integer'
+						}"
+						type="Number" editable="{PWA>CanEdit}" 
+						valueState="{= ${PWA>SubletSplitOwner} + ${PWA>SubletSplitDealer} + ${CostsHelper>SubletSplitHonda} > 100 ? 'Error' : 'None' }"
+						valueStateText="Total Sublet Split must not exceed 100%"
+					/>
+		            <Input 
+		            	value="{
+							path: 'PWA>SubletSplitDealer',
+							type: 'sap.ui.model.type.Integer'
+						}"
+						type="Number" editable="{PWA>CanEdit}" 
+						valueState="{= ${PWA>SubletSplitOwner} + ${PWA>SubletSplitDealer} + ${CostsHelper>SubletSplitHonda} > 100 ? 'Error' : 'None' }"
+						valueStateText="Total Sublet Split must not exceed 100%"
+					/>		            
+	    	    	<Input 
+		            	value="{= 100 - ${PWA>SubletSplitOwner} - ${PWA>SubletSplitDealer}}"
+						type="Number" editable="false" 
+					/>	
 	    		</cells>
 	        </ColumnListItem>
 		</items>
