@@ -55,6 +55,10 @@ sap.ui.define([
 				"CurrentVersionNumber": "",
 				"CurrentVersionCategory": "",
 				"CanEdit": true,
+				"MCPNItemId": null,
+				"SubletItemId": null,
+				"PartsItemId": null,
+				"LabourItemId": null,
 				"changed": false,
 				"Attachments": []
 			};
@@ -74,6 +78,10 @@ sap.ui.define([
 			this.PWA.CurrentVersionNumber = jsonModel.CurrentVersionNumber;
 			this.PWA.CurrentVersionCategory = jsonModel.CurrentVersionCategory;
 			this.PWA.CanEdit = jsonModel.CanEdit;
+			this.PWA.MCPNItemId = jsonModel.MCPNItemId;
+			this.PWA.SubletItemId = jsonModel.SubletItemId;
+			this.PWA.PartsItemId = jsonModel.PartsItemId;
+			this.PWA.LabourItemId = jsonModel.LabourItemId;
 			
 			this.PWA.Attachments = jsonModel.Attachments;
 			this.resetChanges();
@@ -131,6 +139,10 @@ sap.ui.define([
 			this.PWA.CurrentVersionNumber = oPWA.CurrentVersionNumber;
 			this.PWA.CurrentVersionCategory = oPWA.CurrentVersionCategory;
 			this.PWA.CanEdit = oPWA.CanEdit;
+			this.PWA.MCPNItemId = oPWA.MCPNItemId;
+			this.PWA.SubletItemId = oPWA.SubletItemId;
+			this.PWA.PartsItemId = oPWA.PartsItemId;
+			this.PWA.LabourItemId = oPWA.LabourItemId;
 	
 			var oAttachments = oODataModel.getObject(sPath + "/Attachments");
 			if (oAttachments){
@@ -149,6 +161,7 @@ sap.ui.define([
 				"Attachments" : []
 			};
 			
+			PWA.PWANumber = this.PWA.PWANumber;
 			PWA.PWAType = this.PWA.PWAType;
 			PWA.VIN = this.PWA.VIN;
 			PWA.EngineNumber = this.PWA.EngineNumber;
@@ -178,6 +191,10 @@ sap.ui.define([
 			PWA.Rectification = this.PWA.Rectification;
 			PWA.DealerComment = this.PWA.DealerComment;
 			PWA.VersionIdentifier = this.PWA.VersionIdentifier;
+			PWA.MCPNItemId = this.PWA.MCPNItemId; 
+			PWA.SubletItemId = this.PWA.SubletItemId;
+			PWA.PartsItemId = this.PWA.PartsItemId;
+			PWA.LabourItemId = this.PWA.LabourItemId;
 		
 		    if (this.PWA.Attachments){
 				for (var i = 0; i < this.PWA.Attachments.length; i++) {

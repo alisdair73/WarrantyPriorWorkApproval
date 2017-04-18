@@ -24,7 +24,6 @@
 								maxFractionDigits: 2
 							}
 						}"
-		        		type="Number"
 		        		editable="false"
 		        		change="calculateTotalCost"/>
 	    	    	<Input  
@@ -36,7 +35,6 @@
 								maxFractionDigits: 2
 							}
 						}"
-	    	    		type="Number"
 	    	    		editable="{PWA>CanEdit}"
 	    	    		change="calculateTotalCost"/>
 	    	    	<Input
@@ -48,7 +46,6 @@
 								maxFractionDigits: 2
 							}
 						}"
-	    	    		type="Number"
 	    	    		editable="{PWA>CanEdit}"
 	    	    		change="calculateTotalCost"/>
 	            	<Input
@@ -60,8 +57,8 @@
 								maxFractionDigits: 2
 							}
 						}"
-	            		type="Number" 
-	            		editable="false"/>
+						editable="false"
+	            	/>
 	        	</cells>
 			</ColumnListItem>
 	    	<ColumnListItem id="approvedCosts" visible="{= !${PWA>CanEdit} &amp;&amp; ${PWA>CurrentVersionCategory} === 'OC' }">
@@ -76,8 +73,7 @@
 								maxFractionDigits: 1
 							}
 						}"	
-						editable="false"
-						type="Number"/>
+						editable="false"/>
 		        	<Input 
 		        		value="{
 							path: 'PWA>ApprovedLabourCost',
@@ -87,8 +83,7 @@
 								maxFractionDigits: 2
 							}
 						}"
-						editable="false"
-		        		type="Number"/>
+						editable="false"/>
 	    	    	<Input  
 	    	    		value="{
 							path: 'PWA>ApprovedPartsCost',
@@ -98,8 +93,7 @@
 								maxFractionDigits: 2
 							}
 						}"
-						editable="false"
-	    	    		type="Number"/>
+						editable="false"/>
 	    	    	<Input
 	    	    		value="{
 							path: 'PWA>ApprovedSubletCost',
@@ -120,8 +114,7 @@
 								maxFractionDigits: 2
 							}
 						}"
-						editable="false"
-	            		type="Number"/>
+						editable="false"/>
 	        	</cells>
 	    	</ColumnListItem>	        						
 	    </items>

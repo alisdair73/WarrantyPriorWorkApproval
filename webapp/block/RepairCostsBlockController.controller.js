@@ -20,11 +20,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		
 		calculateTotalCost: function(){
 			
-			this.getView().getModel("ViewHelper").setProperty("/UI/requestedTotal",
-				this.getView().getModel("PWA").getProperty("/RequestedLabourCost") +
-				this.getView().getModel("PWA").getProperty("/RequestedPartsCost") +
-				this.getView().getModel("PWA").getProperty("/RequestedSubletCost")
-			);
+			var requestedTotal = 
+				parseFloat(this.getView().getModel("PWA").getProperty("/RequestedLabourCost"), 2) +
+				parseFloat(this.getView().getModel("PWA").getProperty("/RequestedPartsCost"), 2) +
+				parseFloat(this.getView().getModel("PWA").getProperty("/RequestedSubletCost"), 2);
+			
+			this.getView().getModel("ViewHelper").setProperty("/UI/requestedTotal", requestedTotal);
 		}
 	});
 

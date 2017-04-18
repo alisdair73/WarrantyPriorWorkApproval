@@ -93,12 +93,18 @@ sap.ui.define([
 			this._addMessagesToHeader(leadingMessage.details);
 			PWA.updatePWAFromJSONModel(responseData);
 			
-			this.getView().getModel("ViewHelper").setProperty("/UI/requestedTotal",
-				this.getView().getModel("PWA").getProperty("/RequestedLabourCost") +
-				this.getView().getModel("PWA").getProperty("/RequestedPartsCost") +
-				this.getView().getModel("PWA").getProperty("/RequestedSubletCost")
-			);
+			this._updateEstimatedTotal();
 			this.getModel("ViewHelper").setProperty("/busy", false);
+		},
+		
+		_updateEstimatedTotal: function(){
+			
+			var requestedTotal = 
+				parseFloat(this.getView().getModel("PWA").getProperty("/RequestedLabourCost"), 2) +
+				parseFloat(this.getView().getModel("PWA").getProperty("/RequestedPartsCost"), 2) +
+				parseFloat(this.getView().getModel("PWA").getProperty("/RequestedSubletCost"), 2);
+			
+			this.getView().getModel("ViewHelper").setProperty("/UI/requestedTotal", requestedTotal);
 		},
 		
 		_onActionError: function(error){
@@ -149,7 +155,7 @@ sap.ui.define([
 			
 			//Testing
 			//PWANumber = '200000000192';
-			//PWANumber = "200000000069";
+			//PWANumber = "200000000342";
 				
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";
@@ -180,6 +186,7 @@ sap.ui.define([
 		_onBindingChange: function(oData) {
 			//Check if there is any data first
 			PWA.updatePWAFromOdata(oData);
+			this._updateEstimatedTotal();
 		},
 		
 		_openPWATypeSelectDialog: function(){
