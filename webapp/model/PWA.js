@@ -82,6 +82,7 @@ sap.ui.define([
 			this.PWA.SubletItemId = jsonModel.SubletItemId;
 			this.PWA.PartsItemId = jsonModel.PartsItemId;
 			this.PWA.LabourItemId = jsonModel.LabourItemId;
+			this.PWA.RequestedLabourCost = jsonModel.RequestedLabourCost.toString();
 			
 			this.PWA.Attachments = jsonModel.Attachments;
 			this.resetChanges();

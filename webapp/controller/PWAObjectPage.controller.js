@@ -125,7 +125,9 @@ sap.ui.define([
 			this.getModel().metadataLoaded().then(function() {
 				// check that the user has an active Dealership assigned if not we don't allow them to continue
 				this.getOwnerComponent().getModel().read(
-					"/DealershipSet?$filter=active eq true", {
+					"/DealershipSet", {
+						context: null,
+						filters: [new Filter("active",sap.ui.model.FilterOperator.EQ, true)],
 						success: function(oData) {
 							if (!oData.results.length) {
 								this._showNoDealershipDialog();
@@ -155,7 +157,7 @@ sap.ui.define([
 			
 			//Testing
 			//PWANumber = '200000000192';
-			//PWANumber = "200000000342";
+			//PWANumber = "200000000353";
 				
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";
@@ -193,7 +195,9 @@ sap.ui.define([
 			
 			//Need to determine the Sales Organisations being used and filter PWA Types List
 			this.getModel().read(
-				"/DealerSalesAreaSet", {
+				"/ClaimTypeSet", {
+					context: null,
+					filters: [new Filter("IsAuthorisationType",sap.ui.model.FilterOperator.EQ, true)],					
 					success: function(oData) {
 						if (oData.results.length) {
 							if (! this._PWATypeSelection) {
@@ -215,13 +219,13 @@ sap.ui.define([
 			
 			for (var i = 0; i < oSalesAreas.results.length; i++) {
 				var salesArea = oSalesAreas.results[i];
-				if (distinctCompanyCodes.indexOf(salesArea.CompCode) === -1){
+				if (distinctCompanyCodes.indexOf(salesArea.CompanyCode) === -1){
 					salesOrganisations.push({
-						"CompanyCode": salesArea.CompCode,
-						"CompanyCodeName": salesArea.CompCodeDescr,
+						"CompanyCode": salesArea.CompanyCode,
+						"CompanyCodeName": salesArea.CompanyCodeName,
 						"SalesOrg": salesArea.SalesOrg
 					});
-					distinctCompanyCodes.push(salesArea.CompCode);
+					distinctCompanyCodes.push(salesArea.CompanyCode);
 				}
 			}
 			// Set the default as the first entry in the list
