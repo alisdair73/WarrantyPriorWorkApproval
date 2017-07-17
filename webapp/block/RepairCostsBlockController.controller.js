@@ -9,13 +9,34 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 	return Controller.extend("hnd.dpe.warranty.prior_work_approval.block.RepairCostsBlockController", {
 		
 		onInit: function() {
-    		
-			var oViewModel = new JSONModel({
-				"PartsSplitHonda": 0,
-				"LabourSplitHonda": 0,
-				"SubletSplitHonda": 0
-			});
-			this.getView().setModel(oViewModel, "CostsHelper");
+    	},
+		
+		partsChanged: function() {
+			
+			this.getView().getModel("PWA").setProperty("/RequestedPartsSplitHonda",
+				100 - ( 
+					this.getView().getModel("PWA").getProperty("/RequestedPartsSplitOwner") +
+					this.getView().getModel("PWA").getProperty("/RequestedPartsSplitDealer") 
+				)
+			);
+    	},
+		
+		subletChanged: function() {
+			this.getView().getModel("PWA").setProperty("/RequestedSubletSplitHonda",
+				100 - ( 
+					this.getView().getModel("PWA").getProperty("/RequestedSubletSplitOwner") +
+					this.getView().getModel("PWA").getProperty("/RequestedSubletSplitDealer") 
+				)
+			);			
+    	},
+		
+		labourChanged: function() {
+			this.getView().getModel("PWA").setProperty("/RequestedLabourSplitHonda",
+				100 - ( 
+					this.getView().getModel("PWA").getProperty("/RequestedLabourSplitOwner") +
+					this.getView().getModel("PWA").getProperty("/RequestedLabourSplitDealer") 
+				)
+			);
     	},
 		
 		calculateTotalCost: function(){
@@ -28,5 +49,4 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			this.getView().getModel("ViewHelper").setProperty("/UI/requestedTotal", requestedTotal);
 		}
 	});
-
 });

@@ -19,9 +19,11 @@ sap.ui.define([
 				"DateOfFailure": null,
 				"FailureMeasure": "",
 				"MCPN": "",
-				"OwnerName": "",
-				"CompanyName": "",
-				"PhoneNumber": "",
+				"OwnerTitle": "",
+				"OwnerGivenName": "",
+				"OwnerSurname": "",
+				"OwnerCompanyName": "",
+				"OwnerPhoneNumber": "",
 				"SoldByDealer": false,
 				"HistoryComplete": false,
 				"ServicedByDealer": false,
@@ -34,12 +36,24 @@ sap.ui.define([
 				"ApprovedLabourCost": 0,
 				"ApprovedPartsCost": 0,
 				"ApprovedSubletCost": 0,
-				"LabourSplitOwner": 0,
-				"LabourSplitDealer": 0,
-				"PartsSplitOwner": 0,
-				"PartsSplitDealer": 0,
-				"SubletSplitOwner": 0,
-				"SubletSplitDealer": 0,
+				"RequestedLabourSplitOwner": 0,
+				"RequestedLabourSplitDealer": 0,
+				"RequestedLabourSplitHonda": 0,
+				"RequestedPartsSplitOwner": 0,
+				"RequestedPartsSplitDealer": 0,
+				"RequestedPartsSplitHonda": 0,
+				"RequestedSubletSplitOwner": 0,
+				"RequestedSubletSplitDealer": 0,
+				"RequestedSubletSplitHonda": 0,
+				"ApprovedLabourSplitOwner": 0,
+				"ApprovedLabourSplitDealer": 0,
+				"ApprovedLabourSplitHonda": 0,
+				"ApprovedPartsSplitOwner": 0,
+				"ApprovedPartsSplitDealer": 0,
+				"ApprovedPartsSplitHonda": 0,
+				"ApprovedSubletSplitOwner": 0,
+				"ApprovedSubletSplitDealer": 0,
+				"ApprovedSubletSplitHonda": 0,				
 				"GoodwillReason": "",
 				"CustomerConcern": "",
 				"Rectification": "",
@@ -104,9 +118,11 @@ sap.ui.define([
 			this.PWA.DateOfFailure = oPWA.DateOfFailure;
 			this.PWA.FailureMeasure = oPWA.FailureMeasure;
 			this.PWA.MCPN = oPWA.MCPN;
-			this.PWA.OwnerName = oPWA.OwnerName;
-			this.PWA.CompanyName = oPWA.CompanyName;
-			this.PWA.PhoneNumber = oPWA.PhoneNumber;
+			this.PWA.OwnerTitle = oPWA.OwnerTitle;
+			this.PWA.OwnerGivenName = oPWA.OwnerGivenName;
+			this.PWA.OwnerSurname = oPWA.OwnerSurname;
+			this.PWA.OwnerCompanyName = oPWA.OwnerCompanyName;
+			this.PWA.OwnerPhoneNumber = oPWA.OwnerPhoneNumber;
 			this.PWA.SoldByDealer = oPWA.SoldByDealer;
 			this.PWA.HistoryComplete = oPWA.HistoryComplete;
 			this.PWA.ServicedByDealer = oPWA.ServicedByDealer;
@@ -119,12 +135,27 @@ sap.ui.define([
 			this.PWA.ApprovedLabourCost = oPWA.ApprovedLabourCost;
 			this.PWA.ApprovedPartsCost = oPWA.ApprovedPartsCost;
 			this.PWA.ApprovedSubletCost = oPWA.ApprovedSubletCost;
-			this.PWA.LabourSplitOwner = oPWA.LabourSplitOwner;
-			this.PWA.LabourSplitDealer = oPWA.LabourSplitDealer;
-			this.PWA.PartsSplitOwner = oPWA.PartsSplitOwner;
-			this.PWA.PartsSplitDealer = oPWA.PartsSplitDealer;
-			this.PWA.SubletSplitOwner = oPWA.SubletSplitOwner;
-			this.PWA.SubletSplitDealer = oPWA.SubletSplitDealer;
+			
+			this.PWA.RequestedLabourSplitOwner = oPWA.RequestedLabourSplitOwner;
+			this.PWA.RequestedLabourSplitDealer = oPWA.RequestedLabourSplitDealer;
+			this.PWA.RequestedLabourSplitHonda = oPWA.RequestedLabourSplitHonda;
+			this.PWA.RequestedPartsSplitOwner = oPWA.RequestedPartsSplitOwner;
+			this.PWA.RequestedPartsSplitDealer = oPWA.RequestedPartsSplitDealer;
+			this.PWA.RequestedPartsSplitHonda = oPWA.RequestedPartsSplitHonda;
+			this.PWA.RequestedSubletSplitOwner = oPWA.RequestedSubletSplitOwner;
+			this.PWA.RequestedSubletSplitDealer = oPWA.RequestedSubletSplitDealer;
+			this.PWA.RequestedSubletSplitHonda = oPWA.RequestedSubletSplitHonda;
+			
+			this.PWA.ApprovedLabourSplitOwner = oPWA.ApprovedLabourSplitOwner;
+			this.PWA.ApprovedLabourSplitDealer = oPWA.ApprovedLabourSplitDealer;
+			this.PWA.ApprovedLabourSplitHonda = oPWA.ApprovedLabourSplitHonda;
+			this.PWA.ApprovedPartsSplitOwner = oPWA.ApprovedPartsSplitOwner;
+			this.PWA.ApprovedPartsSplitDealer = oPWA.ApprovedPartsSplitDealer;
+			this.PWA.ApprovedPartsSplitHonda = oPWA.ApprovedPartsSplitHonda;
+			this.PWA.ApprovedSubletSplitOwner = oPWA.ApprovedSubletSplitOwner;
+			this.PWA.ApprovedSubletSplitDealer = oPWA.ApprovedSubletSplitDealer;
+			this.PWA.ApprovedSubletSplitHonda = oPWA.ApprovedSubletSplitHonda;
+			
 			this.PWA.GoodwillReason = oPWA.GoodwillReason;
 			this.PWA.CustomerConcern = oPWA.CustomerConcern;
 			this.PWA.Rectification = oPWA.Rectification;
@@ -170,9 +201,11 @@ sap.ui.define([
 			PWA.DateOfFailure = this.PWA.DateOfFailure;
 			PWA.FailureMeasure = this.PWA.FailureMeasure;
 			PWA.MCPN = this.PWA.MCPN;
-			PWA.OwnerName = this.PWA.OwnerName;
-			PWA.CompanyName = this.PWA.CompanyName;
-			PWA.PhoneNumber = this.PWA.PhoneNumber;
+			PWA.OwnerTitle = this.PWA.OwnerTitle;
+			PWA.OwnerGivenName = this.PWA.OwnerGivenName;
+			PWA.OwnerSurname = this.PWA.OwnerSurname;
+			PWA.OwnerCompanyName = this.PWA.OwnerCompanyName;
+			PWA.OwnerPhoneNumber = this.PWA.OwnerPhoneNumber;
 			PWA.SoldByDealer = this.PWA.SoldByDealer;
 			PWA.HistoryComplete = this.PWA.HistoryComplete;
 			PWA.ServicedByDealer = this.PWA.ServicedByDealer;
@@ -181,12 +214,17 @@ sap.ui.define([
 			PWA.RequestedLabourCost = this.PWA.RequestedLabourCost.toString();
 			PWA.RequestedPartsCost = this.PWA.RequestedPartsCost.toString();
 			PWA.RequestedSubletCost = this.PWA.RequestedSubletCost.toString();
-			PWA.LabourSplitOwner = this.PWA.LabourSplitOwner.toString();
-			PWA.LabourSplitDealer = this.PWA.LabourSplitDealer.toString();
-			PWA.PartsSplitOwner = this.PWA.PartsSplitOwner.toString();
-			PWA.PartsSplitDealer = this.PWA.PartsSplitDealer.toString();
-			PWA.SubletSplitOwner = this.PWA.SubletSplitOwner.toString();
-			PWA.SubletSplitDealer = this.PWA.SubletSplitDealer.toString();
+			
+			PWA.RequestedLabourSplitOwner = this.PWA.RequestedLabourSplitOwner.toString();
+			PWA.RequestedLabourSplitDealer = this.PWA.RequestedLabourSplitDealer.toString();
+			PWA.RequestedLabourSplitHonda = this.PWA.RequestedLabourSplitHonda.toString();
+			PWA.RequestedPartsSplitOwner = this.PWA.RequestedPartsSplitOwner.toString();
+			PWA.RequestedPartsSplitDealer = this.PWA.RequestedPartsSplitDealer.toString();
+			PWA.RequestedPartsSplitHonda = this.PWA.RequestedPartsSplitHonda.toString();
+			PWA.RequestedSubletSplitOwner = this.PWA.RequestedSubletSplitOwner.toString();
+			PWA.RequestedSubletSplitDealer = this.PWA.RequestedSubletSplitDealer.toString();
+			PWA.RequestedSubletSplitHonda = this.PWA.RequestedSubletSplitHonda.toString();
+			
 			PWA.GoodwillReason = this.PWA.GoodwillReason;
 			PWA.CustomerConcern = this.PWA.CustomerConcern;
 			PWA.Rectification = this.PWA.Rectification;

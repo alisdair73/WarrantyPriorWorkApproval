@@ -9,25 +9,25 @@
 	    	<ColumnListItem id="approvedContributionParts">
 	        	<cells>
 	            	<Text text="PARTS"/>
-					<Input value="{PWA>PartsSplitOwner}" type="Number" editable="false"/>
-		            <Input value="{PWA>PartsSplitDealer}" type="Number" editable="false"/>
-	    	    	<Input value="0" type="Number" editable="false"/>
+					<Input value="{PWA>ApprovedPartsSplitOwner}" type="Number" editable="false"/>
+		            <Input value="{PWA>ApprovedPartsSplitDealer}" type="Number" editable="false"/>
+	    	    	<Input value="{PWA>ApprovedPartsSplitHonda}" type="Number" editable="false"/>
 	    		</cells>
 	        </ColumnListItem>
 	    	<ColumnListItem id="approvedContributionLabour">
 	        	<cells>
 	            	<Text text="LABOUR"/>
-					<Input value="{PWA>LabourSplitOwner}" type="Number" editable="false"/>
-		            <Input value="{PWA>LabourSplitDealer}" type="Number" editable="false"/>
-	    	    	<Input value="0" type="Number" editable="false"/>
+					<Input value="{PWA>ApprovedLabourSplitOwner}" type="Number" editable="false"/>
+		            <Input value="{PWA>ApprovedLabourSplitDealer}" type="Number" editable="false"/>
+	    	    	<Input value="{PWA>ApprovedLabourSplitHonda}" type="Number" editable="false"/>
 	    		</cells>
 	        </ColumnListItem>
 	    	<ColumnListItem id="approvedContributionSublet">
 	        	<cells>
 	            	<Text text="SUBLET"/>
-					<Input value="{PWA>SubletSplitOwner}" type="Number" editable="false"/>
-		            <Input value="{PWA>SubletSplitDealer}" type="Number" editable="false"/>
-	    	    	<Input value="0" type="Number" editable="false"/>
+					<Input value="{PWA>ApprovedSubletSplitOwner}" type="Number" editable="false"/>
+		            <Input value="{PWA>ApprovedSubletSplitDealer}" type="Number" editable="false"/>
+	    	    	<Input value="{PWA>ApprovedSubletSplitHonda}" type="Number" editable="false"/>
 	    		</cells>
 	        </ColumnListItem>
 		</items>

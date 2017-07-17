@@ -12,28 +12,58 @@
 							<l:Grid defaultSpan="L4 M6 S6">
 								<l:content>
 									<l:VerticalLayout width="100%">
-										<Label text="VIN" labelFor="VIN"/>
-										<Input  id="VIN" value="{PWA>VIN}" editable="{PWA>CanEdit}"/>
+										<Label id="VIN_label" text="VIN/Serial Number" required="true" labelFor="VIN"/>
+										<Input 
+											id="VIN" 
+											value="{PWA>VIN}"
+											required="true"
+											editable="{PWA>CanEdit}"
+											showSuggestion="true"
+											suggest="onVINSuggest"
+											showTableSuggestionValueHelp="false"
+											suggestionItemSelected="onVINSelection"
+											maxLength="35"
+											change="onVINChanged"
+											suggestionRows="{/VINSet}"
+											maxSuggestionWidth="500px"
+										>
+											<suggestionColumns>
+												<Column>
+													<Text text="VIN" />
+												</Column>
+												<Column>
+													<Text text="Vehicle Type" />
+												</Column>
+											</suggestionColumns>
+											<suggestionRows>
+												<ColumnListItem>
+													<cells>
+														<Label text="{VIN}" />
+														<Label text="{Description}" />
+													</cells>
+												</ColumnListItem>
+											</suggestionRows>									
+										</Input>
 									</l:VerticalLayout>	
 									<l:VerticalLayout width="100%">
 										<Label text="Engine Number" labelFor="engineNumber"/>
 										<Input  id="engineNumber" value="{PWA>EngineNumber}" editable="{PWA>CanEdit}"/>
 									</l:VerticalLayout>
-								<l:VerticalLayout width="100%">
-									<Label text="Dealer Contact" labelFor="dealerContact"/>
-									<ComboBox 
-										id="dealerContact"
-										width="100%"
-										showSecondaryValues= "true"
-										editable="{PWA>CanEdit}"
-										items="{
-											path: '/EmployeeSet',
-											sorter: { path: 'LastName' }
-										}"
-										selectedKey="{PWA>DealerContact}">
-										<core:ListItem key="{EmployeeNumber}" text="{FirstName} {LastName}" additionalText = "({EmployeeNumber})"/>
-									</ComboBox>		
-								</l:VerticalLayout>							
+									<l:VerticalLayout width="100%">
+										<Label text="Dealer Contact" labelFor="dealerContact"/>
+										<ComboBox 
+											id="dealerContact"
+											width="100%"
+											showSecondaryValues= "true"
+											editable="{PWA>CanEdit}"
+											items="{
+												path: '/EmployeeSet',
+												sorter: { path: 'LastName' }
+											}"
+											selectedKey="{PWA>DealerContact}">
+											<core:ListItem key="{EmployeeNumber}" text="{FirstName} {LastName}" additionalText = "({EmployeeNumber})"/>
+										</ComboBox>		
+									</l:VerticalLayout>							
 									<l:VerticalLayout width="100%">
 										<Label text="Date of Failure" labelFor="dateOfFailure"/>
 										<DatePicker id="dateOfFailure" change="onChangeDatePicker"
@@ -48,9 +78,43 @@
 											<l:GridData span="L6"/>
 										</l:layoutData>
 										<Label text="Main Causal Part Number (MCPN)" labelFor="MCPN"/>
-										<Input id="MCPN" value="{PWA>MCPN}"	description="{PWA>MCPNDescription}"
-											editable="{PWA>CanEdit}" 
-											showValueHelp="true" valueHelpRequest="onSelectMCPN" fieldWidth="40%"/>
+								        <Input 
+								          id="MCPN" 
+								          required="true"
+								          value="{PWA>/MCPN}"  
+								          description="{PWA>MCPNDescription}"
+								          change="onMCPNChanged"
+								          editable="{= ${WarrantyClaim>/CanEdit} &amp;&amp; ${WarrantyClaim>/ClaimTypeGroup} !== 'RECALL'}"
+								          showValueHelp="true"
+								          showSuggestion="true"
+								          filterSuggests="false"
+								          suggest="onMCPNSuggest"
+								          suggestionItemSelected="onMCPNSelected"
+								          suggestionRows="{/ZDPE_C_MATERIALS}"
+								          valueHelpRequest="onSelectMCPN"
+								        >
+								          <layoutData>
+								            <l:GridData span="L6" />
+								          </layoutData>
+								          <suggestionColumns>
+								            <Column>
+								              <Text text="Part No." />
+								            </Column>
+								            <Column>
+								              <Text text="Description" />
+								            </Column>
+								          </suggestionColumns>
+								          <suggestionRows>
+								            <ColumnListItem>
+								              <cells>
+								                <Label text="{materialNo}" />
+								                <Label text="{description}" />
+								              </cells>
+								            </ColumnListItem>
+								          </suggestionRows>                 
+								        </Input>
+											
+											
 									</l:VerticalLayout>								
 								</l:content>
 							</l:Grid>

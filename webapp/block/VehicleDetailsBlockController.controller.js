@@ -5,6 +5,57 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 	return Controller.extend("hnd.dpe.warranty.prior_work_approval.block.VehicleDetailsBlockController", {
 		
+		//VIN Search
+		onVINSuggest:function(event){
+			var searchString = event.getParameter("suggestValue");
+			var filters = [];
+			if (searchString) {
+				filters.push(new Filter("VIN", sap.ui.model.FilterOperator.StartsWith, searchString));
+			}
+			event.getSource().getBinding("suggestionRows").filter(filters);
+		}, 
+		
+		onVINChanged: function(event){
+			var searchString = event.getParameter("suggestValue");
+			var filters = [];
+			if (searchString) {
+				filters.push(new Filter("VIN", sap.ui.model.FilterOperator.StartsWith, searchString));
+			}
+			event.getSource().getBinding("suggestionRows").filter(filters);	
+		},
+		
+		//MCPN
+		onMCPNChanged: function(){
+			
+		},
+		
+		onMCPNSuggest: function(event){
+			
+			var searchString = event.getParameter("suggestValue");
+			var filters = [];
+			if (searchString) {
+				filters.push(new Filter([
+					new Filter("materialNo", sap.ui.model.FilterOperator.StartsWith, searchString),
+					new Filter("description", sap.ui.model.FilterOperator.Contains, searchString)
+				], false));
+			}
+			event.getSource().getBinding("suggestionRows").filter(filters);
+		},
+		
+		onMCPNSelected: function(event){
+			
+			var dataObject = null;
+			if (event.getId() === "suggestionItemSelected"){
+				dataObject = event.getParameter("selectedRow").getBindingContext().getObject();
+			} else {
+				dataObject = event.getParameter("selectedItem").getBindingContext().getObject();
+			}
+			
+			//Update Here
+			this.getView().getModel("PWA").setProperty("/MCPN",dataObject.materialNo);
+            this.getView().getModel("PWA").setProperty("/MCPNDescription",dataObject.description);
+		},	
+		
 		onSelectMCPN: function(){
 			
 			// Create the dialog if it isn't already
@@ -19,26 +70,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		
 		onValueHelpSearch: function(event) {
 			
-			var searchValue = event.getParameter("value");
+			var searchString = event.getParameter("value");
 			var filters = [];
-			filters.push(new Filter(
-				"PartNumber",
-				sap.ui.model.FilterOperator.Contains, searchValue
-			));
-			filters.push(new Filter(
-				"Description",
-				sap.ui.model.FilterOperator.Contains, searchValue
-			));
+			filters.push(new Filter([
+				new Filter("materialNo", sap.ui.model.FilterOperator.StartsWith, searchString),
+				new Filter("description", sap.ui.model.FilterOperator.Contains, searchString)
+			], false));
 			event.getSource().getBinding("items").filter(filters);
-		},
-		
-		onMCPNSelected: function(event){
-
-			this.getView().getModel("PWA").setProperty("/MCPN",event.getParameter("selectedContexts")[0].getObject().PartNumber);
-            this.getView().getModel("PWA").setProperty("/MCPNDescription",event.getParameter("selectedContexts")[0].getObject().Description);
-
 		}
-		
-		
 	});
 });

@@ -11,22 +11,24 @@
 	            	<Text text="PARTS"/>
 					<Input 
 						value="{
-							path: 'PWA>PartsSplitOwner',
+							path: 'PWA>RequestedPartsSplitOwner',
 							type: 'sap.ui.model.type.Integer'
 						}"
+						change="partsChanged"
 						type="Number" editable="{PWA>CanEdit}" 
-						valueState="{= ${PWA>PartsSplitOwner} + ${PWA>PartsSplitDealer} + ${CostsHelper>PartsSplitHonda} > 100 ? 'Error' : 'None' }"
+						valueState="{= ${PWA>RequestedPartsSplitOwner} + ${PWA>RequestedPartsSplitDealer} > 100 ? 'Error' : 'None' }"
 						valueStateText="Total Parts Split must not exceed 100%"/>
 		            <Input 
 		            	value="{
-							path: 'PWA>PartsSplitDealer',
+							path: 'PWA>RequestedPartsSplitDealer',
 							type: 'sap.ui.model.type.Integer'
 						}"
+						change="partsChanged"
 						type="Number" editable="{PWA>CanEdit}" 
-						valueState="{= ${PWA>PartsSplitOwner} + ${PWA>PartsSplitDealer} + ${CostsHelper>PartsSplitHonda} > 100 ? 'Error' : 'None' }"
+						valueState="{= ${PWA>RequestedPartsSplitOwner} + ${PWA>RequestedPartsSplitDealer} > 100 ? 'Error' : 'None' }"
 						valueStateText="Total Parts Split must not exceed 100%"/>
 		            <Input 
-		            	value="{= 100 - ${PWA>PartsSplitOwner} - ${PWA>PartsSplitDealer}}"
+		            	value="{PWA>RequestedPartsSplitHonda}"
 						type="Number" editable="false" 
 					/>						
 	    		</cells>
@@ -36,24 +38,26 @@
 	            	<Text text="LABOUR"/>
 					<Input 
 						value="{
-							path: 'PWA>LabourSplitOwner',
+							path: 'PWA>RequestedLabourSplitOwner',
 							type: 'sap.ui.model.type.Integer'
 						}"
+						change="labourChanged"
 						type="Number" editable="{PWA>CanEdit}" 
-						valueState="{= ${PWA>LabourSplitOwner} + ${PWA>LabourSplitDealer} + ${CostsHelper>LabourSplitHonda} > 100 ? 'Error' : 'None' }"
+						valueState="{= ${PWA>RequestedLabourSplitOwner} + ${PWA>RequestedLabourSplitDealer} > 100 ? 'Error' : 'None' }"
 						valueStateText="Total Labour Split must not exceed 100%"
 					/>
 		            <Input 
 		            	value="{
-							path: 'PWA>LabourSplitDealer',
+							path: 'PWA>RequestedLabourSplitDealer',
 							type: 'sap.ui.model.type.Integer'
 						}"
+						change="labourChanged"
 						type="Number" editable="{PWA>CanEdit}" 
-						valueState="{= ${PWA>LabourSplitOwner} + ${PWA>LabourSplitDealer} + ${CostsHelper>LabourSplitHonda} > 100 ? 'Error' : 'None' }"
+						valueState="{= ${PWA>RequestedLabourSplitOwner} + ${PWA>RequestedLabourSplitDealer} > 100 ? 'Error' : 'None' }"
 						valueStateText="Total Labour Split must not exceed 100%"
 					/>		            
 	    	    	<Input 
-		            	value="{= 100 - ${PWA>LabourSplitOwner} - ${PWA>LabourSplitDealer}}"
+		            	value="{PWA>RequestedLabourSplitHonda}"
 						type="Number" editable="false" 
 					/>	
 	    		</cells>
@@ -63,24 +67,26 @@
 	            	<Text text="SUBLET"/>
 					<Input 
 						value="{
-							path: 'PWA>SubletSplitOwner',
+							path: 'PWA>RequestedSubletSplitOwner',
 							type: 'sap.ui.model.type.Integer'
 						}"
+						change="subletChanged"
 						type="Number" editable="{PWA>CanEdit}" 
-						valueState="{= ${PWA>SubletSplitOwner} + ${PWA>SubletSplitDealer} + ${CostsHelper>SubletSplitHonda} > 100 ? 'Error' : 'None' }"
+						valueState="{= ${PWA>RequestedSubletSplitOwner} + ${PWA>RequestedSubletSplitDealer} > 100 ? 'Error' : 'None' }"
 						valueStateText="Total Sublet Split must not exceed 100%"
 					/>
 		            <Input 
 		            	value="{
-							path: 'PWA>SubletSplitDealer',
+							path: 'PWA>RequestedSubletSplitDealer',
 							type: 'sap.ui.model.type.Integer'
 						}"
+						change="subletChanged"
 						type="Number" editable="{PWA>CanEdit}" 
-						valueState="{= ${PWA>SubletSplitOwner} + ${PWA>SubletSplitDealer} + ${CostsHelper>SubletSplitHonda} > 100 ? 'Error' : 'None' }"
+						valueState="{= ${PWA>RequestedSubletSplitOwner} + ${PWA>RequestedSubletSplitDealer} > 100 ? 'Error' : 'None' }"
 						valueStateText="Total Sublet Split must not exceed 100%"
 					/>		            
 	    	    	<Input 
-		            	value="{= 100 - ${PWA>SubletSplitOwner} - ${PWA>SubletSplitDealer}}"
+		            	value="{PWA>RequestedSubletSplitHonda}"
 						type="Number" editable="false" 
 					/>	
 	    		</cells>
