@@ -98,7 +98,6 @@ sap.ui.define([
 			this.PWA.LabourItemId = jsonModel.LabourItemId;
 			this.PWA.RequestedLabourCost = jsonModel.RequestedLabourCost.toString();
 			
-			this.PWA.Attachments = jsonModel.Attachments;
 			this.resetChanges();
 		}, 
 		
@@ -181,7 +180,6 @@ sap.ui.define([
 				for (var i = 0; i < oAttachments.length; i++) {
 					var oAttachment = oODataModel.getObject("/" + oAttachments[i]);
 					oAttachment.URL = "/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('" + this.PWA.PWANumber + "')/Attachments('" + oAttachment.DocumentID + "')/$value";
-					oAttachment.deleted = false;
 					this.PWA.Attachments.push(oAttachment);
 				}
 			}
@@ -237,9 +235,12 @@ sap.ui.define([
 		
 		    if (this.PWA.Attachments){
 				for (var i = 0; i < this.PWA.Attachments.length; i++) {
-			  		var attachment = this.PWA.Attachments[i];
-					delete attachment.__metadata;
-					delete attachment.URL;
+			  		var attachment = {
+			  			"DocumentID": this.PWA.Attachments[i].DocumentID,
+		    			"MimeType": this.PWA.Attachments[i].MimeType,
+		    			"FileName": this.PWA.Attachments[i].FileName,
+		    			"deleted": this.PWA.Attachments[i].deleted
+			  		};
 					PWA.Attachments.push(attachment);
 				}	
 		    }

@@ -1,4 +1,4 @@
-<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified"
 	controllerName="hnd.dpe.warranty.prior_work_approval.block.SupportingDocumentsBlockController">
 	<sap.ui.layout.form:Form xmlns:sap.ui.layout.form="sap.ui.layout.form" editable="true" objectBindings="{PWA>/}">
 		<sap.ui.layout.form:layout>
@@ -10,9 +10,10 @@
 					<sap.ui.layout.form:FormElement>
 						<sap.ui.layout.form:fields>
 							<UploadCollection
-								id="UploadCollection"
-								uploadUrl="/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('{PWA>PWANumber}')/Attachments"
+								id="pwaAttachmentCollection"
+								uploadUrl="/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('Attachment')/Attachments"
 								multiple="false"
+								instantUpload="false"
 								showSeparators="All"
 								fileDeleted="onFileDeleted"
 								uploadEnabled="{PWA>CanEdit}"
@@ -23,7 +24,7 @@
 								change="onChange"
 								maximumFileSize="25"
 								noDataText="{= ${PWA>PWANumber} === '' ? 'PWA must be saved before adding attachments' : 'No Attachments' }"
-								items="{path : 'PWA>/Attachments'}"
+								items="{path : 'PWA>Attachments'}"
 								mode="SingleSelectMaster">
 								<toolbar>
 									<OverflowToolbar id="myId" >
@@ -32,8 +33,9 @@
 									<UploadCollectionToolbarPlaceholder/>
 									</OverflowToolbar>
 								</toolbar>
-								<items>
+									<items>
 									<UploadCollectionItem
+									    id="collectionLine"
 										documentId="{PWA>DocumentID}"
 										fileName="{PWA>FileName}"
 										mimeType="{PWA>MimeType}"

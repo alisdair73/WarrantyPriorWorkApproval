@@ -94,6 +94,8 @@ sap.ui.define([
 			PWA.updatePWAFromJSONModel(responseData);
 			
 			this._updateEstimatedTotal();
+			
+			sap.ui.getCore().getEventBus().publish("PWA","Saved");
 			this.getModel("ViewHelper").setProperty("/busy", false);
 		},
 		
@@ -156,7 +158,7 @@ sap.ui.define([
 			}
 			
 			//Testing
-			//PWANumber = '200000000458';
+			//PWANumber = '200000000507';
 			//PWANumber = "200000000353";
 				
 			if (PWANumber){

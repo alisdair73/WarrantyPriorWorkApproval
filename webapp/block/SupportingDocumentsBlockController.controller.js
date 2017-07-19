@@ -9,11 +9,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		
 		onInit: function () {
 			// Sets the text to the label
-			this.getView().byId("UploadCollection").addEventDelegate({
+			this.getView().byId("pwaAttachmentCollection").addEventDelegate({
 				onBeforeRendering : function () {
 					this.getView().byId("attachmentTitle").setText(this._getAttachmentTitleText());
 				}.bind(this)
 			});
+			
+			//Set up Event Listener to Upload Files
+			sap.ui.getCore().getEventBus().subscribe("PWA","Saved",this._uploadAttachmentCollection.bind(this),this);
 		},
 
 		onUploadComplete: function(oEvent) {
@@ -28,6 +31,20 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		    	"URL": "/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('" + PWANumber + "')/Attachments('" + fileResponse.d.DocumentID + "')/$value"
 		    };
 		    attachments.push(attachment);
+		    
+		    var uploadCollection = this.getView().byId("pwaAttachmentCollection");
+
+		    for (var i = 0; i < uploadCollection.getItems().length; i++) {
+				if (uploadCollection.getItems()[i].getFileName() === fileResponse.d.FileName) {
+					uploadCollection.removeItem(uploadCollection.getItems()[i]);
+					break;
+				}
+			}
+
+/*		    uploadCollection.bindAggregation("items", {
+				path: "PWA>Attachments",
+				template: this.getView().byId("collectionLine").clone()
+			});*/
 		    this.getView().getModel("PWA").setProperty("/Attachments", attachments);
 		},
 		
@@ -41,13 +58,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			
     		oEvent.getParameters().addHeaderParameter(new sap.m.UploadCollectionParameter({
                 name: "slug",
-                value: oEvent.getParameter("fileName")
+                value: this.getView().getModel("PWA").getProperty("/PWANumber") + "|" + oEvent.getParameter("fileName")
             }));
             
     		oEvent.getParameters().addHeaderParameter(new sap.m.UploadCollectionParameter({
                 name: "accept",
                 value: "application/json"
-            }));			
+            }));
+            
 		},
 		
 		onChange: function(oEvent) {
@@ -72,7 +90,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				false
 			));
 			
-			this.getView().byId("UploadCollection").getBinding("items").filter(filters);
+			this.getView().byId("pwaAttachmentCollection").getBinding("items").filter(filters);
 		    
 		},		
 		
@@ -81,8 +99,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
 
 		_getAttachmentTitleText: function(){
-			var aItems = this.getView().byId("UploadCollection").getItems();
+			var aItems = this.getView().byId("pwaAttachmentCollection").getItems();
 			return "Uploaded (" + aItems.length + ")";
+		},
+		
+		_uploadAttachmentCollection: function(){
+			//Start the File Upload
+			var attachmentCollection = this.getView().byId("pwaAttachmentCollection");
+			attachmentCollection.upload();
 		}
 	});
 

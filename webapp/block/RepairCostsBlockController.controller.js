@@ -1,9 +1,5 @@
-sap.ui.define(["sap/ui/core/mvc/Controller",
-"sap/m/MessageToast",
-"sap/ui/model/Filter",
-"sap/m/UploadCollectionParameter",
-"sap/ui/model/json/JSONModel"
-], function(Controller, MessageToast, Filter, UploadCollectionParameter, JSONModel) {
+sap.ui.define(["sap/ui/core/mvc/Controller"
+], function(Controller) {
 	"use strict";
 
 	return Controller.extend("hnd.dpe.warranty.prior_work_approval.block.RepairCostsBlockController", {

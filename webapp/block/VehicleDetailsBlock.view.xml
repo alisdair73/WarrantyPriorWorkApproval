@@ -66,8 +66,13 @@
 									</l:VerticalLayout>							
 									<l:VerticalLayout width="100%">
 										<Label text="Date of Failure" labelFor="dateOfFailure"/>
-										<DatePicker id="dateOfFailure" change="onChangeDatePicker"
-											displayFormat="medium" dateValue="{PWA>DateOfFailure}" editable="{PWA>CanEdit}"/>
+										<DatePicker 
+											id="dateOfFailure" 
+											change="onChangeDatePicker"
+											displayFormat="medium" 
+											dateValue="{PWA>DateOfFailure}" 
+											editable="{PWA>CanEdit}"
+										/>
 									</l:VerticalLayout>
 									<l:VerticalLayout width="100%">
 										<Label text="Failure KM" labelFor="failureKM"/>
@@ -113,8 +118,6 @@
 								            </ColumnListItem>
 								          </suggestionRows>                 
 								        </Input>
-											
-											
 									</l:VerticalLayout>								
 								</l:content>
 							</l:Grid>
