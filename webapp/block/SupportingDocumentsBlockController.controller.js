@@ -41,10 +41,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				}
 			}
 
-/*		    uploadCollection.bindAggregation("items", {
-				path: "PWA>Attachments",
-				template: this.getView().byId("collectionLine").clone()
-			});*/
 		    this.getView().getModel("PWA").setProperty("/Attachments", attachments);
 		},
 		
