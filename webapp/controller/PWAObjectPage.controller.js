@@ -4,13 +4,16 @@ sap.ui.define([
 	"hnd/dpe/warranty/prior_work_approval/model/PWA",
 	"sap/ui/model/Filter",
 	"sap/m/MessageStrip",
-	"sap/m/MessageToast"
-], function(BaseController, JSONModel, PWA, Filter, MessageStrip, MessageToast) {
+	"sap/m/MessageToast",
+	"sap/m/MessageBox"
+], function(BaseController, JSONModel, PWA, Filter, MessageStrip, MessageToast, MessageBox) {
 	"use strict";
 
 	return BaseController.extend("hnd.dpe.warranty.prior_work_approval.controller.PWAObjectPage", {
  
     	onInit: function() {
+    		
+    		this.getView().setModel(sap.ui.getCore().getMessageManager().getMessageModel(), "message");
     		
 			var oViewModel = new JSONModel({
 				"busy": false,
@@ -55,21 +58,33 @@ sap.ui.define([
 		},
 		
 		onSubmit: function(){
-			this._doPWAAction("SubmitPWA");
+			if(this._canExecuteAction()){
+				this._doPWAAction("SubmitPWA");
+			}
 		},
 		
 		onValidate: function(){
-			this._doPWAAction("ValidatePWA");
+			if(this._canExecuteAction()){
+				this._doPWAAction("ValidatePWA");
+			}
 		},
 		
 		onCancel: function(){
 			this.navigateToLaunchpad();
 		},
 		
+		openMessages: function(event){
+			
+			if (!this._messagePopover)  {
+				this._messagePopover = sap.ui.xmlfragment( "hnd.dpe.warranty.prior_work_approval.view.Messages" );
+				this.getView().addDependent(this._messagePopover );
+			}
+			this._messagePopover.openBy(event.getSource());
+		},
+		
 /*      
 			Private Functions 
 */		
-
 		_doPWAAction: function(actionName){
 			this.getModel("ViewHelper").setProperty("/busy", true);
 			this._clearHeaderMessages();
@@ -158,7 +173,7 @@ sap.ui.define([
 			}
 			
 			//Testing
-			PWANumber = "200000000556";
+			//PWANumber = "200000000556";
 				
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";
@@ -269,6 +284,32 @@ sap.ui.define([
 			//Scroll to the top of the page so messages are visible
 			var objectLayout = this.getView().byId("PWA");
 			objectLayout.scrollToSection(this.getView().byId("vehicleDetails_sub1").getId(), 0, -200);
+		},
+		
+		_canExecuteAction: function(){
+			
+			//Run all UI Validation Rules
+			sap.ui.getCore().getMessageManager().removeAllMessages();
+			PWA.validateAll();
+			sap.ui.getCore().getEventBus().publish("Validation","Refresh");
+			
+			//If there are any Frontend Issues - then don't call Action...
+			if(PWA.hasFrontendValidationError()){
+				MessageBox.error(
+					"Please correct the data validation errors.",
+					{
+						id : "errorMessageBox",
+						actions : [MessageBox.Action.CLOSE],
+						onClose : function () {
+							//this.navigateToLaunchpad();
+						}
+					}	
+				);
+				return false;
+			} else {
+				return true;
+			}	
+
 		}
 	});
 });

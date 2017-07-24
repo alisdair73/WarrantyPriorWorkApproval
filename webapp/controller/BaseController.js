@@ -1,8 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
-	"sap/ui/core/format/DateFormat"
-], function(Controller, JSONModel, DateFormat) {
+	"sap/ui/core/format/DateFormat",
+	"sap/ui/core/message/Message"
+], function(Controller, JSONModel, DateFormat, Message) {
 	"use strict";
 	return Controller.extend("hnd.dpe.warranty.prior_work_approval.controller.BaseController", {
 
@@ -50,6 +51,64 @@ sap.ui.define([
 					shellHash: "#"
 				}
 			});
+		},
+		
+		logValidationMessage:function(fieldId, modelName, target){
+			
+			this._removeErrorMessageFromMessageManager("UI_" + fieldId);
+			
+			var model = this.getView().getModel(modelName ? modelName : "PWA");
+			var messageTarget = target ? target : "/" + fieldId;
+			var field = model.getProperty(messageTarget);
+			
+			if(!field.ruleResult.valid){
+				 
+				this._addErrorMessageToMessageManager(
+					"UI_" + fieldId,
+					model,
+					this.getView().getModel("i18n").getResourceBundle().getText(
+						field.ruleResult.errorTextID,[
+							this.getView().byId(fieldId + "_label").getText()
+						]
+					),
+					messageTarget + "/value"
+				);
+			}
+		},
+
+		_doesMessageExistInMessageManager: function (messageID){
+			var registeredMessages = sap.ui.getCore().getMessageManager().getMessageModel().getData().filter(
+  				function(registeredMessage){
+					return registeredMessage.id ===  messageID;
+				}
+			);
+    		
+    		if(registeredMessages.length > 0){
+    			return registeredMessages[0];
+    		}  
+		},	
+	
+		_removeErrorMessageFromMessageManager:function(messageID){
+			
+			var message = this._doesMessageExistInMessageManager(messageID);
+			if(message){
+				sap.ui.getCore().getMessageManager().removeMessages(message);
+			}
+		},
+		
+		_addErrorMessageToMessageManager:function(messageID, messageProcessor, messageText, messageTarget){
+			
+			if( !this._doesMessageExistInMessageManager(messageID)){
+			
+				var message = new Message({
+					"id": messageID,
+	            	"message": messageText,
+	                "type": 'Error',
+	                "target": messageTarget,
+	                "processor": messageProcessor
+	        	});
+      			sap.ui.getCore().getMessageManager().addMessages(message);
+			}
 		}
 	});
 });

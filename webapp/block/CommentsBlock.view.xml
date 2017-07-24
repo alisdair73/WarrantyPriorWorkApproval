@@ -1,4 +1,5 @@
-<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout">
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout"
+	controllerName="hnd.dpe.warranty.prior_work_approval.block.CommentsBlockController">
 	<sap.ui.layout.form:Form xmlns:sap.ui.layout.form="sap.ui.layout.form" editable="true" objectBindings="{PWA>/}">
 		<sap.ui.layout.form:layout>
 	    	<sap.ui.layout.form:ResponsiveGridLayout/>
@@ -24,13 +25,18 @@
 										<l:layoutData>
 											<l:GridData span="L12"/>
 										</l:layoutData>
-										<Label text="Customer Concern" labelFor="customerConcern"/>
-										<TextArea id="customerConcern" rows="5" cols="120" 
-											value="{PWA>CustomerConcern}"
+										<Label id="CustomerConcern_label" text="Customer Concern" labelFor="customerConcern" required="true"/>
+										<TextArea 
+											id="CustomerConcern" 
+											rows="5" 
+											cols="120" 
+											value="{PWA>CustomerConcern/value}"
 											editable="{PWA>CanEdit}"
+											change="onCustomerConcernedChanged"
+											valueState="{= ${PWA>CustomerConcern/ruleResult/valid} ? 'None':'Error'}"
 										/>
 									</l:VerticalLayout>
-									<l:VerticalLayout width="100%">
+									<l:VerticalLayout width="100%" visible="{= ${PWA>PWATypeGroup} === 'GOODWILL' }">
 										<l:layoutData>
 											<l:GridData span="L12"/>
 										</l:layoutData>
@@ -44,10 +50,15 @@
 										<l:layoutData>
 											<l:GridData span="L12"/>
 										</l:layoutData>
-										<Label text="Dealer Comment" labelFor="dealerComment"/>
-										<TextArea id="dealerComment" rows="5" cols="120" 
-											value="{PWA>DealerComment}"
+										<Label id="DealerComment_label" text="Dealer Comment" labelFor="dealerComment" required="true"/>
+										<TextArea 
+											id="DealerComment" 
+											rows="5" 
+											cols="120" 
+											value="{PWA>DealerComment/value}"
 											editable="{PWA>CanEdit}"
+											change="onDealerCommentChanged"
+											valueState="{= ${PWA>DealerComment/ruleResult/valid} ? 'None':'Error'}"
 										/>
 									</l:VerticalLayout>
 								</l:content>

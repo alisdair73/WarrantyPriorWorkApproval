@@ -1,6 +1,7 @@
 sap.ui.define([
-	"sap/ui/model/json/JSONModel"
-], function(JSONModel) {
+	"sap/ui/model/json/JSONModel",
+	"hnd/dpe/warranty/prior_work_approval/model/validationRules"
+], function(JSONModel, Rule) {
 	"use strict";
 
 	return {
@@ -13,12 +14,12 @@ sap.ui.define([
 				"PWANumber": "",
 				"PWAType": "",
 				"SubmittedOn": null,
-				"VIN": "",
+				"VIN": { "value":"", "ruleResult":{"valid": true, "errorTextID":""}},
 				"EngineNumber": "",
 				"DealerContact": "",
-				"DateOfFailure": null,
+				"DateOfFailure": { "value":null, "ruleResult":{"valid": true, "errorTextID":""}},
 				"FailureMeasure": "",
-				"MCPN": "",
+				"MCPN": { "value":"", "ruleResult":{"valid": true, "errorTextID":""}},
 				"OwnerTitle": "",
 				"OwnerGivenName": "",
 				"OwnerSurname": "",
@@ -55,9 +56,9 @@ sap.ui.define([
 				"ApprovedSubletSplitDealer": 0,
 				"ApprovedSubletSplitHonda": 0,				
 				"GoodwillReason": "",
-				"CustomerConcern": "",
+				"CustomerConcern": { "value":"", "ruleResult":{"valid": true, "errorTextID":""}},
 				"Rectification": "",
-				"DealerComment": "",
+				"DealerComment": { "value":"", "ruleResult":{"valid": true, "errorTextID":""}},
 				"AssessmentComments": "",
 				"AssessmentCodes": "",
 				"PWATypeDescription": "",
@@ -111,12 +112,12 @@ sap.ui.define([
 			this.PWA.PWANumber = oPWA.PWANumber;
 			this.PWA.PWAType = oPWA.PWAType;
 			this.PWA.SubmittedOn = oPWA.SubmittedOn;
-			this.PWA.VIN = oPWA.VIN;
+			this.PWA.VIN.value = oPWA.VIN;
 			this.PWA.EngineNumber = oPWA.EngineNumber;
 			this.PWA.DealerContact = oPWA.DealerContact;
-			this.PWA.DateOfFailure = oPWA.DateOfFailure;
+			this.PWA.DateOfFailure.value = oPWA.DateOfFailure;
 			this.PWA.FailureMeasure = oPWA.FailureMeasure;
-			this.PWA.MCPN = oPWA.MCPN;
+			this.PWA.MCPN.value = oPWA.MCPN;
 			this.PWA.OwnerTitle = oPWA.OwnerTitle;
 			this.PWA.OwnerGivenName = oPWA.OwnerGivenName;
 			this.PWA.OwnerSurname = oPWA.OwnerSurname;
@@ -134,7 +135,6 @@ sap.ui.define([
 			this.PWA.ApprovedLabourCost = oPWA.ApprovedLabourCost;
 			this.PWA.ApprovedPartsCost = oPWA.ApprovedPartsCost;
 			this.PWA.ApprovedSubletCost = oPWA.ApprovedSubletCost;
-			
 			this.PWA.RequestedLabourSplitOwner = oPWA.RequestedLabourSplitOwner;
 			this.PWA.RequestedLabourSplitDealer = oPWA.RequestedLabourSplitDealer;
 			this.PWA.RequestedLabourSplitHonda = oPWA.RequestedLabourSplitHonda;
@@ -144,7 +144,6 @@ sap.ui.define([
 			this.PWA.RequestedSubletSplitOwner = oPWA.RequestedSubletSplitOwner;
 			this.PWA.RequestedSubletSplitDealer = oPWA.RequestedSubletSplitDealer;
 			this.PWA.RequestedSubletSplitHonda = oPWA.RequestedSubletSplitHonda;
-			
 			this.PWA.ApprovedLabourSplitOwner = oPWA.ApprovedLabourSplitOwner;
 			this.PWA.ApprovedLabourSplitDealer = oPWA.ApprovedLabourSplitDealer;
 			this.PWA.ApprovedLabourSplitHonda = oPWA.ApprovedLabourSplitHonda;
@@ -154,11 +153,10 @@ sap.ui.define([
 			this.PWA.ApprovedSubletSplitOwner = oPWA.ApprovedSubletSplitOwner;
 			this.PWA.ApprovedSubletSplitDealer = oPWA.ApprovedSubletSplitDealer;
 			this.PWA.ApprovedSubletSplitHonda = oPWA.ApprovedSubletSplitHonda;
-			
 			this.PWA.GoodwillReason = oPWA.GoodwillReason;
-			this.PWA.CustomerConcern = oPWA.CustomerConcern;
+			this.PWA.CustomerConcern.value = oPWA.CustomerConcern;
 			this.PWA.Rectification = oPWA.Rectification;
-			this.PWA.DealerComment = oPWA.DealerComment;
+			this.PWA.DealerComment.value = oPWA.DealerComment;
 			this.PWA.AssessmentComments = oPWA.AssessmentComments;
 			this.PWA.AssessmentCodes = oPWA.AssessmentCodes;
 			this.PWA.PWATypeDescription = oPWA.PWATypeDescription;
@@ -193,12 +191,12 @@ sap.ui.define([
 			
 			PWA.PWANumber = this.PWA.PWANumber;
 			PWA.PWAType = this.PWA.PWAType;
-			PWA.VIN = this.PWA.VIN;
+			PWA.VIN = this.PWA.VIN.value;
 			PWA.EngineNumber = this.PWA.EngineNumber;
 			PWA.DealerContact = this.PWA.DealerContact;
-			PWA.DateOfFailure = this.PWA.DateOfFailure;
+			PWA.DateOfFailure = this.PWA.DateOfFailure.value;
 			PWA.FailureMeasure = this.PWA.FailureMeasure;
-			PWA.MCPN = this.PWA.MCPN;
+			PWA.MCPN = this.PWA.MCPN.value;
 			PWA.OwnerTitle = this.PWA.OwnerTitle;
 			PWA.OwnerGivenName = this.PWA.OwnerGivenName;
 			PWA.OwnerSurname = this.PWA.OwnerSurname;
@@ -212,7 +210,6 @@ sap.ui.define([
 			PWA.RequestedLabourCost = this.PWA.RequestedLabourCost.toString();
 			PWA.RequestedPartsCost = this.PWA.RequestedPartsCost.toString();
 			PWA.RequestedSubletCost = this.PWA.RequestedSubletCost.toString();
-			
 			PWA.RequestedLabourSplitOwner = this.PWA.RequestedLabourSplitOwner.toString();
 			PWA.RequestedLabourSplitDealer = this.PWA.RequestedLabourSplitDealer.toString();
 			PWA.RequestedLabourSplitHonda = this.PWA.RequestedLabourSplitHonda.toString();
@@ -222,11 +219,10 @@ sap.ui.define([
 			PWA.RequestedSubletSplitOwner = this.PWA.RequestedSubletSplitOwner.toString();
 			PWA.RequestedSubletSplitDealer = this.PWA.RequestedSubletSplitDealer.toString();
 			PWA.RequestedSubletSplitHonda = this.PWA.RequestedSubletSplitHonda.toString();
-			
 			PWA.GoodwillReason = this.PWA.GoodwillReason;
-			PWA.CustomerConcern = this.PWA.CustomerConcern;
+			PWA.CustomerConcern = this.PWA.CustomerConcern.value;
 			PWA.Rectification = this.PWA.Rectification;
-			PWA.DealerComment = this.PWA.DealerComment;
+			PWA.DealerComment = this.PWA.DealerComment.value;
 			PWA.VersionIdentifier = this.PWA.VersionIdentifier;
 			PWA.MCPNItemId = this.PWA.MCPNItemId; 
 			PWA.SubletItemId = this.PWA.SubletItemId;
@@ -252,6 +248,53 @@ sap.ui.define([
 			this.PWAOriginal = jQuery.extend(true, {}, this.PWA);
 			this.PWAOriginal.changed = false;
 			this.oDataModel.setData(this.PWA);			
+		},
+		
+		validateVIN: function(){
+			this.PWA.VIN.ruleResult = 
+				Rule.validateRequiredFieldIsPopulated(this.PWA.VIN.value);
+		},
+		
+		validateMCPN: function(){
+			this.PWA.MCPN.ruleResult = 
+				Rule.validateRequiredFieldIsPopulated(this.PWA.MCPN.value);
+		},
+		
+		validateDateOfFailure: function(){
+			this.PWA.DateOfFailure.ruleResult = 
+				Rule.validateRequiredFieldIsPopulated(this.PWA.DateOfFailure.value);	
+		},             
+		
+		validateCustomerConcern :function(){
+			this.PWA.CustomerConcern.ruleResult = 
+				Rule.validateRequiredFieldIsPopulated(this.PWA.CustomerConcern.value); 
+		},
+		
+		validateDealerComment:function(){
+			this.PWA.DealerComment.ruleResult = 
+				Rule.validateRequiredFieldIsPopulated(this.PWA.DealerComment.value); 
+		},
+		
+		validateAll: function(){
+			this.validateVIN();
+			this.validateMCPN();
+			this.validateDateOfFailure();
+			this.validateCustomerConcern();
+			this.validateDealerComment();
+		},
+		
+		hasFrontendValidationError: function(){
+			
+			if(this.PWA.VIN.ruleResult.valid &&
+				this.PWA.MCPN.ruleResult.valid &&
+				this.PWA.DateOfFailure.ruleResult.valid &&
+				this.PWA.CustomerConcern.ruleResult.valid &&
+				this.PWA.DealerComment.ruleResult.valid){
+				
+				return false;		
+			} 
+			return true;
 		}
+		
 	};
 });

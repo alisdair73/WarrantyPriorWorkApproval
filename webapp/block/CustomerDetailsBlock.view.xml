@@ -38,7 +38,7 @@
 						<l:GridData span="XL8 L8 M8 S8" />
 					</layoutData>
 				</Input>
-				<Input id="phone" value="{PWA>OwnerPhoneNumber}" editable="{PWA>CanEdit}" width="100%" placeholder="Phone No.">
+				<Input id="phone" value="{PWA>OwnerPhoneNumber}" editable="{PWA>CanEdit}" width="100%" placeholder="Phone No." maxLength="11">
 					<layoutData>
 						<l:GridData span="XL2 L2 M2 S2" />
 					</layoutData>

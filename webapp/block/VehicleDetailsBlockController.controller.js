@@ -1,9 +1,15 @@
-sap.ui.define(["sap/ui/core/mvc/Controller",
-"sap/ui/model/Filter"
-], function(Controller,  Filter) {
+sap.ui.define([
+	"hnd/dpe/warranty/prior_work_approval/controller/BaseController",
+	"sap/ui/model/Filter",
+	"hnd/dpe/warranty/prior_work_approval/model/PWA"
+], function(BaseController,  Filter, PWA) {
 	"use strict";
 
-	return Controller.extend("hnd.dpe.warranty.prior_work_approval.block.VehicleDetailsBlockController", {
+	return BaseController.extend("hnd.dpe.warranty.prior_work_approval.block.VehicleDetailsBlockController", {
+		
+		onInit: function(){
+			sap.ui.getCore().getEventBus().subscribe("Validation","Refresh",this._refreshValidationMessages.bind(this),this);
+		},
 		
 		//VIN Search
 		onVINSuggest:function(event){
@@ -22,11 +28,20 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				filters.push(new Filter("VIN", sap.ui.model.FilterOperator.StartsWith, searchString));
 			}
 			event.getSource().getBinding("suggestionRows").filter(filters);	
+			
+			PWA.validateVIN();
+			this.logValidationMessage("VIN");
+		},
+		
+		onDateOfFailureChanged: function(){
+			PWA.validateDateOfFailure();
+			this.logValidationMessage("DateOfFailure");
 		},
 		
 		//MCPN
 		onMCPNChanged: function(){
-			
+			PWA.validateMCPN();
+			this.logValidationMessage("PWA");
 		},
 		
 		onMCPNSuggest: function(event){
@@ -52,7 +67,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			}
 			
 			//Update Here
-			this.getView().getModel("PWA").setProperty("/MCPN",dataObject.materialNo);
+			this.getView().getModel("PWA").setProperty("/MCPN/value",dataObject.materialNo);
             this.getView().getModel("PWA").setProperty("/MCPNDescription",dataObject.description);
 		},	
 		
@@ -77,6 +92,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				new Filter("description", sap.ui.model.FilterOperator.Contains, searchString)
 			], false));
 			event.getSource().getBinding("items").filter(filters);
+		},
+		
+		_refreshValidationMessages: function(){
+			this.logValidationMessage("VIN");
+			this.logValidationMessage("DateOfFailure");
+			this.logValidationMessage("MCPN");
 		}
 	});
 });

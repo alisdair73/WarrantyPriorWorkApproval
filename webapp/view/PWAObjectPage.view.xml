@@ -95,11 +95,22 @@
 		</sections>
 		<footer>
 			<m:OverflowToolbar>
+				<m:Button 
+					icon="sap-icon://message-popup" 
+					visible="{= ${message>/length} &gt; 0}"
+					text="{message>/length}" 
+					type="Emphasized" 
+					press="openMessages"/>
 				<m:ToolbarSpacer/>
 				<m:Button text="Save Draft" press="onDraft" visible="{PWA>/CanEdit}"/>
 				<m:Button text="Cancel" press="onCancel"/>
 				<m:Button text="Validate" press="onValidate" visible="{PWA>/CanEdit}"/>
-				<m:Button text="Submit" press="onSubmit" type="Emphasized" visible="{PWA>/CanEdit}"/>
+				<m:Button 
+					text="{= ${PWA>/CurrentVersionNumber} === '0001' ? 'Submit' : 'Resubmit'}" 
+					press="onSubmit" 
+					type="Emphasized" 
+					visible="{PWA>/CanEdit}"
+				/>
 			</m:OverflowToolbar>
 		</footer>
     </ObjectPageLayout>
