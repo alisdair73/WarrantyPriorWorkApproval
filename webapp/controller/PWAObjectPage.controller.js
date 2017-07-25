@@ -76,7 +76,7 @@ sap.ui.define([
 		openMessages: function(event){
 			
 			if (!this._messagePopover)  {
-				this._messagePopover = sap.ui.xmlfragment( "hnd.dpe.warranty.prior_work_approval.view.Messages" );
+				this._messagePopover = sap.ui.xmlfragment( "hnd.dpe.warranty.prior_work_approval.fragment.Messages" );
 				this.getView().addDependent(this._messagePopover );
 			}
 			this._messagePopover.openBy(event.getSource());

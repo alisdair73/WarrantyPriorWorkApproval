@@ -1,7 +1,8 @@
 sap.ui.define([
 	"sap/ui/model/json/JSONModel",
-	"hnd/dpe/warranty/prior_work_approval/model/validationRules"
-], function(JSONModel, Rule) {
+	"hnd/dpe/warranty/prior_work_approval/model/validationRules",
+	"sap/ui/core/format/DateFormat"
+], function(JSONModel, Rule, DateFormat) {
 	"use strict";
 
 	return {
@@ -261,8 +262,22 @@ sap.ui.define([
 		},
 		
 		validateDateOfFailure: function(){
-			this.PWA.DateOfFailure.ruleResult = 
-				Rule.validateRequiredFieldIsPopulated(this.PWA.DateOfFailure.value);	
+			
+			if(this.PWA.DateOfFailure.value){
+				this.PWA.DateOfFailure.value = this._convertDateTimeToDateOnly(this.PWA.DateOfFailure.value);
+				
+				this.PWA.DateOfFailure.ruleResult = Rule.validateRequiredFieldIsPopulated(this.PWA.DateOfFailure.value);
+				if(this.PWA.DateOfFailure.ruleResult.valid){
+					this.PWA.DateOfFailure.ruleResult = Rule.validateDateIsNotFutureDate(this.PWA.DateOfFailure.value);
+					
+					if(this.PWA.DateOfFailure.ruleResult.valid){
+						this.PWA.DateOfFailure.ruleResult = Rule.validateDateIsNotMoreThan60DaysPrior(this.PWA.DateOfFailure.value);
+					}
+				}
+				
+			} else {
+				this.PWA.DateOfFailure.ruleResult = {"valid": false, "errorTextID":"mandatoryField"};
+			}
 		},             
 		
 		validateCustomerConcern :function(){
@@ -294,6 +309,17 @@ sap.ui.define([
 				return false;		
 			} 
 			return true;
+		},
+		
+		_convertDateTimeToDateOnly: function(dateTime) {
+			
+			var dateTemplate = DateFormat.getDateTimeInstance({
+				pattern: "yyyy-MM-ddTKK:mm:ss"
+			});
+			var formattedDateTime = dateTemplate.format(dateTime);
+			formattedDateTime  = formattedDateTime.split("T");
+			var formattedDate = formattedDateTime[0];
+			return new Date(formattedDate);
 		}
 		
 	};

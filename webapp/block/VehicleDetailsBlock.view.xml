@@ -48,7 +48,8 @@
 									</l:VerticalLayout>	
 									<l:VerticalLayout width="100%">
 										<Label text="Engine Number" labelFor="engineNumber"/>
-										<Input  id="engineNumber" value="{PWA>EngineNumber}" editable="{PWA>CanEdit}"/>
+										<Input  id="engineNumber" value="{PWA>EngineNumber}" 
+											editable="{PWA>CanEdit}" maxLength="10"/>
 									</l:VerticalLayout>
 									<l:VerticalLayout width="100%">
 										<Label text="Dealer Contact" labelFor="dealerContact"/>
@@ -99,6 +100,7 @@
 								          suggestionItemSelected="onMCPNSelected"
 								          suggestionRows="{/ZDPE_C_MATERIALS}"
 								          valueHelpRequest="onSelectMCPN"
+								          maxLength="40"
 								          valueState="{= ${PWA>MCPN/ruleResult/valid} ? 'None':'Error'}"
 								        >
 								          <layoutData>

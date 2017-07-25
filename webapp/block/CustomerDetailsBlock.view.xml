@@ -17,28 +17,33 @@
 			<f:content>
 				<core:Title text="Customer Details" />
 				<Label text="Owner Name" labelFor="title"/>
-				<Input id="title" value="{PWA>OwnerTitle}" editable="{PWA>CanEdit}" width="100%" placeholder="Title">
+				<Input id="title" value="{PWA>OwnerTitle}" editable="{PWA>CanEdit}" width="100%" 
+					placeholder="Title" maxLength="8">
 					<layoutData>
 						<l:GridData span="XL2 L2 M2 S2" />
 					</layoutData>
 				</Input>
-				<Input id="givenName" value="{PWA>OwnerGivenName}" editable="{PWA>CanEdit}" width="100%" placeholder="Given Name">
+				<Input id="givenName" value="{PWA>OwnerGivenName}" editable="{PWA>CanEdit}" width="100%" 
+					placeholder="Given Name" maxLength="30">
 					<layoutData>
 						<l:GridData span="XL4 L4 M4 S4" />
 					</layoutData>
 				</Input>
-				<Input id="lastName" value="{PWA>OwnerSurname}" editable="{PWA>CanEdit}" width="100%" placeholder="Surname">
+				<Input id="lastName" value="{PWA>OwnerSurname}" editable="{PWA>CanEdit}" width="100%" 
+					placeholder="Surname" maxLength="40">
 					<layoutData>
 						<l:GridData span="XL4 L4 M4 S4" />
 					</layoutData>
 				</Input>
 				<Label text="Company/Phone Number" labelFor="company"/>
-				<Input id="company" value="{PWA>OwnerCompanyName}" editable="{PWA>CanEdit}" width="100%" placeholder="Company Name">
+				<Input id="company" value="{PWA>OwnerCompanyName}" editable="{PWA>CanEdit}" width="100%" 
+					placeholder="Company Name" maxLength="40">
 					<layoutData>
 						<l:GridData span="XL8 L8 M8 S8" />
 					</layoutData>
 				</Input>
-				<Input id="phone" value="{PWA>OwnerPhoneNumber}" editable="{PWA>CanEdit}" width="100%" placeholder="Phone No." maxLength="11">
+				<Input id="phone" value="{PWA>OwnerPhoneNumber}" editable="{PWA>CanEdit}" width="100%" 
+					placeholder="Phone No." maxLength="11">
 					<layoutData>
 						<l:GridData span="XL2 L2 M2 S2" />
 					</layoutData>

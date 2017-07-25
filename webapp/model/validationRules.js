@@ -3,6 +3,23 @@ sap.ui.define([], function() {
 
 	return {
 
+        validateDateIsNotMoreThan60DaysPrior: function(fieldValue){
+        	
+        	var validated = true;
+        	
+        	var now = new Date();   
+			var today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); 
+			var dateToValidate = new Date(fieldValue.getFullYear(), fieldValue.getMonth(), fieldValue.getDate());
+			
+			var diffInMS = Math.abs(today.getTime() - dateToValidate.getTime());
+			var diffInDays = Math.ceil(diffInMS / (1000 * 3600 * 24));
+			
+			if(diffInDays > 60){
+				validated = false;
+			}
+			return {"valid": validated, "errorTextID":"notMoreThan60DaysPrior"};
+        },
+
 		validateDateIsNotFutureDate: function(fieldValue){
 			
 			var now = new Date();   
