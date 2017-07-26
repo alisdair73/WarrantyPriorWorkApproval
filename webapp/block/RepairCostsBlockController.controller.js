@@ -1,11 +1,19 @@
-sap.ui.define(["sap/ui/core/mvc/Controller"
-], function(Controller) {
+sap.ui.define([
+  "hnd/dpe/warranty/prior_work_approval/controller/BaseController",
+  "hnd/dpe/warranty/prior_work_approval/model/PWA"
+], function(BaseController, PWA) {
 	"use strict";
 
-	return Controller.extend("hnd.dpe.warranty.prior_work_approval.block.RepairCostsBlockController", {
+	return BaseController.extend("hnd.dpe.warranty.prior_work_approval.block.RepairCostsBlockController", {
 		
 		onInit: function() {
+			sap.ui.getCore().getEventBus().subscribe("Validation","Refresh",this._refreshValidationMessages.bind(this),this);
     	},
+		
+		onRequestedLabourHoursChanged: function(){
+			PWA.validateRequestedLabourHours();
+			this.logValidationMessage("RequestedLabourHours");
+		},
 		
 		partsChanged: function() {
 			
@@ -43,6 +51,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller"
 				parseFloat(this.getView().getModel("PWA").getProperty("/RequestedSubletCost"), 2);
 			
 			this.getView().getModel("ViewHelper").setProperty("/UI/requestedTotal", requestedTotal);
-		}
+		},
+		
+		_refreshValidationMessages: function(){
+			this.logValidationMessage("RequestedLabourHours");
+		}		
 	});
 });

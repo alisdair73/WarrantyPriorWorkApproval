@@ -30,7 +30,7 @@ sap.ui.define([
 				"HistoryComplete": false,
 				"ServicedByDealer": false,
 				"OriginalOwner": false,
-				"RequestedLabourHours": 0,
+				"RequestedLabourHours": { "value": 0, "ruleResult":{"valid": true, "errorTextID":""}},
 				"RequestedLabourCost": 0,
 				"RequestedPartsCost": 0,
 				"RequestedSubletCost": 0,
@@ -128,7 +128,7 @@ sap.ui.define([
 			this.PWA.HistoryComplete = oPWA.HistoryComplete;
 			this.PWA.ServicedByDealer = oPWA.ServicedByDealer;
 			this.PWA.OriginalOwner = oPWA.OriginalOwner;
-			this.PWA.RequestedLabourHours = oPWA.RequestedLabourHours;
+			this.PWA.RequestedLabourHours.value = oPWA.RequestedLabourHours;
 			this.PWA.RequestedLabourCost = oPWA.RequestedLabourCost;
 			this.PWA.RequestedPartsCost = oPWA.RequestedPartsCost;
 			this.PWA.RequestedSubletCost = oPWA.RequestedSubletCost;
@@ -207,7 +207,7 @@ sap.ui.define([
 			PWA.HistoryComplete = this.PWA.HistoryComplete;
 			PWA.ServicedByDealer = this.PWA.ServicedByDealer;
 			PWA.OriginalOwner = this.PWA.OriginalOwner;
-			PWA.RequestedLabourHours = this.PWA.RequestedLabourHours.toString();
+			PWA.RequestedLabourHours = this.PWA.RequestedLabourHours.value.toString();
 			PWA.RequestedLabourCost = this.PWA.RequestedLabourCost.toString();
 			PWA.RequestedPartsCost = this.PWA.RequestedPartsCost.toString();
 			PWA.RequestedSubletCost = this.PWA.RequestedSubletCost.toString();
@@ -290,12 +290,25 @@ sap.ui.define([
 				Rule.validateRequiredFieldIsPopulated(this.PWA.DealerComment.value); 
 		},
 		
+		validateRequestedLabourHours: function(){
+			var validated = true;
+			
+			this.PWA.DealerComment.ruleResult = Rule.validateIsANumber(this.PWA.RequestedLabourHours.value); 
+			if(this.PWA.DealerComment.ruleResult.valid){
+				if(this.PWA.RequestedLabourHours.value > 99.99){
+					validated = false;
+				}
+				this.PWA.RequestedLabourHours.ruleResult = {"valid": validated, "errorTextID":"requestedLabourHoursToBig"};
+			}
+		},		
+		
 		validateAll: function(){
 			this.validateVIN();
 			this.validateMCPN();
 			this.validateDateOfFailure();
 			this.validateCustomerConcern();
 			this.validateDealerComment();
+			this.validateRequestedLabourHours();
 		},
 		
 		hasFrontendValidationError: function(){
@@ -304,7 +317,8 @@ sap.ui.define([
 				this.PWA.MCPN.ruleResult.valid &&
 				this.PWA.DateOfFailure.ruleResult.valid &&
 				this.PWA.CustomerConcern.ruleResult.valid &&
-				this.PWA.DealerComment.ruleResult.valid){
+				this.PWA.DealerComment.ruleResult.valid &&
+				this.PWA.RequestedLabourHours.ruleResult){
 				
 				return false;		
 			} 

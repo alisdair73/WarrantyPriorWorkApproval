@@ -47,6 +47,10 @@ sap.ui.define([], function() {
 				}
 			}
 			return {"valid": validated, "errorTextID":"mandatoryField"};
+		},
+		
+		validateIsANumber: function(fieldValue){
+			return {"valid": !isNaN(fieldValue), "errorTextID":"notANumber"};
 		}
 	};
 

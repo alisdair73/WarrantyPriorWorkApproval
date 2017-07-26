@@ -5,16 +5,24 @@
 	    		<cells>
 	        		<Text text="REQUESTED"/>
 					<Input 
+					    id="RequestedLabourHours"
 						value="{
-							path: 'PWA>RequestedLabourHours',
+							path: 'PWA>RequestedLabourHours/value',
 							type: 'sap.ui.model.type.Float',
 							formatOptions: {
 								minFractionDigits: 2,
-								maxFractionDigits: 2
+								maxFractionDigits: 2,
+            					groupingEnabled: false,
+            					groupingSeparator: ',',
+            					decimalSeparator: '.'								
 							}
+
 						}"	
 						type="Number"
-						editable="{PWA>CanEdit}"/>
+						editable="{PWA>CanEdit}"
+						change="onRequestedLabourHoursChanged"
+						valueState="{= ${PWA>RequestedLabourHours/ruleResult/valid} ? 'None':'Error'}"
+					/>
 		        	<Input 
 		        		value="{
 							path: 'PWA>RequestedLabourCost',
