@@ -3,7 +3,7 @@
 	    <items>
 	    	<ColumnListItem id="requestedCosts" visible="true">
 	    		<cells>
-	        		<Text text="REQUESTED"/>
+	        		<Text text="REQUESTED (100%)"/>
 					<Input 
 					    id="RequestedLabourHours"
 						value="{
@@ -77,8 +77,11 @@
 							path: 'PWA>ApprovedLabourHours',
 							type: 'sap.ui.model.type.Float',
 							formatOptions: {
-								minFractionDigits: 1,
-								maxFractionDigits: 1
+								minFractionDigits: 2,
+								maxFractionDigits: 2,
+            					groupingEnabled: false,
+            					groupingSeparator: ',',
+            					decimalSeparator: '.'								
 							}
 						}"	
 						editable="false"/>

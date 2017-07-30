@@ -14,6 +14,7 @@ sap.ui.define([
 			this.PWA = {
 				"PWANumber": "",
 				"PWAType": "",
+				"PWAObjectType":"",
 				"SubmittedOn": null,
 				"VIN": { "value":"", "ruleResult":{"valid": true, "errorTextID":""}},
 				"EngineNumber": "",
@@ -64,12 +65,12 @@ sap.ui.define([
 				"AssessmentCodes": "",
 				"PWATypeDescription": "",
 				"PWATypeGroup": "",
-				"StatusDescription": "NEW PWA",
-				"StatusIcon": "sap-icon://write-new-document",
+				"StatusDescription": "",
+				"StatusIcon": "",
 				"MCPNDescription": "",
 				"VersionIdentifier": null,
-				"CurrentVersionNumber": "",
-				"CurrentVersionCategory": "",
+				"CurrentVersionNumber":"0001",
+				"CurrentVersionCategory":"IC",
 				"CanEdit": true,
 				"MCPNItemId": null,
 				"SubletItemId": null,
@@ -112,6 +113,7 @@ sap.ui.define([
 		
 			this.PWA.PWANumber = oPWA.PWANumber;
 			this.PWA.PWAType = oPWA.PWAType;
+			this.PWA.PWAObjectType = oPWA.PWAObjectType;
 			this.PWA.SubmittedOn = oPWA.SubmittedOn;
 			this.PWA.VIN.value = oPWA.VIN;
 			this.PWA.EngineNumber = oPWA.EngineNumber;
@@ -192,6 +194,7 @@ sap.ui.define([
 			
 			PWA.PWANumber = this.PWA.PWANumber;
 			PWA.PWAType = this.PWA.PWAType;
+			PWA.PWAObjectType = this.PWA.PWAObjectType;
 			PWA.VIN = this.PWA.VIN.value;
 			PWA.EngineNumber = this.PWA.EngineNumber;
 			PWA.DealerContact = this.PWA.DealerContact;
@@ -318,7 +321,7 @@ sap.ui.define([
 				this.PWA.DateOfFailure.ruleResult.valid &&
 				this.PWA.CustomerConcern.ruleResult.valid &&
 				this.PWA.DealerComment.ruleResult.valid &&
-				this.PWA.RequestedLabourHours.ruleResult){
+				this.PWA.RequestedLabourHours.ruleResult.valid){
 				
 				return false;		
 			} 

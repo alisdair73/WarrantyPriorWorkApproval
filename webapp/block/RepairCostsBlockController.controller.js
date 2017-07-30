@@ -17,6 +17,9 @@ sap.ui.define([
 		
 		partsChanged: function() {
 			
+			this._sanitisePercentageInputs("/RequestedPartsSplitOwner");
+			this._sanitisePercentageInputs("/RequestedPartsSplitDealer");
+
 			this.getView().getModel("PWA").setProperty("/RequestedPartsSplitHonda",
 				100 - ( 
 					this.getView().getModel("PWA").getProperty("/RequestedPartsSplitOwner") +
@@ -26,6 +29,10 @@ sap.ui.define([
     	},
 		
 		subletChanged: function() {
+			
+			this._sanitisePercentageInputs("/RequestedSubletSplitOwner");
+			this._sanitisePercentageInputs("/RequestedSubletSplitDealer");
+			
 			this.getView().getModel("PWA").setProperty("/RequestedSubletSplitHonda",
 				100 - ( 
 					this.getView().getModel("PWA").getProperty("/RequestedSubletSplitOwner") +
@@ -35,6 +42,10 @@ sap.ui.define([
     	},
 		
 		labourChanged: function() {
+			
+			this._sanitisePercentageInputs("/RequestedLabourSplitOwner");
+			this._sanitisePercentageInputs("/RequestedLabourSplitDealer");
+			
 			this.getView().getModel("PWA").setProperty("/RequestedLabourSplitHonda",
 				100 - ( 
 					this.getView().getModel("PWA").getProperty("/RequestedLabourSplitOwner") +
@@ -51,6 +62,26 @@ sap.ui.define([
 				parseFloat(this.getView().getModel("PWA").getProperty("/RequestedSubletCost"), 2);
 			
 			this.getView().getModel("ViewHelper").setProperty("/UI/requestedTotal", requestedTotal);
+			
+			var approvedTotal = 
+				parseFloat(this.getView().getModel("PWA").getProperty("/ApprovedLabourCost"), 2) +
+				parseFloat(this.getView().getModel("PWA").getProperty("/ApprovedPartsCost"), 2) +
+				parseFloat(this.getView().getModel("PWA").getProperty("/ApprovedSubletCost"), 2);
+			
+			this.getView().getModel("ViewHelper").setProperty("/UI/approvedTotal", approvedTotal);
+			
+		},
+		
+		_sanitisePercentageInputs: function(fieldName){
+		
+			if (this.getView().getModel("PWA").getProperty(fieldName) > 100){
+				this.getView().getModel("PWA").setProperty(fieldName,100);
+			}
+			
+			if (this.getView().getModel("PWA").getProperty(fieldName) < 0){
+				this.getView().getModel("PWA").setProperty(fieldName,0);
+			}
+			
 		},
 		
 		_refreshValidationMessages: function(){

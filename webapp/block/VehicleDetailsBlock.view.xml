@@ -46,26 +46,28 @@
 											</suggestionRows>									
 										</Input>
 									</l:VerticalLayout>	
+									
 									<l:VerticalLayout width="100%">
 										<Label text="Engine Number" labelFor="engineNumber"/>
 										<Input  id="engineNumber" value="{PWA>EngineNumber}" 
 											editable="{PWA>CanEdit}" maxLength="10"/>
 									</l:VerticalLayout>
+									
 									<l:VerticalLayout width="100%">
 										<Label text="Dealer Contact" labelFor="dealerContact"/>
-										<ComboBox 
-											id="dealerContact"
-											width="100%"
-											showSecondaryValues= "true"
+										<Input 
+											id="dealerContact" 
+											value="{PWA>DealerContact}"
+											maxLength="20"
 											editable="{PWA>CanEdit}"
-											items="{
-												path: '/EmployeeSet',
-												sorter: { path: 'LastName' }
-											}"
-											selectedKey="{PWA>DealerContact}">
-											<core:ListItem key="{EmployeeNumber}" text="{FirstName} {LastName}" additionalText = "({EmployeeNumber})"/>
-										</ComboBox>		
-									</l:VerticalLayout>							
+											showSuggestion="true"
+											suggestionItems="{/EmployeeSet}">
+											<suggestionItems>
+												<core:ListItem key="{EmployeeNumber}" text="{FirstName} {LastName}" />
+											</suggestionItems>										
+										</Input>
+									</l:VerticalLayout>	
+								
 									<l:VerticalLayout width="100%">
 										<Label id="DateOfFailure_label" text="Date of Failure" labelFor="dateOfFailure"/>
 										<DatePicker 

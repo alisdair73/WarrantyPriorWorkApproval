@@ -44,10 +44,16 @@ sap.ui.define([
 			var PWAType = oEvent.getParameter("listItem").getBindingContext().getObject().Code;
 			var PWATypeDescription = oEvent.getParameter("listItem").getBindingContext().getObject().Description;
 			var PWATypeGroup = oEvent.getParameter("listItem").getBindingContext().getObject().Group;
+			var objectType = oEvent.getParameter("listItem").getBindingContext().getObject().ClaimObjectType;
+			var statusDescription = oEvent.getParameter("listItem").getBindingContext().getObject().InitialStatusDescription;
+			var statusIcon = oEvent.getParameter("listItem").getBindingContext().getObject().InitialStatusIcon;
 			
 			this.getModel("PWA").setProperty("/PWAType",PWAType);
 			this.getModel("PWA").setProperty("/PWATypeDescription", PWATypeDescription);
 			this.getModel("PWA").setProperty("/PWATypeGroup", PWATypeGroup);
+			this.getModel("PWA").setProperty("/PWAObjectType", objectType);
+			this.getModel("PWA").setProperty("/StatusDescription",statusDescription);
+			this.getModel("PWA").setProperty("/StatusIcon",statusIcon);
 			
 			this.getModel("ViewHelper").setProperty("/busy", false);
 			this._PWATypeSelection.close();
@@ -122,6 +128,13 @@ sap.ui.define([
 				parseFloat(this.getView().getModel("PWA").getProperty("/RequestedSubletCost"), 2);
 			
 			this.getView().getModel("ViewHelper").setProperty("/UI/requestedTotal", requestedTotal);
+			
+			var approvedTotal = 
+				parseFloat(this.getView().getModel("PWA").getProperty("/ApprovedLabourCost"), 2) +
+				parseFloat(this.getView().getModel("PWA").getProperty("/ApprovedPartsCost"), 2) +
+				parseFloat(this.getView().getModel("PWA").getProperty("/ApprovedSubletCost"), 2);
+			
+			this.getView().getModel("ViewHelper").setProperty("/UI/approvedTotal", approvedTotal);
 		},
 		
 		_onActionError: function(error){
@@ -173,7 +186,7 @@ sap.ui.define([
 			}
 			
 			//Testing
-			//PWANumber = "200000000556";
+			//PWANumber = "200000000585";
 				
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";

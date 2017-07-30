@@ -12,10 +12,14 @@
 					<Input 
 						value="{
 							path: 'PWA>RequestedPartsSplitOwner',
-							type: 'sap.ui.model.type.Integer'
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								maxFractionDigits: 0								
+							}
 						}"
 						change="partsChanged"
-						type="Number" editable="{PWA>CanEdit}" 
+						type="Number" 
+						editable="{PWA>CanEdit}" 
 						valueState="{= ${PWA>RequestedPartsSplitOwner} + ${PWA>RequestedPartsSplitDealer} > 100 ? 'Error' : 'None' }"
 						valueStateText="Total Parts Split must not exceed 100%"/>
 		            <Input 
