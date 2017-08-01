@@ -42,9 +42,16 @@
 			<layout:VerticalLayout class="sapUiNoMargin" width="100%" id="messageArea"/>
 		</headerContent>
 		<sections>
-			<ObjectPageSection id="vehicleDetails" title="VEHICLE">
+			<ObjectPageSection 
+				id="vehicleDetails" 
+				title="{= ${PWA/PWAObjectType} === 'VELO' ? 'VEHICLE':'PRODUCT'}"
+			>
 				<subSections>
-					<ObjectPageSubSection id="vehicleDetails_sub1" title="VEHICLE" mode="Expanded">
+					<ObjectPageSubSection 
+						id="vehicleDetails_sub1" 
+						title="{= ${PWA>/PWAObjectType} === 'VELO' ? 'VEHICLE':'PRODUCT'}" 
+						mode="Expanded"
+					>
 						<blocks>
 							<claimBlocks:VehicleDetailsBlock/>
 						</blocks>
