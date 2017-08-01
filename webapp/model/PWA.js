@@ -57,9 +57,9 @@ sap.ui.define([
 				"ApprovedSubletSplitOwner": 0,
 				"ApprovedSubletSplitDealer": 0,
 				"ApprovedSubletSplitHonda": 0,				
-				"GoodwillReason": "",
+				"GoodwillReason": { "value":"", "ruleResult":{"valid": true, "errorTextID":""}},
 				"CustomerConcern": { "value":"", "ruleResult":{"valid": true, "errorTextID":""}},
-				"Rectification": "",
+				"Rectification": { "value":"", "ruleResult":{"valid": true, "errorTextID":""}},
 				"DealerComment": { "value":"", "ruleResult":{"valid": true, "errorTextID":""}},
 				"AssessmentComments": "",
 				"AssessmentCodes": "",
@@ -156,9 +156,9 @@ sap.ui.define([
 			this.PWA.ApprovedSubletSplitOwner = oPWA.ApprovedSubletSplitOwner;
 			this.PWA.ApprovedSubletSplitDealer = oPWA.ApprovedSubletSplitDealer;
 			this.PWA.ApprovedSubletSplitHonda = oPWA.ApprovedSubletSplitHonda;
-			this.PWA.GoodwillReason = oPWA.GoodwillReason;
+			this.PWA.GoodwillReason.value = oPWA.GoodwillReason;
 			this.PWA.CustomerConcern.value = oPWA.CustomerConcern;
-			this.PWA.Rectification = oPWA.Rectification;
+			this.PWA.Rectification.value = oPWA.Rectification;
 			this.PWA.DealerComment.value = oPWA.DealerComment;
 			this.PWA.AssessmentComments = oPWA.AssessmentComments;
 			this.PWA.AssessmentCodes = oPWA.AssessmentCodes;
@@ -223,9 +223,9 @@ sap.ui.define([
 			PWA.RequestedSubletSplitOwner = this.PWA.RequestedSubletSplitOwner.toString();
 			PWA.RequestedSubletSplitDealer = this.PWA.RequestedSubletSplitDealer.toString();
 			PWA.RequestedSubletSplitHonda = this.PWA.RequestedSubletSplitHonda.toString();
-			PWA.GoodwillReason = this.PWA.GoodwillReason;
+			PWA.GoodwillReason = this.PWA.GoodwillReason.value;
 			PWA.CustomerConcern = this.PWA.CustomerConcern.value;
-			PWA.Rectification = this.PWA.Rectification;
+			PWA.Rectification = this.PWA.Rectification.value;
 			PWA.DealerComment = this.PWA.DealerComment.value;
 			PWA.VersionIdentifier = this.PWA.VersionIdentifier;
 			PWA.MCPNItemId = this.PWA.MCPNItemId; 
@@ -292,12 +292,35 @@ sap.ui.define([
 			this.PWA.DealerComment.ruleResult = 
 				Rule.validateRequiredFieldIsPopulated(this.PWA.DealerComment.value); 
 		},
+	
+		validateRectification:function(){
+		
+			switch(this.PWA.PWATypeGroup){
+				case "NORMAL":
+					break;
+				case "GOODWILL":
+					this.PWA.Rectification.ruleResult = 
+						Rule.validateRequiredFieldIsPopulated(this.PWA.Rectification.value); 
+					break;
+			}
+		},	
+		
+		validateGoodwillReason:function(){
+			
+			switch(this.PWA.PWATypeGroup){
+				case "NORMAL":
+					break;
+				case "GOODWILL":
+					this.PWA.GoodwillReason.ruleResult = 
+						Rule.validateRequiredFieldIsPopulated(this.PWA.GoodwillReason.value); 
+			}
+		},
 		
 		validateRequestedLabourHours: function(){
 			var validated = true;
 			
-			this.PWA.DealerComment.ruleResult = Rule.validateIsANumber(this.PWA.RequestedLabourHours.value); 
-			if(this.PWA.DealerComment.ruleResult.valid){
+			this.PWA.RequestedLabourHours.ruleResult = Rule.validateIsANumber(this.PWA.RequestedLabourHours.value); 
+			if(this.PWA.RequestedLabourHours.ruleResult.valid){
 				if(this.PWA.RequestedLabourHours.value > 99.99){
 					validated = false;
 				}
@@ -311,6 +334,8 @@ sap.ui.define([
 			this.validateDateOfFailure();
 			this.validateCustomerConcern();
 			this.validateDealerComment();
+			this.validateGoodwillReason();
+			this.validateRectification();
 			this.validateRequestedLabourHours();
 		},
 		
@@ -321,6 +346,8 @@ sap.ui.define([
 				this.PWA.DateOfFailure.ruleResult.valid &&
 				this.PWA.CustomerConcern.ruleResult.valid &&
 				this.PWA.DealerComment.ruleResult.valid &&
+				this.PWA.GoodwillReason.ruleResult.valid &&
+				this.PWA.Rectification.ruleResult.valid &&
 				this.PWA.RequestedLabourHours.ruleResult.valid){
 				
 				return false;		

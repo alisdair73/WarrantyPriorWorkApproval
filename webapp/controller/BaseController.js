@@ -60,14 +60,12 @@ sap.ui.define([
 			var model = this.getView().getModel(modelName ? modelName : "PWA");
 			var messageTarget = target ? target : "/" + fieldId;
 			var field = model.getProperty(messageTarget);
-			
+
 			if(!field.ruleResult.valid){
-				 
-				var fieldName = "";
-				if(this.getView().byId(fieldId + "_label")){
-					fieldName = this.getView().byId(fieldId + "_label").getText();
-				} 
-				 
+
+				//Get the Field Name 
+				var fieldName = this.getView().getModel("i18n").getResourceBundle().getText(fieldId);
+				
 				this._addErrorMessageToMessageManager(
 					"UI_" + fieldId,
 					model,

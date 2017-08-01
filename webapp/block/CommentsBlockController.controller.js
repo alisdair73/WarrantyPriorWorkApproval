@@ -11,6 +11,16 @@ sap.ui.define([
 			sap.ui.getCore().getEventBus().subscribe("Validation","Refresh",this._refreshValidationMessages.bind(this),this);
 		},
 		
+		onGoodwillReasonChanged: function(){
+			PWA.validateGoodwillReason();
+			this.logValidationMessage("GoodwillReason");
+		},
+		
+		onRectificationChanged: function(){
+			PWA.validateRectification();
+			this.logValidationMessage("Rectification");
+		},
+		
 		onCustomerConcernedChanged: function(){
 			PWA.validateCustomerConcern();
 			this.logValidationMessage("CustomerConcern");
@@ -22,6 +32,8 @@ sap.ui.define([
 		},
 		
 		_refreshValidationMessages: function(){
+			this.logValidationMessage("GoodwillReason");
+			this.logValidationMessage("Rectification");
 			this.logValidationMessage("CustomerConcern");
 			this.logValidationMessage("DealerComment");
 		}

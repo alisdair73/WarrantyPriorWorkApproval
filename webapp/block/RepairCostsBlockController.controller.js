@@ -74,6 +74,10 @@ sap.ui.define([
 		
 		_sanitisePercentageInputs: function(fieldName){
 		
+		
+			//Convert to Integer
+			this.getView().getModel("PWA").setProperty(fieldName, Math.round(this.getView().getModel("PWA").getProperty(fieldName)));
+		
 			if (this.getView().getModel("PWA").getProperty(fieldName) > 100){
 				this.getView().getModel("PWA").setProperty(fieldName,100);
 			}

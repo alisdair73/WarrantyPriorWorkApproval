@@ -15,10 +15,12 @@
 										<l:layoutData>
 											<l:GridData span="L12"/>
 										</l:layoutData>
-										<Label text="Reason for Goodwill" labelFor="goodwillReason"/>
-										<TextArea id="goodwillReason" rows="5" cols="120" 
-											value="{PWA>GoodwillReason}"
+										<Label text="Reason for Goodwill" labelFor="goodwillReason" required="true"/>
+										<TextArea id="GoodwillReason" rows="5" cols="120" 
+											value="{PWA>GoodwillReason/value}"
 											editable="{PWA>CanEdit}"
+											change="onGoodwillReasonChanged"
+											valueState="{= ${PWA>GoodwillReason/ruleResult/valid} ? 'None':'Error'}"
 										/>
 									</l:VerticalLayout>
 									<l:VerticalLayout width="100%">
@@ -40,10 +42,12 @@
 										<l:layoutData>
 											<l:GridData span="L12"/>
 										</l:layoutData>
-										<Label text="Rectification" labelFor="rectification"/>
-										<TextArea id="rectification" rows="5" cols="120" 
-											value="{PWA>Rectification}"
+										<Label text="Rectification" labelFor="rectification" required="true"/>
+										<TextArea id="Rectification" rows="5" cols="120" 
+											value="{PWA>Rectification/value}"
 											editable="{PWA>CanEdit}"
+											change="onRectificationChanged"
+											valueState="{= ${PWA>Rectification/ruleResult/valid} ? 'None':'Error'}"
 										/>
 									</l:VerticalLayout>
 									<l:VerticalLayout width="100%">

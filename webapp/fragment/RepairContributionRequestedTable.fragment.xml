@@ -25,7 +25,10 @@
 		            <Input 
 		            	value="{
 							path: 'PWA>RequestedPartsSplitDealer',
-							type: 'sap.ui.model.type.Integer'
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								maxFractionDigits: 0								
+							}
 						}"
 						change="partsChanged"
 						type="Number" editable="{PWA>CanEdit}" 
@@ -43,7 +46,10 @@
 					<Input 
 						value="{
 							path: 'PWA>RequestedLabourSplitOwner',
-							type: 'sap.ui.model.type.Integer'
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								maxFractionDigits: 0								
+							}
 						}"
 						change="labourChanged"
 						type="Number" editable="{PWA>CanEdit}" 
@@ -53,7 +59,10 @@
 		            <Input 
 		            	value="{
 							path: 'PWA>RequestedLabourSplitDealer',
-							type: 'sap.ui.model.type.Integer'
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								maxFractionDigits: 0								
+							}
 						}"
 						change="labourChanged"
 						type="Number" editable="{PWA>CanEdit}" 
@@ -72,7 +81,10 @@
 					<Input 
 						value="{
 							path: 'PWA>RequestedSubletSplitOwner',
-							type: 'sap.ui.model.type.Integer'
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								maxFractionDigits: 0								
+							}
 						}"
 						change="subletChanged"
 						type="Number" editable="{PWA>CanEdit}" 
@@ -82,7 +94,10 @@
 		            <Input 
 		            	value="{
 							path: 'PWA>RequestedSubletSplitDealer',
-							type: 'sap.ui.model.type.Integer'
+							type: 'sap.ui.model.type.Float',
+							formatOptions: {
+								maxFractionDigits: 0								
+							}
 						}"
 						change="subletChanged"
 						type="Number" editable="{PWA>CanEdit}" 
