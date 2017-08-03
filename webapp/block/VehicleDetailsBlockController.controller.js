@@ -12,7 +12,10 @@ sap.ui.define([
 		},
 		
 		//VIN Search
-		onVINSuggest:function(event){
+		
+		//This needs the SERN/VELO stuff
+		
+		onExternalObjectNumberSuggest:function(event){
 			var searchString = event.getParameter("suggestValue");
 			var filters = [];
 			if (searchString) {
@@ -21,7 +24,7 @@ sap.ui.define([
 			event.getSource().getBinding("suggestionRows").filter(filters);
 		}, 
 		
-		onVINChanged: function(event){
+		onExternalObjectNumberChanged: function(event){
 			var searchString = event.getParameter("suggestValue");
 			var filters = [];
 			if (searchString) {
@@ -29,8 +32,8 @@ sap.ui.define([
 			}
 			event.getSource().getBinding("suggestionRows").filter(filters);	
 			
-			PWA.validateVIN();
-			this.logValidationMessage("VIN");
+			PWA.validateExternalObjectNumber();
+			this.logValidationMessage("ExternalObjectNumber");
 		},
 		
 		onDateOfFailureChanged: function(){
@@ -95,7 +98,7 @@ sap.ui.define([
 		},
 		
 		_refreshValidationMessages: function(){
-			this.logValidationMessage("VIN");
+			this.logValidationMessage("ExternalObjectNumber");
 			this.logValidationMessage("DateOfFailure");
 			this.logValidationMessage("MCPN");
 		}

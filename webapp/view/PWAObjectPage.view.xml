@@ -44,12 +44,12 @@
 		<sections>
 			<ObjectPageSection 
 				id="vehicleDetails" 
-				title="{= ${PWA/PWAObjectType} === 'VELO' ? 'VEHICLE':'PRODUCT'}"
+				title="{= ${PWA/ObjectType} === 'VELO' ? 'VEHICLE':'PRODUCT'}"
 			>
 				<subSections>
 					<ObjectPageSubSection 
 						id="vehicleDetails_sub1" 
-						title="{= ${PWA>/PWAObjectType} === 'VELO' ? 'VEHICLE':'PRODUCT'}" 
+						title="{= ${PWA>/ObjectType} === 'VELO' ? 'VEHICLE':'PRODUCT'}" 
 						mode="Expanded"
 					>
 						<blocks>

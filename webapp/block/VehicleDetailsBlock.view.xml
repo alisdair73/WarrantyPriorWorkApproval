@@ -7,7 +7,7 @@
 		<sap.ui.layout.form:formContainers>
 			<sap.ui.layout.form:FormContainer 
 				id="__container0" 
-				title="{= ${PWA>/PWAObjectType} === 'VELO' ? 'Vehicle Details':'Product Details'}"
+				title="{= ${PWA>/ObjectType} === 'VELO' ? 'Vehicle Details':'Product Details'}"
 			>
 				<sap.ui.layout.form:formElements>
 					<sap.ui.layout.form:FormElement id="__element0">
@@ -16,25 +16,25 @@
 								<l:content>
 									<l:VerticalLayout width="100%">
 										<Label 
-											id="VIN_label" 
-											text="{= ${PWA>/PWAObjectType} === 'VELO' ? 'VIN':'Serial Number'}"
+											id="ExternalObjectNumber_label" 
+											text="{= ${PWA>/ObjectType} === 'VELO' ? 'VIN':'Serial Number'}"
 											required="true" 
 											labelFor="VIN"
 										/>
 										<Input 
-											id="VIN" 
-											value="{PWA>VIN/value}"
+											id="ExternalObjectNumber" 
+											value="{PWA>ExternalObjectNumber/value}"
 											required="true"
 											editable="{PWA>CanEdit}"
 											showSuggestion="true"
-											suggest="onVINSuggest"
+											suggest="onExternalObjectNumberSuggest"
 											showTableSuggestionValueHelp="false"
-											suggestionItemSelected="onVINSelection"
+											suggestionItemSelected="onExternalObjectNumberSelection"
 											maxLength="35"
-											change="onVINChanged"
+											change="onExternalObjectNumberChanged"
 											suggestionRows="{/VINSet}"
 											maxSuggestionWidth="500px"
-											valueState="{= ${PWA>VIN/ruleResult/valid} ? 'None':'Error'}"
+											valueState="{= ${PWA>ExternalObjectNumber/ruleResult/valid} ? 'None':'Error'}"
 										>
 											<suggestionColumns>
 												<Column>

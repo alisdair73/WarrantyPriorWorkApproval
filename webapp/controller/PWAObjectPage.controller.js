@@ -51,7 +51,7 @@ sap.ui.define([
 			this.getModel("PWA").setProperty("/PWAType",PWAType);
 			this.getModel("PWA").setProperty("/PWATypeDescription", PWATypeDescription);
 			this.getModel("PWA").setProperty("/PWATypeGroup", PWATypeGroup);
-			this.getModel("PWA").setProperty("/PWAObjectType", objectType);
+			this.getModel("PWA").setProperty("/ObjectType", objectType);
 			this.getModel("PWA").setProperty("/StatusDescription",statusDescription);
 			this.getModel("PWA").setProperty("/StatusIcon",statusIcon);
 			
@@ -186,7 +186,7 @@ sap.ui.define([
 			}
 			
 			//Testing
-			//PWANumber = "200000000585";
+			//PWANumber = "200000000603";
 				
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";

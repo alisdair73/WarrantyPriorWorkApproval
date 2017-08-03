@@ -14,9 +14,9 @@ sap.ui.define([
 			this.PWA = {
 				"PWANumber": "",
 				"PWAType": "",
-				"PWAObjectType":"",
+				"ObjectType":"",
+				"ExternalObjectNumber": { "value":"", "ruleResult":{"valid": true, "errorTextID":""}},
 				"SubmittedOn": null,
-				"VIN": { "value":"", "ruleResult":{"valid": true, "errorTextID":""}},
 				"EngineNumber": "",
 				"DealerContact": "",
 				"DateOfFailure": { "value":null, "ruleResult":{"valid": true, "errorTextID":""}},
@@ -113,9 +113,9 @@ sap.ui.define([
 		
 			this.PWA.PWANumber = oPWA.PWANumber;
 			this.PWA.PWAType = oPWA.PWAType;
-			this.PWA.PWAObjectType = oPWA.PWAObjectType;
+			this.PWA.ObjectType = oPWA.ObjectType;
 			this.PWA.SubmittedOn = oPWA.SubmittedOn;
-			this.PWA.VIN.value = oPWA.VIN;
+			this.PWA.ExternalObjectNumber.value = oPWA.ExternalObjectNumber;
 			this.PWA.EngineNumber = oPWA.EngineNumber;
 			this.PWA.DealerContact = oPWA.DealerContact;
 			this.PWA.DateOfFailure.value = oPWA.DateOfFailure;
@@ -194,8 +194,8 @@ sap.ui.define([
 			
 			PWA.PWANumber = this.PWA.PWANumber;
 			PWA.PWAType = this.PWA.PWAType;
-			PWA.PWAObjectType = this.PWA.PWAObjectType;
-			PWA.VIN = this.PWA.VIN.value;
+			PWA.ObjectType = this.PWA.ObjectType;
+			PWA.ExternalObjectNumber = this.PWA.ExternalObjectNumber.value;
 			PWA.EngineNumber = this.PWA.EngineNumber;
 			PWA.DealerContact = this.PWA.DealerContact;
 			PWA.DateOfFailure = this.PWA.DateOfFailure.value;
@@ -254,9 +254,9 @@ sap.ui.define([
 			this.oDataModel.setData(this.PWA);			
 		},
 		
-		validateVIN: function(){
-			this.PWA.VIN.ruleResult = 
-				Rule.validateRequiredFieldIsPopulated(this.PWA.VIN.value);
+		validateExternalObjectNumber: function(){
+			this.PWA.ExternalObjectNumber.ruleResult = 
+				Rule.validateRequiredFieldIsPopulated(this.PWA.ExternalObjectNumber.value);
 		},
 		
 		validateMCPN: function(){
@@ -329,7 +329,7 @@ sap.ui.define([
 		},		
 		
 		validateAll: function(){
-			this.validateVIN();
+			this.validateExternalObjectNumber();
 			this.validateMCPN();
 			this.validateDateOfFailure();
 			this.validateCustomerConcern();
@@ -341,7 +341,7 @@ sap.ui.define([
 		
 		hasFrontendValidationError: function(){
 			
-			if(this.PWA.VIN.ruleResult.valid &&
+			if(this.PWA.ExternalObjectNumber.ruleResult.valid &&
 				this.PWA.MCPN.ruleResult.valid &&
 				this.PWA.DateOfFailure.ruleResult.valid &&
 				this.PWA.CustomerConcern.ruleResult.valid &&
