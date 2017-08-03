@@ -19,13 +19,14 @@
 											id="ExternalObjectNumber_label" 
 											text="{= ${PWA>/ObjectType} === 'VELO' ? 'VIN':'Serial Number'}"
 											required="true" 
-											labelFor="VIN"
+											labelFor="ExternalObjectNumber"
 										/>
 										<Input 
-											id="ExternalObjectNumber" 
+											id="ExternalObjectNumber_VELO" 
 											value="{PWA>ExternalObjectNumber/value}"
 											required="true"
 											editable="{PWA>CanEdit}"
+											visible="{= ${PWA>/ObjectType} === 'VELO'}"
 											showSuggestion="true"
 											suggest="onExternalObjectNumberSuggest"
 											showTableSuggestionValueHelp="false"
@@ -49,6 +50,40 @@
 													<cells>
 														<Label text="{VIN}" />
 														<Label text="{Description}" />
+													</cells>
+												</ColumnListItem>
+											</suggestionRows>									
+										</Input>
+										<Input 
+											id="ExternalObjectNumber_SERN" 
+											value="{PWA>ExternalObjectNumber/value}"
+											required="true"
+											
+											editable="{PWA>CanEdit}"
+											visible="{= ${PWA>/ObjectType} !== 'VELO'}"
+											showSuggestion="true"
+											suggest="onExternalObjectNumberSuggest"
+											showTableSuggestionValueHelp="false"
+											suggestionItemSelected="onExternalObjectNumberSelection"
+											maxLength="35"
+											change="onExternalObjectNumberChanged"
+											suggestionRows="{/Zwty_c_serial_number}"
+											maxSuggestionWidth="700px"
+											valueState="{= ${PWA>ExternalObjectNumber/ruleResult/valid} ? 'None':'Error'}"
+										>
+											<suggestionColumns>
+												<Column>
+													<Text text="Serial Number" />
+												</Column>
+												<Column>
+													<Text text="Description" />
+												</Column>
+											</suggestionColumns>
+											<suggestionRows>
+												<ColumnListItem>
+													<cells>
+														<Label text="{SerialNumber}" />
+														<Label text="{Equipment_Text}" />
 													</cells>
 												</ColumnListItem>
 											</suggestionRows>									

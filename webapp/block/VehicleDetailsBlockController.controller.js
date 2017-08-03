@@ -1,39 +1,47 @@
 sap.ui.define([
 	"hnd/dpe/warranty/prior_work_approval/controller/BaseController",
 	"sap/ui/model/Filter",
-	"hnd/dpe/warranty/prior_work_approval/model/PWA"
-], function(BaseController,  Filter, PWA) {
+	"hnd/dpe/warranty/prior_work_approval/model/PWA",
+	"sap/ui/model/json/JSONModel"
+], function(BaseController, Filter, PWA, JSONModel) {
 	"use strict";
 
 	return BaseController.extend("hnd.dpe.warranty.prior_work_approval.block.VehicleDetailsBlockController", {
 		
 		onInit: function(){
+			
+			this.setModel(
+				new JSONModel({"Description": ""}),
+				"SerialUIHelper"
+			);
+			
 			sap.ui.getCore().getEventBus().subscribe("Validation","Refresh",this._refreshValidationMessages.bind(this),this);
 		},
 		
-		//VIN Search
-		
-		//This needs the SERN/VELO stuff
-		
 		onExternalObjectNumberSuggest:function(event){
-			var searchString = event.getParameter("suggestValue");
-			var filters = [];
-			if (searchString) {
-				filters.push(new Filter("VIN", sap.ui.model.FilterOperator.StartsWith, searchString));
-			}
-			event.getSource().getBinding("suggestionRows").filter(filters);
+			
+			event.getSource().getBinding("suggestionRows").filter(this._applyExternalObjectNumberFilter(event.getParameter("suggestValue")));
 		}, 
 		
 		onExternalObjectNumberChanged: function(event){
-			var searchString = event.getParameter("suggestValue");
-			var filters = [];
-			if (searchString) {
-				filters.push(new Filter("VIN", sap.ui.model.FilterOperator.StartsWith, searchString));
-			}
-			event.getSource().getBinding("suggestionRows").filter(filters);	
+			
+			this.getView().getModel("PWA").setProperty("/ExternalObjectNumber/value",
+				this.getView().getModel("PWA").getProperty("/ExternalObjectNumber/value").toUpperCase()
+			);
 			
 			PWA.validateExternalObjectNumber();
 			this.logValidationMessage("ExternalObjectNumber");
+		},
+		
+		_applyExternalObjectNumberFilter: function(filterString){
+			
+			var filters = [];
+			if (filterString) {
+						
+				var filterName = this.getView().getModel("PWA").getProperty("/ObjectType") === "VELO" ? "VIN" : "SerialNumber";
+				filters.push(new Filter(filterName, sap.ui.model.FilterOperator.StartsWith, filterString));
+			}
+			return filters;
 		},
 		
 		onDateOfFailureChanged: function(){
