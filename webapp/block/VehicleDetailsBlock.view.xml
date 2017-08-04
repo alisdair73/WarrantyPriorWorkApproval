@@ -33,7 +33,7 @@
 											suggestionItemSelected="onExternalObjectNumberSelection"
 											maxLength="35"
 											change="onExternalObjectNumberChanged"
-											suggestionRows="{/VINSet}"
+											suggestionRows="{/ZWTY_C_VIN}"
 											maxSuggestionWidth="500px"
 											valueState="{= ${PWA>ExternalObjectNumber/ruleResult/valid} ? 'None':'Error'}"
 										>
