@@ -3,10 +3,8 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"hnd/dpe/warranty/prior_work_approval/model/PWA",
 	"sap/ui/model/Filter",
-	"sap/m/MessageStrip",
-	"sap/m/MessageToast",
 	"sap/m/MessageBox"
-], function(BaseController, JSONModel, PWA, Filter, MessageStrip, MessageToast, MessageBox) {
+], function(BaseController, JSONModel, PWA, Filter, MessageBox) {
 	"use strict";
 
 	return BaseController.extend("hnd.dpe.warranty.prior_work_approval.controller.PWAObjectPage", {
@@ -23,7 +21,8 @@ sap.ui.define([
 					"dealerNumber":"",
 					"dealerDescription":"",
 					"requestedTotal": 0,
-					"approvedTotal": 0
+					"approvedTotal": 0,
+					"hasBeenValidated":false
 				}
 			});
 			this.setModel(oViewModel, "ViewHelper");
@@ -93,12 +92,13 @@ sap.ui.define([
 */		
 		_doPWAAction: function(actionName){
 			this.getModel("ViewHelper").setProperty("/busy", true);
-			this._clearHeaderMessages();
 			
 			this.getView().getModel().create("/PriorWorkApprovalSet",
 				PWA.convertToODataForUpdate(), 
 				{
-					"success": this._onActionSuccess.bind(this),
+					"success": function(responseData,response){
+						this._onActionSuccess(actionName, responseData, response);
+					}.bind(this),
 					"error": this._onActionError.bind(this),
 					"headers": { "pwaaction": actionName },
 					"async": true
@@ -106,16 +106,24 @@ sap.ui.define([
 			);
 		},
 
-		_onActionSuccess: function(responseData,response){
+		_onActionSuccess: function(actionName,responseData,response){
 			
 			var leadingMessage = JSON.parse(response.headers['sap-message']);
-			MessageToast.show(leadingMessage.message);
+
+			if(actionName === "ValidatePWA"){
+				this.getModel("ViewHelper").setProperty("/UI/hasBeenValidated", true);
+			}
 			
-			this._addMessagesToHeader(leadingMessage.details);
+			MessageBox.success(
+				leadingMessage.message + "\nPlease observe any additional notes provided.",
+				{
+					id : "successMessageBox",
+					actions : [MessageBox.Action.CLOSE]
+				}	
+			);
+			
 			PWA.updatePWAFromJSONModel(responseData);
-			
 			this._updateEstimatedTotal();
-			
 			sap.ui.getCore().getEventBus().publish("PWA","Saved");
 			this.getModel("ViewHelper").setProperty("/busy", false);
 		},
@@ -140,9 +148,28 @@ sap.ui.define([
 		_onActionError: function(error){
 			switch(error.statusCode){
 				case "400":
-					var errorDetail = JSON.parse(error.responseText);
-					this._addMessagesToHeader(errorDetail.error.innererror.errordetails);
+					
+					MessageBox.error(
+						"An error occurred while processing the Warranty Claim.",
+						{
+							id : "errorMessageBox",
+							actions : [MessageBox.Action.CLOSE]
+						}	
+					);
+					
+					//REMOVE THE DUPLICATED LEAD MESSAGE - "SY/530"
+					var registeredMessages = sap.ui.getCore().getMessageManager().getMessageModel().getData().filter(
+		  				function(registeredMessage){
+							return registeredMessage.code === 'SY/530';
+						}
+					);
+		    		
+		    		if(registeredMessages.length > 0){
+		    			sap.ui.getCore().getMessageManager().removeMessages(registeredMessages[0]);
+		    		}  
+					//////////////
 					break;
+					
 				case "500":
 					//Technical Error
 					break;
@@ -186,7 +213,7 @@ sap.ui.define([
 			}
 			
 			//Testing
-			//PWANumber = "200000000603";
+			//PWANumber = "200000000622";
 				
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";
@@ -275,30 +302,7 @@ sap.ui.define([
 			
 			sap.ui.getCore().byId("PWATypeList").getBinding("items").filter(filters);	
 		},
-		
-		_clearHeaderMessages: function(){
-			this.getView().byId("messageArea").destroyContent();
-		},
-		
-		_addMessagesToHeader: function(messages){
-		
-			var messageArea = this.getView().byId("messageArea");
-			messageArea.destroyContent();
-			
-			for (var i = 0; i < messages.length; i++) {
-				var messageStrip = new MessageStrip("msgStrip" + i, {
-					text: messages[i].message,
-					showCloseButton: false,
-					showIcon: true,
-					type: messages[i].severity === "error" ? "Error" : "Warning"
-				});
-				messageArea.addContent(messageStrip);
-			}
-			//Scroll to the top of the page so messages are visible
-			var objectLayout = this.getView().byId("PWA");
-			objectLayout.scrollToSection(this.getView().byId("vehicleDetails_sub1").getId(), 0, -200);
-		},
-		
+	
 		_canExecuteAction: function(){
 			
 			//Run all UI Validation Rules
@@ -312,10 +316,7 @@ sap.ui.define([
 					"Please correct the data validation errors.",
 					{
 						id : "errorMessageBox",
-						actions : [MessageBox.Action.CLOSE],
-						onClose : function () {
-							//this.navigateToLaunchpad();
-						}
+						actions : [MessageBox.Action.CLOSE]
 					}	
 				);
 				return false;

@@ -16,6 +16,8 @@ sap.ui.define([
 				"PWAType": "",
 				"ObjectType":"",
 				"ExternalObjectNumber": { "value":"", "ruleResult":{"valid": true, "errorTextID":""}},
+				"ExternalObjectDescription":"",
+				"ExternalObjectModelCode":"",
 				"SubmittedOn": null,
 				"EngineNumber": "",
 				"DealerContact": "",

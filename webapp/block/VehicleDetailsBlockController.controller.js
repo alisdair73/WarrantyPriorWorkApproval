@@ -33,6 +33,19 @@ sap.ui.define([
 			this.logValidationMessage("ExternalObjectNumber");
 		},
 		
+		onExternalObjectNumberVELOSelected: function(event){
+
+			var dataObject = event.getParameter("selectedRow").getBindingContext().getObject();
+			this.getView().getModel("PWA").setProperty("/ExternalObjectDescription",dataObject.Description);
+		},
+		
+		onExternalObjectNumberSERNSelected: function(event){
+			
+			var dataObject = event.getParameter("selectedRow").getBindingContext().getObject();
+			this.getView().getModel("PWA").setProperty("/ExternalObjectDescription",dataObject.Equipment_Text);
+			this.getView().getModel("PWA").setProperty("/ExternalObjectModelCode",dataObject.ModelCode);
+		},
+		
 		_applyExternalObjectNumberFilter: function(filterString){
 			
 			var filters = [];
@@ -52,7 +65,7 @@ sap.ui.define([
 		//MCPN
 		onMCPNChanged: function(){
 			PWA.validateMCPN();
-			this.logValidationMessage("PWA");
+			this.logValidationMessage("MCPN");
 		},
 		
 		onMCPNSuggest: function(event){

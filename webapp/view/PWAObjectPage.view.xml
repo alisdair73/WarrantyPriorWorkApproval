@@ -39,7 +39,6 @@
 					icon="{= ${PWA>/CanEdit} ? 'sap-icon://unlocked' : 'sap-icon://locked' }"
 				/>
 			</layout:VerticalLayout>
-			<layout:VerticalLayout class="sapUiNoMargin" width="100%" id="messageArea"/>
 		</headerContent>
 		<sections>
 			<ObjectPageSection 
@@ -120,7 +119,7 @@
 					text="{= ${PWA>/CurrentVersionNumber} === '0001' ? 'Submit' : 'Resubmit'}" 
 					press="onSubmit" 
 					type="Emphasized" 
-					visible="{PWA>/CanEdit}"
+					visible="{= ${PWA>/CanEdit} &amp;&amp; ${ViewHelper>/UI/hasBeenValidated}}"
 				/>
 			</m:OverflowToolbar>
 		</footer>
