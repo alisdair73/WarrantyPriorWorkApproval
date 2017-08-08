@@ -5,6 +5,7 @@
 		class="sapUiPopupWithPadding"
 		items="{/ZDPE_C_MATERIALS}"
 		search="onValueHelpSearch"
+		liveChange="onValueHelpSearch"
 		confirm="onMCPNSelected"
 		cancel="onValueHelpClose"
 		multiSelect="false">

@@ -69,16 +69,25 @@ sap.ui.define([
 		},
 		
 		onMCPNSuggest: function(event){
+			event.getSource().getBinding("suggestionRows").filter(this._partSearchFilter(event.getParameter("suggestValue")));
+		},
+		
+		_partSearchFilter: function(searchString){
 			
-			var searchString = event.getParameter("suggestValue");
 			var filters = [];
 			if (searchString) {
+				var partsFilterString = searchString.replace(/[^a-zA-Z0-9]/g, "");
 				filters.push(new Filter([
-					new Filter("materialNo", sap.ui.model.FilterOperator.StartsWith, searchString),
+					new Filter("materialNo", sap.ui.model.FilterOperator.StartsWith, partsFilterString),
 					new Filter("description", sap.ui.model.FilterOperator.Contains, searchString)
 				], false));
+				filters.push( new Filter("salesOrg",sap.ui.model.FilterOperator.EQ, 
+					this.getView().getModel("PWA").getProperty("/SalesOrganisation")));
+			} else {
+				filters.push( new Filter("salesOrg",sap.ui.model.FilterOperator.EQ, 
+						this.getView().getModel("PWA").getProperty("/SalesOrganisation")));
 			}
-			event.getSource().getBinding("suggestionRows").filter(filters);
+			return filters;
 		},
 		
 		onMCPNSelected: function(event){
@@ -103,19 +112,19 @@ sap.ui.define([
 				this.getView().addDependent(this._MCPNDialog);
 			}
 
+			var filters = [];
+			filters.push(new Filter("salesOrg",sap.ui.model.FilterOperator.EQ, 
+				this.getView().getModel("PWA").getProperty("/SalesOrganisation")));
+
+			this._MCPNDialog.getBinding("items").filter(filters);
+
 			// Display the popup
 			this._MCPNDialog.open();
 		},
 		
 		onValueHelpSearch: function(event) {
 			
-			var searchString = event.getParameter("value");
-			var filters = [];
-			filters.push(new Filter([
-				new Filter("materialNo", sap.ui.model.FilterOperator.StartsWith, searchString),
-				new Filter("description", sap.ui.model.FilterOperator.Contains, searchString)
-			], false));
-			event.getSource().getBinding("items").filter(filters);
+			event.getSource().getBinding("items").filter(this._partSearchFilter(event.getParameter("value")));
 		},
 		
 		_refreshValidationMessages: function(){

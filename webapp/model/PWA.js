@@ -118,6 +118,8 @@ sap.ui.define([
 			this.PWA.ObjectType = oPWA.ObjectType;
 			this.PWA.SubmittedOn = oPWA.SubmittedOn;
 			this.PWA.ExternalObjectNumber.value = oPWA.ExternalObjectNumber;
+			this.PWA.ExternalObjectDescription = oPWA.ExternalObjectDescription;
+			this.PWA.ExternalObjectModelCode = oPWA.ExternalObjectModelCode;
 			this.PWA.EngineNumber = oPWA.EngineNumber;
 			this.PWA.DealerContact = oPWA.DealerContact;
 			this.PWA.DateOfFailure.value = oPWA.DateOfFailure;
