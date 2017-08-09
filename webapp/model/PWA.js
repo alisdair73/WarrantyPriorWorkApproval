@@ -33,6 +33,7 @@ sap.ui.define([
 				"HistoryComplete": false,
 				"ServicedByDealer": false,
 				"OriginalOwner": false,
+				"RequestedTotalCost": { "value": 0, "ruleResult":{"valid": true, "errorTextID":""}},
 				"RequestedLabourHours": { "value": 0, "ruleResult":{"valid": true, "errorTextID":""}},
 				"RequestedLabourCost": 0,
 				"RequestedPartsCost": 0,
@@ -332,6 +333,17 @@ sap.ui.define([
 			}
 		},		
 		
+		validateTotalCostIsGreaterThanZero: function(){
+			
+			var validated = true;
+			
+			if( this.PWA.RequestedTotalCost.value <= 0){
+              validated = false;
+			}
+			this.PWA.RequestedTotalCost.ruleResult = {"valid": validated, "errorTextID":"claimIsZero"}; 
+
+		},
+		
 		validateAll: function(){
 			this.validateExternalObjectNumber();
 			this.validateMCPN();
@@ -341,6 +353,7 @@ sap.ui.define([
 			this.validateGoodwillReason();
 			this.validateRectification();
 			this.validateRequestedLabourHours();
+			this.validateTotalCostIsGreaterThanZero();
 		},
 		
 		hasFrontendValidationError: function(){

@@ -56,8 +56,9 @@
 	    	    		editable="{PWA>CanEdit}"
 	    	    		change="calculateTotalCost"/>
 	            	<Input
+	            	    id="RequestedTotalCost"
 	            		value="{
-							path: 'ViewHelper>/UI/requestedTotal',
+							path: 'PWA>/RequestedTotalCost/value',
 							type: 'sap.ui.model.type.Float',
 							formatOptions: {
 								minFractionDigits: 2,
@@ -65,6 +66,7 @@
 							}
 						}"
 						editable="false"
+						valueState="{= ${PWA>/RequestedTotalCost/ruleResult/valid} ? 'None':'Error'}"
 	            	/>
 	        	</cells>
 			</ColumnListItem>

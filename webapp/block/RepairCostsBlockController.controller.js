@@ -61,7 +61,9 @@ sap.ui.define([
 				parseFloat(this.getView().getModel("PWA").getProperty("/RequestedPartsCost"), 2) +
 				parseFloat(this.getView().getModel("PWA").getProperty("/RequestedSubletCost"), 2);
 			
-			this.getView().getModel("ViewHelper").setProperty("/UI/requestedTotal", requestedTotal);
+			this.getView().getModel("PWA").setProperty("/RequestedTotalCost/value", requestedTotal);
+			PWA.validateTotalCostIsGreaterThanZero();
+			this.logValidationMessage("RequestedTotalCost");
 			
 			var approvedTotal = 
 				parseFloat(this.getView().getModel("PWA").getProperty("/ApprovedLabourCost"), 2) +
@@ -90,6 +92,7 @@ sap.ui.define([
 		
 		_refreshValidationMessages: function(){
 			this.logValidationMessage("RequestedLabourHours");
+			this.logValidationMessage("RequestedTotalCost");
 		}		
 	});
 });

@@ -20,7 +20,7 @@ sap.ui.define([
 				"UI": {
 					"dealerNumber":"",
 					"dealerDescription":"",
-					"requestedTotal": 0,
+//					"requestedTotal": { "value": 0, "ruleResult":{"valid": true, "errorTextID":""}},
 					"approvedTotal": 0,
 					"hasBeenValidated":false
 				}
@@ -135,7 +135,7 @@ sap.ui.define([
 				parseFloat(this.getView().getModel("PWA").getProperty("/RequestedPartsCost"), 2) +
 				parseFloat(this.getView().getModel("PWA").getProperty("/RequestedSubletCost"), 2);
 			
-			this.getView().getModel("ViewHelper").setProperty("/UI/requestedTotal", requestedTotal);
+			this.getView().getModel("PWA").setProperty("/RequestedTotalCost/value", requestedTotal);
 			
 			var approvedTotal = 
 				parseFloat(this.getView().getModel("PWA").getProperty("/ApprovedLabourCost"), 2) +
@@ -255,7 +255,7 @@ sap.ui.define([
 					context: null,
 					filters: [new Filter("IsAuthorisationType",sap.ui.model.FilterOperator.EQ, true)],					
 					success: function(oData) {
-						if (oData.results.length) {
+						if (oData.results.length && oData.results.length > 0) {
 							if (! this._PWATypeSelection) {
 								this._PWATypeSelection = sap.ui.xmlfragment("hnd.dpe.warranty.prior_work_approval.fragment.PWATypeSelection", this);
 								this.setModel(new JSONModel(this._buildSalesOrgList(oData)),"SalesAreas");
@@ -263,9 +263,25 @@ sap.ui.define([
 							}
 							this._PWATypeSelection.open();
 							this._filterPWAType(this.getModel("PWA").getProperty("/SalesOrganisation"));
+						} else {
+							this._showPWAClaimErrorMessage();
 						}
-					}.bind(this)
+					}.bind(this),
+					error: this._showPWAClaimErrorMessage.bind(this)
 				}
+			);
+		},
+		
+		_showPWAClaimErrorMessage: function(){
+			MessageBox.error(
+				"An error occurred while loading Claim Types for your Dealership.\nPlease try again later.",
+				{
+					id : "errorMessageBox",
+					actions : [MessageBox.Action.CLOSE],
+					onClose : function () {
+						this.navigateToLaunchpad();
+					}.bind(this)
+				}	
 			);
 		},
 		
