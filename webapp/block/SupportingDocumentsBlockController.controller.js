@@ -16,9 +16,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			});
 			
 			//Set up Event Listener to Upload Files
-			sap.ui.getCore().getEventBus().subscribe("PWA","Saved",this._uploadAttachmentCollection.bind(this),this);
+			sap.ui.getCore().getEventBus().subscribe("PWA","Saved",this._uploadAttachmentCollection,this);
 		},
 
+		onExit: function () {
+			sap.ui.getCore().getEventBus().unsubscribe("PWA","Saved",this._uploadAttachmentCollection,this);
+		},
+		
 		onUploadComplete: function(oEvent) {
 
 			var fileResponse = JSON.parse( oEvent.getParameter("mParameters").responseRaw );
@@ -44,7 +48,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		    this.getView().getModel("PWA").setProperty("/Attachments", attachments);
 		},
 		
-		onUploadTerminated: function(oEvent) {
+		onUploadTerminated: function() {
 		
 /*			var sFileName = oEvent.getParameter("fileName");
 			var oRequestHeaders = oEvent.getParameters().getHeaderParameter();*/
@@ -54,7 +58,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			
     		oEvent.getParameters().addHeaderParameter(new sap.m.UploadCollectionParameter({
                 name: "slug",
-                value: this.getView().getModel("PWA").getProperty("/PWANumber") + "|" + oEvent.getParameter("fileName")
+                value: oEvent.getParameter("fileName")
             }));
             
     		oEvent.getParameters().addHeaderParameter(new sap.m.UploadCollectionParameter({
@@ -102,7 +106,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		_uploadAttachmentCollection: function(){
 			//Start the File Upload
 			var attachmentCollection = this.getView().byId("pwaAttachmentCollection");
-			attachmentCollection.upload();
+			if(attachmentCollection){
+				attachmentCollection.upload();
+			}
 		}
 	});
 

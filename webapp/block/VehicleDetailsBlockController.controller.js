@@ -15,7 +15,11 @@ sap.ui.define([
 				"SerialUIHelper"
 			);
 			
-			sap.ui.getCore().getEventBus().subscribe("Validation","Refresh",this._refreshValidationMessages.bind(this),this);
+			sap.ui.getCore().getEventBus().subscribe("Validation","Refresh",this._refreshValidationMessages,this);
+		},
+		
+		onExit: function(){
+			sap.ui.getCore().getEventBus().unsubscribe("Validation","Refresh",this._refreshValidationMessages,this);
 		},
 		
 		onExternalObjectNumberSuggest:function(event){

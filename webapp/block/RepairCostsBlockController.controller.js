@@ -7,7 +7,11 @@ sap.ui.define([
 	return BaseController.extend("hnd.dpe.warranty.prior_work_approval.block.RepairCostsBlockController", {
 		
 		onInit: function() {
-			sap.ui.getCore().getEventBus().subscribe("Validation","Refresh",this._refreshValidationMessages.bind(this),this);
+			sap.ui.getCore().getEventBus().subscribe("Validation","Refresh",this._refreshValidationMessages,this);
+    	},
+    	
+   		onExit: function() {
+			sap.ui.getCore().getEventBus().unsubscribe("Validation","Refresh",this._refreshValidationMessages,this);
     	},
 		
 		onRequestedLabourHoursChanged: function(){
