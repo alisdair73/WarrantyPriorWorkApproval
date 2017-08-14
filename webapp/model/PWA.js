@@ -15,6 +15,7 @@ sap.ui.define([
 				"PWANumber": "",
 				"PWAType": "",
 				"ObjectType":"",
+				"PrecedingPWANumber":"", 
 				"ExternalObjectNumber": { "value":"", "ruleResult":{"valid": true, "errorTextID":""}},
 				"ExternalObjectDescription":"",
 				"ExternalObjectModelCode":"",
@@ -88,7 +89,7 @@ sap.ui.define([
 			return this.oDataModel;
 		},
 		
-		updatePWAFromJSONModel: function(jsonModel){
+		updatePWAFromJSONModel: function(jsonModel, validateMode){
 
 			this.PWA.PWANumber = jsonModel.PWANumber;
 			this.PWA.SubmittedOn = jsonModel.SubmittedOn;
@@ -97,12 +98,15 @@ sap.ui.define([
 			this.PWA.VersionIdentifier = jsonModel.VersionIdentifier;
 			this.PWA.CurrentVersionNumber = jsonModel.CurrentVersionNumber;
 			this.PWA.CurrentVersionCategory = jsonModel.CurrentVersionCategory;
-			this.PWA.CanEdit = jsonModel.CanEdit;
-			this.PWA.MCPNItemId = jsonModel.MCPNItemId;
-			this.PWA.SubletItemId = jsonModel.SubletItemId;
-			this.PWA.PartsItemId = jsonModel.PartsItemId;
-			this.PWA.LabourItemId = jsonModel.LabourItemId;
 			this.PWA.RequestedLabourCost = jsonModel.RequestedLabourCost.toString();
+			this.PWA.CanEdit = jsonModel.CanEdit;
+			
+			if(!validateMode){
+				this.PWA.MCPNItemId = jsonModel.MCPNItemId;
+				this.PWA.SubletItemId = jsonModel.SubletItemId;
+				this.PWA.PartsItemId = jsonModel.PartsItemId;
+				this.PWA.LabourItemId = jsonModel.LabourItemId;
+			}
 			
 			this.resetChanges();
 		}, 
@@ -118,6 +122,7 @@ sap.ui.define([
 			this.PWA.PWAType = oPWA.PWAType;
 			this.PWA.ObjectType = oPWA.ObjectType;
 			this.PWA.SubmittedOn = oPWA.SubmittedOn;
+			this.PWA.PrecedingPWANumber = oPWA.PrecedingPWANumber;
 			this.PWA.ExternalObjectNumber.value = oPWA.ExternalObjectNumber;
 			this.PWA.ExternalObjectDescription = oPWA.ExternalObjectDescription;
 			this.PWA.ExternalObjectModelCode = oPWA.ExternalObjectModelCode;
@@ -219,15 +224,15 @@ sap.ui.define([
 			PWA.RequestedLabourCost = this.PWA.RequestedLabourCost.toString();
 			PWA.RequestedPartsCost = this.PWA.RequestedPartsCost.toString();
 			PWA.RequestedSubletCost = this.PWA.RequestedSubletCost.toString();
-			PWA.RequestedLabourSplitOwner = this.PWA.RequestedLabourSplitOwner.toString();
-			PWA.RequestedLabourSplitDealer = this.PWA.RequestedLabourSplitDealer.toString();
-			PWA.RequestedLabourSplitHonda = this.PWA.RequestedLabourSplitHonda.toString();
-			PWA.RequestedPartsSplitOwner = this.PWA.RequestedPartsSplitOwner.toString();
-			PWA.RequestedPartsSplitDealer = this.PWA.RequestedPartsSplitDealer.toString();
-			PWA.RequestedPartsSplitHonda = this.PWA.RequestedPartsSplitHonda.toString();
-			PWA.RequestedSubletSplitOwner = this.PWA.RequestedSubletSplitOwner.toString();
-			PWA.RequestedSubletSplitDealer = this.PWA.RequestedSubletSplitDealer.toString();
-			PWA.RequestedSubletSplitHonda = this.PWA.RequestedSubletSplitHonda.toString();
+			PWA.RequestedLabourSplitOwner = this.PWA.RequestedLabourSplitOwner;
+			PWA.RequestedLabourSplitDealer = this.PWA.RequestedLabourSplitDealer;
+			PWA.RequestedLabourSplitHonda = this.PWA.RequestedLabourSplitHonda;
+			PWA.RequestedPartsSplitOwner = this.PWA.RequestedPartsSplitOwner;
+			PWA.RequestedPartsSplitDealer = this.PWA.RequestedPartsSplitDealer;
+			PWA.RequestedPartsSplitHonda = this.PWA.RequestedPartsSplitHonda;
+			PWA.RequestedSubletSplitOwner = this.PWA.RequestedSubletSplitOwner;
+			PWA.RequestedSubletSplitDealer = this.PWA.RequestedSubletSplitDealer;
+			PWA.RequestedSubletSplitHonda = this.PWA.RequestedSubletSplitHonda;
 			PWA.GoodwillReason = this.PWA.GoodwillReason.value;
 			PWA.CustomerConcern = this.PWA.CustomerConcern.value;
 			PWA.Rectification = this.PWA.Rectification.value;

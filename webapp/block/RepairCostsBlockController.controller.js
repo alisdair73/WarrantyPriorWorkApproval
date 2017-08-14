@@ -1,13 +1,28 @@
 sap.ui.define([
   "hnd/dpe/warranty/prior_work_approval/controller/BaseController",
-  "hnd/dpe/warranty/prior_work_approval/model/PWA"
-], function(BaseController, PWA) {
+  "hnd/dpe/warranty/prior_work_approval/model/PWA",
+  "sap/ui/core/format/NumberFormat"
+], function(BaseController, PWA, NumberFormat) {
 	"use strict";
 
 	return BaseController.extend("hnd.dpe.warranty.prior_work_approval.block.RepairCostsBlockController", {
 		
 		onInit: function() {
 			sap.ui.getCore().getEventBus().subscribe("Validation","Refresh",this._refreshValidationMessages,this);
+			
+			this._hoursFormatter = sap.ui.core.format.NumberFormat.getFloatInstance({
+				maxFractionDigits: 1,
+				groupingEnabled: false,
+            	decimalSeparator: '.'
+			});
+			
+			this._costFormatter = sap.ui.core.format.NumberFormat.getFloatInstance({
+				minFractionDigits: 2,
+				maxFractionDigits: 2,
+				groupingEnabled: false,
+            	decimalSeparator: '.'
+			});
+			
     	},
     	
    		onExit: function() {
@@ -15,6 +30,11 @@ sap.ui.define([
     	},
 		
 		onRequestedLabourHoursChanged: function(){
+
+			this.getView().getModel("PWA").setProperty("/RequestedLabourHours/value",
+				this._hoursFormatter.format(this.getView().getModel("PWA").getProperty("/RequestedLabourHours/value"))
+			);
+			
 			PWA.validateRequestedLabourHours();
 			this.logValidationMessage("RequestedLabourHours");
 		},
@@ -60,12 +80,21 @@ sap.ui.define([
 		
 		calculateTotalCost: function(){
 			
+			this.getView().getModel("PWA").setProperty("/RequestedPartsCost",
+				this._costFormatter.format(this.getView().getModel("PWA").getProperty("/RequestedPartsCost"))
+			);
+			
+			this.getView().getModel("PWA").setProperty("/RequestedSubletCost",
+				this._costFormatter.format(this.getView().getModel("PWA").getProperty("/RequestedSubletCost"))
+			);
+			
 			var requestedTotal = 
-				parseFloat(this.getView().getModel("PWA").getProperty("/RequestedLabourCost"), 2) +
-				parseFloat(this.getView().getModel("PWA").getProperty("/RequestedPartsCost"), 2) +
-				parseFloat(this.getView().getModel("PWA").getProperty("/RequestedSubletCost"), 2);
+				this.getView().getModel("PWA").getProperty("/RequestedLabourCost") +
+				this.getView().getModel("PWA").getProperty("/RequestedPartsCost") +
+				this.getView().getModel("PWA").getProperty("/RequestedSubletCost");
 			
 			this.getView().getModel("PWA").setProperty("/RequestedTotalCost/value", requestedTotal);
+			
 			PWA.validateTotalCostIsGreaterThanZero();
 			this.logValidationMessage("RequestedTotalCost");
 			

@@ -122,7 +122,7 @@ sap.ui.define([
 				}	
 			);
 			
-			PWA.updatePWAFromJSONModel(responseData);
+			PWA.updatePWAFromJSONModel(responseData, actionName === "ValidatePWA" );
 			this._updateEstimatedTotal();
 			sap.ui.getCore().getEventBus().publish("PWA","Saved");
 			this.getModel("ViewHelper").setProperty("/busy", false);
@@ -213,7 +213,7 @@ sap.ui.define([
 			}
 			
 			//Testing
-			//PWANumber = "200000000648";
+			//PWANumber = "200000000699";
 				
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";

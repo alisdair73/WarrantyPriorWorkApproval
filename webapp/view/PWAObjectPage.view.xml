@@ -28,6 +28,11 @@
 				<m:ObjectAttribute title="PWA Number" text="{PWA>/PWANumber}"/>
 				<m:ObjectAttribute title="PWA Type" text="{PWA>/PWATypeDescription}"/>
 				<m:ObjectAttribute 
+					title="Legacy PWA Number" 
+					text="{PWA>/PrecedingPWANumber}" 
+					visible="{= ${PWA>/PrecedingPWANumber} !== ''}"
+				/>
+				<m:ObjectAttribute 
 					title="Submitted Date" 
 					text="{	path: 'PWA>/SubmittedOn', 
 							type: 'sap.ui.model.type.Date'

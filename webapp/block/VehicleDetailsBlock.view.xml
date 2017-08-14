@@ -180,7 +180,7 @@
 				<Label id="DateOfFailure_label" text="Date of Failure" labelFor="dateOfFailure"/>
 				<DatePicker 
 					id="DateOfFailure" 
-					displayFormat="medium" 
+					displayFormat="dd/MM/yyyy"
 					dateValue="{PWA>DateOfFailure/value}" 
 					editable="{PWA>CanEdit}"
 					change="onDateOfFailureChanged"
