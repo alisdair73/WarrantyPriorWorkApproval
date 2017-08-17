@@ -14,13 +14,12 @@ sap.ui.define([
     		this.getView().setModel(sap.ui.getCore().getMessageManager().getMessageModel(), "message");
     		
 			var oViewModel = new JSONModel({
-				"busy": false,
+				"busy": true,
 				"delay": 0,
 				"readOnly": false,
 				"UI": {
 					"dealerNumber":"",
 					"dealerDescription":"",
-//					"requestedTotal": { "value": 0, "ruleResult":{"valid": true, "errorTextID":""}},
 					"approvedTotal": 0,
 					"hasBeenValidated":false
 				}
@@ -213,7 +212,7 @@ sap.ui.define([
 			}
 			
 			//Testing
-			//PWANumber = "200000000699";
+			//PWANumber = "200000000459";
 				
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";

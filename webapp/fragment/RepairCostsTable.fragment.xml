@@ -78,8 +78,8 @@
 							path: 'PWA>ApprovedLabourHours',
 							type: 'sap.ui.model.type.Float',
 							formatOptions: {
-								minFractionDigits: 2,
-								maxFractionDigits: 2,
+								minFractionDigits: 1,
+								maxFractionDigits: 1,
             					groupingEnabled: false,
             					groupingSeparator: ',',
             					decimalSeparator: '.'								
