@@ -16,6 +16,7 @@
 								instantUpload="false"
 								showSeparators="All"
 								fileDeleted="onFileDeleted"
+								
 								uploadEnabled="{PWA>CanEdit}"
 								uploadComplete="onUploadComplete"
 								beforeUploadStarts="onBeforeUploadStarts"
@@ -40,7 +41,10 @@
 										mimeType="{PWA>MimeType}"
 										url="{PWA>URL}"
 										visibleEdit="false"
-										visibleDelete="{PWA>/CanEdit}">
+										visibleDelete="{PWA>CanEdit}"
+										enableEdit="false"
+										enableDelete="{PWA>CanEdit}"
+										>
 									</UploadCollectionItem>
 								</items>
 							</UploadCollection>			

@@ -113,8 +113,19 @@ sap.ui.define([
 				this.getModel("ViewHelper").setProperty("/UI/hasBeenValidated", true);
 			}
 			
+			var warningMessages = leadingMessage.details.filter(function(message){
+				return message.severity === "warning";
+			});
+			
+			var messageBoxText = "";
+			if(warningMessages.length > 0){
+				messageBoxText = leadingMessage.message + "\n" + "Please review Warning messages before submitting claim.";
+			} else {
+				messageBoxText = leadingMessage.message + "\n" + "Please observe any additional notes provided.";
+			}
+			
 			MessageBox.success(
-				leadingMessage.message + "\nPlease observe any additional notes provided.",
+				messageBoxText,
 				{
 					id : "successMessageBox",
 					actions : [MessageBox.Action.CLOSE]
@@ -212,7 +223,7 @@ sap.ui.define([
 			}
 			
 			//Testing
-			//PWANumber = "200000000459";
+			PWANumber = "1210000005";
 				
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";

@@ -177,7 +177,7 @@
 	        	
 	        	<core:Title text="" />
 				<core:Title text="Failure Details" />
-				<Label id="DateOfFailure_label" text="Date of Failure" labelFor="dateOfFailure"/>
+				<Label id="DateOfFailure_label" text="Date of Failure" labelFor="dateOfFailure" required="true"/>
 				<DatePicker 
 					id="DateOfFailure" 
 					displayFormat="dd/MM/yyyy"
