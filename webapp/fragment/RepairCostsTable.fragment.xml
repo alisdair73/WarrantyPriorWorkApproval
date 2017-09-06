@@ -1,7 +1,12 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
 	<Table >
+		<headerToolbar>
+			<Toolbar>
+				<Title text="Repair Cost Estimation" level="H2"/>
+			</Toolbar>
+		</headerToolbar>
 	    <items>
-	    	<ColumnListItem id="requestedCosts" visible="true">
+	    	<ColumnListItem id="requestedCosts" visible="{ViewHelper>/UI/showRequestedCosts}">
 	    		<cells>
 	        		<Text text="REQUESTED (100%)"/>
 					<Input 
@@ -15,7 +20,6 @@
             					groupingSeparator: ',',
             					decimalSeparator: '.'								
 							}
-
 						}"	
 						type="Number"
 						editable="{PWA>CanEdit}"
@@ -70,9 +74,9 @@
 	            	/>
 	        	</cells>
 			</ColumnListItem>
-	    	<ColumnListItem id="approvedCosts" visible="{= !${PWA>CanEdit} &amp;&amp; ${PWA>CurrentVersionCategory} === 'OC' }">
+	    	<ColumnListItem id="approvedCosts" visible="{ViewHelper>/UI/showApprovedCosts}">
 	    		<cells>
-	        		<Text text="APPROVED"/>
+	        		<Text text="APPROVED (MAX)"/>
 					<Input 
 						value="{
 							path: 'PWA>ApprovedLabourHours',

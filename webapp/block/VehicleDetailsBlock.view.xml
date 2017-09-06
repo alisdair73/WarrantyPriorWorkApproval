@@ -189,7 +189,22 @@
 				
 				<core:Title text="" />
 				<Label text="Failure KM/Hrs" labelFor="failureKM"/>
-				<Input id="failureKM" value="{PWA>FailureMeasure}" editable="{PWA>CanEdit}"/>
+				<Input 
+					id="failureKM" 
+					value="{
+						path: 'PWA>FailureMeasure',
+						type: 'sap.ui.model.type.Float',
+						formatOptions: {
+							maxFractionDigits: 0,
+        					groupingEnabled: false,
+        					groupingSeparator: ',',
+        					decimalSeparator: '.'								
+						}
+					}"	
+					type="Number"
+					change="onFailureKmChanged"
+					editable="{PWA>CanEdit}"
+				/>
 			</f:content>	
 		</f:SimpleForm>
 	</VBox>

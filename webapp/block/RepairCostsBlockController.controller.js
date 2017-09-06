@@ -22,7 +22,6 @@ sap.ui.define([
 				groupingEnabled: false,
             	decimalSeparator: '.'
 			});
-			
     	},
     	
    		onExit: function() {

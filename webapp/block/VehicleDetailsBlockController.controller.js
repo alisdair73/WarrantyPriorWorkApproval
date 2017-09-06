@@ -2,13 +2,19 @@ sap.ui.define([
 	"hnd/dpe/warranty/prior_work_approval/controller/BaseController",
 	"sap/ui/model/Filter",
 	"hnd/dpe/warranty/prior_work_approval/model/PWA",
-	"sap/ui/model/json/JSONModel"
-], function(BaseController, Filter, PWA, JSONModel) {
+	"sap/ui/model/json/JSONModel",
+	"sap/ui/core/format/NumberFormat"
+], function(BaseController, Filter, PWA, JSONModel, NumberFormat) {
 	"use strict";
 
 	return BaseController.extend("hnd.dpe.warranty.prior_work_approval.block.VehicleDetailsBlockController", {
 		
 		onInit: function(){
+			
+			this._kmFormatter = sap.ui.core.format.NumberFormat.getFloatInstance({
+				maxFractionDigits: 0,
+				groupingEnabled: false
+			});
 			
 			this.setModel(
 				new JSONModel({"Description": ""}),
@@ -16,6 +22,10 @@ sap.ui.define([
 			);
 			
 			sap.ui.getCore().getEventBus().subscribe("Validation","Refresh",this._refreshValidationMessages,this);
+			
+		 //   this.getView().byId("failureKM").attachBrowserEvent("mousewheel", function(event) {
+			// 	event.preventDefault();
+			// });
 		},
 		
 		onExit: function(){
@@ -61,6 +71,12 @@ sap.ui.define([
 			return filters;
 		},
 		
+		onFailureKmChanged: function(){
+			this.getView().getModel("PWA").setProperty("/FailureMeasure",
+				this._kmFormatter.format(this.getView().getModel("PWA").getProperty("/FailureMeasure"))
+			);
+		},
+		
 		onDateOfFailureChanged: function(){
 			PWA.validateDateOfFailure();
 			this.logValidationMessage("DateOfFailure");
@@ -86,10 +102,10 @@ sap.ui.define([
 					new Filter("description", sap.ui.model.FilterOperator.Contains, searchString)
 				], false));
 				filters.push( new Filter("salesOrg",sap.ui.model.FilterOperator.EQ, 
-					this.getView().getModel("PWA").getProperty("/SalesOrganisation")));
+					this.getView().getModel("PWA").getProperty("/SalesOrg")));
 			} else {
 				filters.push( new Filter("salesOrg",sap.ui.model.FilterOperator.EQ, 
-						this.getView().getModel("PWA").getProperty("/SalesOrganisation")));
+						this.getView().getModel("PWA").getProperty("/SalesOrg")));
 			}
 			return filters;
 		},
@@ -118,7 +134,7 @@ sap.ui.define([
 
 			var filters = [];
 			filters.push(new Filter("salesOrg",sap.ui.model.FilterOperator.EQ, 
-				this.getView().getModel("PWA").getProperty("/SalesOrganisation")));
+				this.getView().getModel("PWA").getProperty("/SalesOrg")));
 
 			this._MCPNDialog.getBinding("items").filter(filters);
 

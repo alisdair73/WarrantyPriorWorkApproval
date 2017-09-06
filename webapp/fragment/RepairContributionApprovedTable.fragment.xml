@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-	<Table visible="{= ${PWA>CurrentVersionCategory} === 'OC'}">
+	<Table>
 		<headerToolbar>
 			<Toolbar>
 				<Title text="Approved Repair Contribution" level="H2"/>

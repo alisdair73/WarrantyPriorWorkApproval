@@ -12,7 +12,7 @@ sap.ui.define([
     	onInit: function() {
     		
     		this.getView().setModel(sap.ui.getCore().getMessageManager().getMessageModel(), "message");
-    		
+    	
 			var oViewModel = new JSONModel({
 				"busy": true,
 				"delay": 0,
@@ -21,7 +21,9 @@ sap.ui.define([
 					"dealerNumber":"",
 					"dealerDescription":"",
 					"approvedTotal": 0,
-					"hasBeenValidated":false
+					"hasBeenValidated":false,
+					"showRequestedCosts":true,
+					"showApprovedCosts":false
 				}
 			});
 			this.setModel(oViewModel, "ViewHelper");
@@ -50,6 +52,7 @@ sap.ui.define([
 			this.getModel("PWA").setProperty("/PWATypeDescription", PWATypeDescription);
 			this.getModel("PWA").setProperty("/PWATypeGroup", PWATypeGroup);
 			this.getModel("PWA").setProperty("/ObjectType", objectType);
+			
 			this.getModel("PWA").setProperty("/StatusDescription",statusDescription);
 			this.getModel("PWA").setProperty("/StatusIcon",statusIcon);
 			
@@ -133,9 +136,35 @@ sap.ui.define([
 			);
 			
 			PWA.updatePWAFromJSONModel(responseData, actionName === "ValidatePWA" );
+			this._determineCostsVisibility();
 			this._updateEstimatedTotal();
 			sap.ui.getCore().getEventBus().publish("PWA","Saved");
 			this.getModel("ViewHelper").setProperty("/busy", false);
+		},
+		
+		_determineCostsVisibility:function(){
+			
+			var requestedCosts = this.getModel("PWA").getProperty("/CanEdit") ||
+			(
+				!this.getModel("PWA").getProperty("/CanEdit") &&
+    			this.getModel("PWA").getProperty("/Status") === '0002'
+    		);
+    		
+    		this.getModel("ViewHelper").setProperty("/UI/showRequestedCosts", requestedCosts);
+    		
+    		var approvedCosts = !requestedCosts;
+    		this.getModel("ViewHelper").setProperty("/UI/showApprovedCosts", approvedCosts);
+    		
+   // 		var requestedSplit = requestedSplit && 
+   // 			this.getModel("PWA").getProperty("/PWATypeGroup") === "GOODWILL";
+    		
+   // 		this.getModel("ViewHelper").setProperty("/UI/showRequestedSplit", requestedSplit);
+    		
+			// var approvedSplit = approvedCosts &&
+   // 			this.getModel("PWA").getProperty("/PWATypeGroup") === "GOODWILL";
+    			
+			// this.getModel("ViewHelper").setProperty("/UI/showApprovedSplit", approvedSplit);
+
 		},
 		
 		_updateEstimatedTotal: function(){
@@ -223,8 +252,8 @@ sap.ui.define([
 			}
 			
 			//Testing
-			PWANumber = "1210000005";
-				
+			//PWANumber = "1210000005";
+			//PWANumber = "1150000019";	
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";
 				this._bindView(entityPath);
@@ -254,6 +283,11 @@ sap.ui.define([
 		_onBindingChange: function(oData) {
 			//Check if there is any data first
 			PWA.updatePWAFromOdata(oData);
+			
+			//Are we showing Requested or Aproved Splits
+			this._determineCostsVisibility();
+			
+			//Update Total Cost
 			this._updateEstimatedTotal();
 		},
 		
@@ -272,7 +306,7 @@ sap.ui.define([
 								this.getView().addDependent(this._PWATypeSelection);
 							}
 							this._PWATypeSelection.open();
-							this._filterPWAType(this.getModel("PWA").getProperty("/SalesOrganisation"));
+							this._filterPWAType(this.getModel("PWA").getProperty("/SalesOrg"));
 						} else {
 							this._showPWAClaimErrorMessage();
 						}
@@ -312,7 +346,7 @@ sap.ui.define([
 			}
 			// Set the default as the first entry in the list
 			this.getModel("PWA").setProperty("/CompanyCode",salesOrganisations[0].CompanyCode);
-			this.getModel("PWA").setProperty("/SalesOrganisation",salesOrganisations[0].SalesOrg);
+			this.getModel("PWA").setProperty("/SalesOrg",salesOrganisations[0].SalesOrg);
 			return salesOrganisations;
 		},
 		

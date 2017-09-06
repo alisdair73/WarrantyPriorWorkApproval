@@ -62,7 +62,7 @@
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
-			<ObjectPageSection id="customerDetails" title="CUSTOMER">
+			<ObjectPageSection id="customerDetails" title="CUSTOMER" visible="{= ${PWA>/PWATypeGroup} === 'GOODWILL'}">
 				<subSections>
 					<ObjectPageSubSection id="customerDetails_sub1" title="CUSTOMER" mode="Expanded">
 						<blocks>

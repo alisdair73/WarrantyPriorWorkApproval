@@ -15,6 +15,7 @@ sap.ui.define([
 				"PWANumber": "",
 				"PWAType": "",
 				"ObjectType":"",
+				"SalesOrg":"",
 				"PrecedingPWANumber":"", 
 				"ExternalObjectNumber": { "value":"", "ruleResult":{"valid": true, "errorTextID":""}},
 				"ExternalObjectDescription":"",
@@ -23,7 +24,7 @@ sap.ui.define([
 				"EngineNumber": "",
 				"DealerContact": "",
 				"DateOfFailure": { "value":null, "ruleResult":{"valid": true, "errorTextID":""}},
-				"FailureMeasure": "",
+				"FailureMeasure": "0",
 				"MCPN": { "value":"", "ruleResult":{"valid": true, "errorTextID":""}},
 				"OwnerTitle": "",
 				"OwnerGivenName": "",
@@ -69,6 +70,7 @@ sap.ui.define([
 				"AssessmentCodes": "",
 				"PWATypeDescription": "",
 				"PWATypeGroup": "",
+				"Status":"0001",
 				"StatusDescription": "",
 				"StatusIcon": "",
 				"MCPNDescription": "",
@@ -93,6 +95,7 @@ sap.ui.define([
 
 			this.PWA.PWANumber = jsonModel.PWANumber;
 			this.PWA.SubmittedOn = jsonModel.SubmittedOn;
+			this.PWA.Status = jsonModel.Status;
 			this.PWA.StatusDescription = jsonModel.StatusDescription;
 			this.PWA.StatusIcon = jsonModel.StatusIcon;
 			this.PWA.VersionIdentifier = jsonModel.VersionIdentifier;
@@ -122,6 +125,7 @@ sap.ui.define([
 			this.PWA.PWAType = oPWA.PWAType;
 			this.PWA.ObjectType = oPWA.ObjectType;
 			this.PWA.SubmittedOn = oPWA.SubmittedOn;
+			this.PWA.SalesOrg = oPWA.SalesOrg;
 			this.PWA.PrecedingPWANumber = oPWA.PrecedingPWANumber;
 			this.PWA.ExternalObjectNumber.value = oPWA.ExternalObjectNumber;
 			this.PWA.ExternalObjectDescription = oPWA.ExternalObjectDescription;
@@ -174,6 +178,7 @@ sap.ui.define([
 			this.PWA.AssessmentCodes = oPWA.AssessmentCodes;
 			this.PWA.PWATypeDescription = oPWA.PWATypeDescription;
 			this.PWA.PWATypeGroup = oPWA.PWATypeGroup;
+			this.PWA.Status = oPWA.Status;
 			this.PWA.StatusDescription = oPWA.StatusDescription;
 			this.PWA.StatusIcon = oPWA.StatusIcon;
 			this.PWA.MCPNDescription = oPWA.MCPNDescription;
@@ -205,6 +210,7 @@ sap.ui.define([
 			PWA.PWANumber = this.PWA.PWANumber;
 			PWA.PWAType = this.PWA.PWAType;
 			PWA.ObjectType = this.PWA.ObjectType;
+			PWA.SalesOrg = this.PWA.SalesOrg;
 			PWA.ExternalObjectNumber = this.PWA.ExternalObjectNumber.value;
 			PWA.EngineNumber = this.PWA.EngineNumber;
 			PWA.DealerContact = this.PWA.DealerContact;
