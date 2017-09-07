@@ -364,7 +364,7 @@ sap.ui.define([
 			this.validateGoodwillReason();
 			this.validateRectification();
 			this.validateRequestedLabourHours();
-			this.validateTotalCostIsGreaterThanZero();
+//			this.validateTotalCostIsGreaterThanZero(); DETERMINED VIA BACK END
 		},
 		
 		hasFrontendValidationError: function(){
