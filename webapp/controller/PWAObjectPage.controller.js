@@ -86,7 +86,12 @@ sap.ui.define([
 				this._messagePopover = sap.ui.xmlfragment( "hnd.dpe.warranty.prior_work_approval.fragment.Messages" );
 				this.getView().addDependent(this._messagePopover );
 			}
-			this._messagePopover.openBy(event.getSource());
+
+			if(event){
+				this._messagePopover.openBy(event.getSource());
+			} else {
+				this._messagePopover.openBy(this.getView().byId("messagePopup"));
+			}
 		},
 		
 /*      
@@ -110,35 +115,59 @@ sap.ui.define([
 
 		_onActionSuccess: function(actionName,responseData,response){
 			
+			var isValid = false;
 			var leadingMessage = JSON.parse(response.headers['sap-message']);
 
-			if(actionName === "ValidatePWA"){
-				this.getModel("ViewHelper").setProperty("/UI/hasBeenValidated", true);
-			}
-			
-			var warningMessages = leadingMessage.details.filter(function(message){
-				return message.severity === "warning";
+			var errorMessages = leadingMessage.details.filter(function(message){
+				return message.severity === "error";
 			});
 			
-			var messageBoxText = "";
-			if(warningMessages.length > 0){
-				messageBoxText = leadingMessage.message + "\n" + "Please review Warning messages before submitting claim.";
+			if(errorMessages.length > 0){
+				
+				MessageBox.error(
+					leadingMessage.message,
+					{
+						actions : [MessageBox.Action.CLOSE],
+						onClose: function(){ this.openMessages(); }.bind(this)
+					}	
+				);
+				
 			} else {
-				messageBoxText = leadingMessage.message + "\n" + "Please observe any additional notes provided.";
-			}
 			
-			MessageBox.success(
-				messageBoxText,
-				{
-					id : "successMessageBox",
-					actions : [MessageBox.Action.CLOSE]
-				}	
-			);
+				isValid = true;
+
+				var warningMessages = leadingMessage.details.filter(function(message){
+					return message.severity === "warning";
+				});
+				
+				if(warningMessages.length > 0){
+					MessageBox.warning(
+						leadingMessage.message + "\n" + "Please review Warning messages before submitting claim.",
+						{
+							actions : [MessageBox.Action.CLOSE],
+							onClose: function(){ this.openMessages(); }.bind(this)
+						}	
+					);
+					
+				} else {
+					MessageBox.success(
+						leadingMessage.message + "\n" + "Please observe any additional notes provided.",
+						{
+							actions : [MessageBox.Action.CLOSE]
+						}	
+					);
+				}
+			}
 			
 			PWA.updatePWAFromJSONModel(responseData, actionName === "ValidatePWA" );
 			this._determineCostsVisibility();
 			this._updateEstimatedTotal();
 			sap.ui.getCore().getEventBus().publish("PWA","Saved");
+			
+			if(actionName === "ValidatePWA"){
+				this.getModel("ViewHelper").setProperty("/UI/hasBeenValidated", isValid);
+			}
+				
 			this.getModel("ViewHelper").setProperty("/busy", false);
 		},
 		
@@ -154,17 +183,7 @@ sap.ui.define([
     		
     		var approvedCosts = !requestedCosts;
     		this.getModel("ViewHelper").setProperty("/UI/showApprovedCosts", approvedCosts);
-    		
-   // 		var requestedSplit = requestedSplit && 
-   // 			this.getModel("PWA").getProperty("/PWATypeGroup") === "GOODWILL";
-    		
-   // 		this.getModel("ViewHelper").setProperty("/UI/showRequestedSplit", requestedSplit);
-    		
-			// var approvedSplit = approvedCosts &&
-   // 			this.getModel("PWA").getProperty("/PWATypeGroup") === "GOODWILL";
-    			
-			// this.getModel("ViewHelper").setProperty("/UI/showApprovedSplit", approvedSplit);
-
+  
 		},
 		
 		_updateEstimatedTotal: function(){
@@ -252,8 +271,8 @@ sap.ui.define([
 			}
 			
 			//Testing
-			//PWANumber = "1210000005";
-			//PWANumber = "1150000019";	
+			PWANumber = "1210000060";
+
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";
 				this._bindView(entityPath);

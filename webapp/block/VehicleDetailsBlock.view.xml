@@ -36,7 +36,7 @@
 						id="ExternalObjectNumber_VELO" 
 						value="{PWA>ExternalObjectNumber/value}"
 						description="{PWA>ExternalObjectDescription}"
-						fieldWidth="40%"
+						fieldWidth="50%"
 						required="true"
 						editable="{PWA>CanEdit}"
 						visible="{= ${PWA>/ObjectType} === 'VELO'}"

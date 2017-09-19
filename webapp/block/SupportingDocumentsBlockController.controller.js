@@ -48,10 +48,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		    this.getView().getModel("PWA").setProperty("/Attachments", attachments);
 		},
 		
-		onUploadTerminated: function() {
+		onUploadTerminated: function(event) {
 		
-/*			var sFileName = oEvent.getParameter("fileName");
-			var oRequestHeaders = oEvent.getParameters().getHeaderParameter();*/
+			var sFileName = event.getParameter("fileName");
+			var oRequestHeaders = event.getParameters().getHeaderParameter();
 		},
 		
 		onBeforeUploadStarts: function(oEvent){
@@ -108,6 +108,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var attachmentCollection = this.getView().byId("pwaAttachmentCollection");
 			if(attachmentCollection){
 				attachmentCollection.upload();
+				
+			/*	this.getView().getModel().remove(
+					"/PriorWorkApprovalSet('1210000060')/Attachments('FOL41000000000004EXT42000000007768')/$value",
+					{
+						"success": function(responseData,response){
+							
+						},
+						"error": function(){}
+					}
+				); */
+
 			}
 		}
 	});
