@@ -104,12 +104,15 @@
 					</Input>
 				</l:VerticalLayout>	
 
-				<Label text="Engine Number" labelFor="engineNumber"/>
+				<Label id="EngineNumber_label" text="Engine Number" labelFor="engineNumber" required="true"/>
 				<Input  
-					id="engineNumber" 
-					value="{PWA>EngineNumber}" 
+					id="EngineNumber" 
+					required="true"
+					value="{PWA>EngineNumber/value}" 
 					editable="{PWA>CanEdit}" 
 					maxLength="10"
+					change="onEngineNumberChanged"
+					valueState="{= ${WarrantyClaim>EngineNumber/ruleResult/valid} ? 'None':'Error'}"
 				/>
 				<Label 
 					id="ModelCode_label" 
@@ -188,11 +191,11 @@
 				/>
 				
 				<core:Title text="" />
-				<Label text="Failure KM/Hrs" labelFor="failureKM"/>
+				<Label id="FailureMeasure_label" text="Failure KM/Hrs" labelFor="FailureKmHrs" required="true"/>
 				<Input 
-					id="failureKM" 
+					id="FailureMeasure" 
 					value="{
-						path: 'PWA>FailureMeasure',
+						path: 'PWA>FailureMeasure/value',
 						type: 'sap.ui.model.type.Float',
 						formatOptions: {
 							maxFractionDigits: 0,
@@ -201,9 +204,11 @@
         					decimalSeparator: '.'								
 						}
 					}"	
+					required="true"
 					type="Number"
-					change="onFailureKmChanged"
+					change="onFailureKmHrsChanged"
 					editable="{PWA>CanEdit}"
+					valueState="{= ${PWA>FailureMeasure/ruleResult/valid} ? 'None':'Error'}"
 				/>
 			</f:content>	
 		</f:SimpleForm>

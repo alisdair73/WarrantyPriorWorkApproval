@@ -51,7 +51,20 @@ sap.ui.define([], function() {
 		
 		validateIsANumber: function(fieldValue){
 			return {"valid": !isNaN(fieldValue), "errorTextID":"notANumber"};
-		}
-	};
+		},
+		
+		validateFailureKm: function(fieldValue){
+			
+			var validated = true;
 
+			if(fieldValue && fieldValue !== ""){
+				if (fieldValue <= 0 || fieldValue >= 1000000){
+					validated = false;
+				}
+			}
+			
+			return {"valid": validated, "errorTextID":"FailureKm"};
+		}
+		
+	};
 });

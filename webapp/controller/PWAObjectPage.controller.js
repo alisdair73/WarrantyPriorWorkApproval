@@ -100,6 +100,11 @@ sap.ui.define([
 		_doPWAAction: function(actionName){
 			this.getModel("ViewHelper").setProperty("/busy", true);
 			
+			
+			//Are there any deleted documents
+/*				attachmentCollection._aDeletedItemForPendingUpload.forEach(function(documentToDelete){
+				}*/
+			
 			this.getView().getModel().create("/PriorWorkApprovalSet",
 				PWA.convertToODataForUpdate(), 
 				{
@@ -271,7 +276,7 @@ sap.ui.define([
 			}
 			
 			//Testing
-			PWANumber = "1210000060";
+			PWANumber = "1210000073";
 
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";

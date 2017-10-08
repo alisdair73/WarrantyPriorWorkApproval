@@ -71,10 +71,18 @@ sap.ui.define([
 			return filters;
 		},
 		
-		onFailureKmChanged: function(){
-			this.getView().getModel("PWA").setProperty("/FailureMeasure",
-				this._kmFormatter.format(this.getView().getModel("PWA").getProperty("/FailureMeasure"))
+		onEngineNumberChanged: function(){
+			PWA.validateEngineNumber();
+			this.logValidationMessage("EngineNumber");
+		},
+		
+		onFailureKmHrsChanged: function(){
+			this.getView().getModel("PWA").setProperty("/FailureMeasure/value",
+				this._kmFormatter.format(this.getView().getModel("PWA").getProperty("/FailureMeasure/value"))
 			);
+			
+			PWA.validateFailureKmHrs();
+			this.logValidationMessage("FailureMeasure");
 		},
 		
 		onDateOfFailureChanged: function(){
@@ -149,7 +157,9 @@ sap.ui.define([
 		
 		_refreshValidationMessages: function(){
 			this.logValidationMessage("ExternalObjectNumber");
+			this.logValidationMessage("EngineNumber");
 			this.logValidationMessage("DateOfFailure");
+			this.logValidationMessage("FailureMeasure");
 			this.logValidationMessage("MCPN");
 		}
 	});

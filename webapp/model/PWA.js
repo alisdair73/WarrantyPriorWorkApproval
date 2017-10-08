@@ -21,10 +21,10 @@ sap.ui.define([
 				"ExternalObjectDescription":"",
 				"ExternalObjectModelCode":"",
 				"SubmittedOn": null,
-				"EngineNumber": "",
+				"EngineNumber": { "value":"", "ruleResult":{"valid": true, "errorTextID":""}},
 				"DealerContact": "",
 				"DateOfFailure": { "value":null, "ruleResult":{"valid": true, "errorTextID":""}},
-				"FailureMeasure": "0",
+				"FailureMeasure": { "value":"0", "ruleResult":{"valid": true, "errorTextID":""}},
 				"MCPN": { "value":"", "ruleResult":{"valid": true, "errorTextID":""}},
 				"OwnerTitle": "",
 				"OwnerGivenName": "",
@@ -109,8 +109,18 @@ sap.ui.define([
 				this.PWA.SubletItemId = jsonModel.SubletItemId;
 				this.PWA.PartsItemId = jsonModel.PartsItemId;
 				this.PWA.LabourItemId = jsonModel.LabourItemId;
+				
+/*				this.PWA.Attachments = [];
+	            if(jsonModel.Attachments){
+					for (var i = 0; i < jsonModel.Attachments.results.length; i++) {
+						var attachment = jsonModel.Attachments.results[i];
+						attachment.URL = 
+							"/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('" + 
+							this.PWA.PWANumber + "')/Attachments('" + attachment.DocumentID + "')/$value";
+						this.PWA.Attachments.push(attachment);
+					}
+	            }*/
 			}
-			
 			this.resetChanges();
 		}, 
 		
@@ -130,10 +140,10 @@ sap.ui.define([
 			this.PWA.ExternalObjectNumber.value = oPWA.ExternalObjectNumber;
 			this.PWA.ExternalObjectDescription = oPWA.ExternalObjectDescription;
 			this.PWA.ExternalObjectModelCode = oPWA.ExternalObjectModelCode;
-			this.PWA.EngineNumber = oPWA.EngineNumber;
+			this.PWA.EngineNumber.value = oPWA.EngineNumber;
 			this.PWA.DealerContact = oPWA.DealerContact;
 			this.PWA.DateOfFailure.value = oPWA.DateOfFailure;
-			this.PWA.FailureMeasure = oPWA.FailureMeasure;
+			this.PWA.FailureMeasure.value = oPWA.FailureMeasure;
 			this.PWA.MCPN.value = oPWA.MCPN;
 			this.PWA.OwnerTitle = oPWA.OwnerTitle;
 			this.PWA.OwnerGivenName = oPWA.OwnerGivenName;
@@ -212,10 +222,10 @@ sap.ui.define([
 			PWA.ObjectType = this.PWA.ObjectType;
 			PWA.SalesOrg = this.PWA.SalesOrg;
 			PWA.ExternalObjectNumber = this.PWA.ExternalObjectNumber.value;
-			PWA.EngineNumber = this.PWA.EngineNumber;
+			PWA.EngineNumber = this.PWA.EngineNumber.value;
 			PWA.DealerContact = this.PWA.DealerContact;
 			PWA.DateOfFailure = this.PWA.DateOfFailure.value;
-			PWA.FailureMeasure = this.PWA.FailureMeasure;
+			PWA.FailureMeasure = this.PWA.FailureMeasure.value;
 			PWA.MCPN = this.PWA.MCPN.value;
 			PWA.OwnerTitle = this.PWA.OwnerTitle;
 			PWA.OwnerGivenName = this.PWA.OwnerGivenName;
@@ -255,7 +265,7 @@ sap.ui.define([
 			  			"DocumentID": this.PWA.Attachments[i].DocumentID,
 		    			"MimeType": this.PWA.Attachments[i].MimeType,
 		    			"FileName": this.PWA.Attachments[i].FileName,
-		    			"deleted": this.PWA.Attachments[i].deleted
+		    			"Deleted": this.PWA.Attachments[i].Deleted
 			  		};
 					PWA.Attachments.push(attachment);
 				}	
@@ -273,6 +283,23 @@ sap.ui.define([
 		validateExternalObjectNumber: function(){
 			this.PWA.ExternalObjectNumber.ruleResult = 
 				Rule.validateRequiredFieldIsPopulated(this.PWA.ExternalObjectNumber.value);
+		},
+		
+		validateEngineNumber: function(){
+			this.PWA.EngineNumber.ruleResult = 
+				Rule.validateRequiredFieldIsPopulated(this.PWA.EngineNumber.value);
+		},
+		
+		validateFailureKmHrs: function(){
+			
+			switch(this.PWA.ObjectType) {
+				case "VELO":
+					this.PWA.FailureMeasure.ruleResult = 
+						Rule.validateFailureKm(this.PWA.FailureMeasure.value);  
+					break;
+					
+				default:
+			}
 		},
 		
 		validateMCPN: function(){
@@ -357,7 +384,9 @@ sap.ui.define([
 		
 		validateAll: function(){
 			this.validateExternalObjectNumber();
+			this.validateEngineNumber();
 			this.validateMCPN();
+			this.validateFailureKmHrs();
 			this.validateDateOfFailure();
 			this.validateCustomerConcern();
 			this.validateDealerComment();
@@ -370,6 +399,8 @@ sap.ui.define([
 		hasFrontendValidationError: function(){
 			
 			if(this.PWA.ExternalObjectNumber.ruleResult.valid &&
+				this.PWA.EngineNumber.ruleResult.valid &&
+				this.PWA.FailureMeasure.ruleResult.valid &&
 				this.PWA.MCPN.ruleResult.valid &&
 				this.PWA.DateOfFailure.ruleResult.valid &&
 				this.PWA.CustomerConcern.ruleResult.valid &&
