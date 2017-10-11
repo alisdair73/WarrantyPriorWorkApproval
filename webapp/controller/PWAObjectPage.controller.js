@@ -45,6 +45,7 @@ sap.ui.define([
 			var PWATypeDescription = oEvent.getParameter("listItem").getBindingContext().getObject().Description;
 			var PWATypeGroup = oEvent.getParameter("listItem").getBindingContext().getObject().Group;
 			var objectType = oEvent.getParameter("listItem").getBindingContext().getObject().ClaimObjectType;
+			var status = oEvent.getParameter("listItem").getBindingContext().getObject().InitialStatus;
 			var statusDescription = oEvent.getParameter("listItem").getBindingContext().getObject().InitialStatusDescription;
 			var statusIcon = oEvent.getParameter("listItem").getBindingContext().getObject().InitialStatusIcon;
 			
@@ -53,12 +54,54 @@ sap.ui.define([
 			this.getModel("PWA").setProperty("/PWATypeGroup", PWATypeGroup);
 			this.getModel("PWA").setProperty("/ObjectType", objectType);
 			
+			this.getModel("PWA").setProperty("/Status",status);
 			this.getModel("PWA").setProperty("/StatusDescription",statusDescription);
 			this.getModel("PWA").setProperty("/StatusIcon",statusIcon);
 			
 			this.getModel("ViewHelper").setProperty("/busy", false);
 			this._PWATypeSelection.close();
 		},	
+		
+		onNewPWA: function(){
+			this.navigateToApp("#PriorWorkApproval-create");
+		},
+		
+		onDuplicatePWA: function(){
+			//Reset the Status based on the Claim Type
+			var PWAType = this.getView().getModel("PWA").getProperty("/PWAType");
+			
+			this.getOwnerComponent().getModel().read(
+				"/ClaimTypeSet", {
+					context: null,
+					filters: [new Filter("Code",sap.ui.model.FilterOperator.EQ, PWAType)],
+					success: function(oData) {
+						if (oData.results.length && oData.results.length > 0) {
+
+							this.getModel("ViewHelper").setProperty("/readOnly", false);
+							
+							this.getView().getModel("PWA").setProperty("/PWANumber","");
+							this.getView().getModel("PWA").setProperty("/SubmittedOn",null);
+							this.getView().getModel("PWA").setProperty("/CurrentVersionNumber","0001");
+							this.getView().getModel("PWA").setProperty("/CurrentVersionCategory","IC");
+							this.getView().getModel("PWA").setProperty("/CanEdit",true);
+							this.getView().getModel("PWA").setProperty("/VersionIdentifier",null);
+							
+							this.getModel("PWA").setProperty("/Status",oData.results[0].InitialStatus);
+							this.getModel("PWA").setProperty("/StatusDescription",oData.results[0].InitialStatusDescription);
+
+							sap.ui.getCore().getMessageManager().removeAllMessages();
+							
+							MessageBox.success("PWA Duplicated.");
+							
+						} else {
+							this._showWarrantyClaimErrorMessage();
+						}
+					}.bind(this),
+					error: this._showWarrantyClaimErrorMessage
+				}
+			);
+			
+		},
 		
 		onDraft: function(){
 			this._doPWAAction("SavePWA");
@@ -276,7 +319,7 @@ sap.ui.define([
 			}
 			
 			//Testing
-			PWANumber = "1210000073";
+			//PWANumber = "1210000080";
 
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";

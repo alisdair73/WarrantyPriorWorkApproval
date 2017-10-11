@@ -110,7 +110,7 @@ sap.ui.define([
 				this.PWA.PartsItemId = jsonModel.PartsItemId;
 				this.PWA.LabourItemId = jsonModel.LabourItemId;
 				
-/*				this.PWA.Attachments = [];
+				this.PWA.Attachments = [];
 	            if(jsonModel.Attachments){
 					for (var i = 0; i < jsonModel.Attachments.results.length; i++) {
 						var attachment = jsonModel.Attachments.results[i];
@@ -119,7 +119,7 @@ sap.ui.define([
 							this.PWA.PWANumber + "')/Attachments('" + attachment.DocumentID + "')/$value";
 						this.PWA.Attachments.push(attachment);
 					}
-	            }*/
+	            }
 			}
 			this.resetChanges();
 		}, 

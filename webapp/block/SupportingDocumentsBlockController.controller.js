@@ -10,18 +10,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		
 		onInit: function () {
 			// Sets the text to the label
-			this.getView().byId("pwaAttachmentCollection").addEventDelegate({
+/*			this.getView().byId("pwaAttachmentCollection").addEventDelegate({
 				onBeforeRendering : function () {
-					this.getView().byId("attachmentTitle").setText(this._getAttachmentTitleText());
+					var PWANumber = this.getView().getModel("PWA").getProperty("/PWANumber");
+					if(PWANumber){
+						this.getView().byId("attachmentTitleMaintain").setText this._getAttachmentTitleText());
+					} else {
+						this.getView().byId("attachmentTitleCreate").setText(this._getAttachmentTitleText());
+					}
 				}.bind(this)
-			});
-			
-			var uploadCollection = this.getView().byId("pwaAttachmentCollection");
-            this._UploadCollectionItemTemplate = uploadCollection.getBindingInfo("items").template;
-            this._attachments = [];
-            this._noOfAttachments = 0;
-            //oAttachControlCreate.unbindAggregation("items");
-			
+			});*/
 			
 			//Set up Event Listener to Upload Files
 			sap.ui.getCore().getEventBus().subscribe("PWA","Saved",this._uploadAttachmentCollection,this);
@@ -46,41 +44,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		    };
 		    
 		    attachments.push(attachment);
-			this._noOfAttachments = this._noOfAttachments - 1;
-			
-			var uploadCollection = this.getView().byId("pwaAttachmentCollection");
-			// var uploadCollection = oEvent.getSource();
 
+		//	var uploadCollection = this.getView().byId("pwaAttachmentCollection");
+/*			var uploadCollection = oEvent.getSource();
 		    for (var i = 0; i < uploadCollection.getItems().length; i++) {
 			  	if (uploadCollection.getItems()[i].getFileName() === fileResponse.d.FileName) {
 			  		uploadCollection.removeItem(uploadCollection.getItems()[i]);
 			  		break;
 			  	}
-			}
-			
+			}*/
 			this.getView().getModel("PWA").setProperty("/Attachments", attachments);
-
-/*		    if (this._noOfAttachments === 0){
-
-				uploadCollection.removeAllAggregation("items");
-				this.getView().getModel("PWA").setProperty("/Attachments", attachments);
-				
-				 var test = new sap.m.UploadCollectionItem({
-				 	documentId:"{PWA>DocumentID}",
-				 	fileName:"{PWA>FileName}",
-				 	mimeType:"{PWA>MimeType}",
-				 	url:"{PWA>URL}",
-				 	visibleEdit:false,
-				 	visibleDelete:"{PWA>CanEdit}",
-				 	enableEdit:false,
-				 	enableDelete:"{PWA>CanEdit}"
-				 });
-											
-				 uploadCollection.bindAggregation("items", {
-				 	path: "PWA>Attachments",
-				 	template: test
-				 });
-		    } */
 		},
 		
 		onUploadTerminated: function(event) {
@@ -101,8 +74,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
                 value: "application/json"
             }));
             
-           // this._attachments = this.getView().getModel("PWA").getProperty("/Attachments");
-            
 		},
 		
 		onChange: function(oEvent) {
@@ -116,22 +87,30 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
  
 		onFileDeleted: function(oEvent) {
 		
-			var path = oEvent.getParameter("item").getBindingContext("PWA").getPath();
-			this.getView().getModel("PWA").setProperty(path + "/Deleted", true);
-
-//this.getView().getModel("PWA").setProperty("/Attachments", this.getView().getModel("PWA").getProperty("/Attachments"));
-
-        	var filters = [];
-
-			filters.push(new Filter(
-				"Deleted",
-				sap.ui.model.FilterOperator.EQ, 
-				false
-			));
+			var documentId = oEvent.getParameter("documentId");
 			
-			this.getView().byId("pwaAttachmentCollection").getBinding("items").filter(filters);
-		    
+        	this.getView().getModel().remove(
+            	"/AttachmentSet(DocumentId='" + oEvent.getParameter("documentId") + "')/$value", 
+            	{
+            		"success":function(oData, Response) {
+            			this._refreshAfterDelete(documentId);
+            		}.bind(this),
+            		"error": function(e) {
+            			MessageToast.show(JSON.parse(e.response.body).error.message.value, "");
+            		}
+            	} 
+        	);
 		},		
+		
+		_refreshAfterDelete: function(documentId){
+			MessageToast.show("File deleted");
+            			
+			//Remove Deleted Attachments from Attachment Collection
+            var attachments = this.getView().getModel("PWA").getProperty("/Attachments").filter(function(item) { 
+				return item.DocumentID !== documentId;
+			});
+			this.getView().getModel("PWA").setProperty("/Attachments",attachments);
+		},
 		
 		onFileSizeExceed : function(oEvent) {
 			MessageToast.show("The maximum allowed size for file attachments is 25MB.");
@@ -144,31 +123,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		
 		_uploadAttachmentCollection: function(){
 			//Start the File Upload
-			var attachmentCollection = this.getView().byId("pwaAttachmentCollection");
+			var attachmentCollection = this.getView().byId("pwaAttachmentCollectionCreate");
 			if(attachmentCollection){
-				this._noOfAttachments = attachmentCollection._aFileUploadersForPendingUpload.length
-;
 				attachmentCollection.upload();
-				//attachmentCollection.removeAllAggregation();
-				//this.getView().getModel("PWA").setProperty("/Attachments", this._attachments);
-				
-				//  var test = new sap.m.UploadCollectionItem({
-				//  	documentId:"{PWA>DocumentID}",
-				//  	fileName:"{PWA>FileName}",
-				//  	mimeType:"{PWA>MimeType}",
-				//  	url:"{PWA>URL}",
-				//  	visibleEdit:false,
-				//  	visibleDelete:"{PWA>CanEdit}",
-				//  	enableEdit:false,
-				//  	enableDelete:"{PWA>CanEdit}"
-				//  });
-				
-				// attachmentCollection.bindAggregation("items", {
-				//  	path: "PWA>Attachments",
-				//  	template: test
-				//  });
-				
-			//	this.getView().getModel("PWA").setProperty("/Attachments", attachments);
 			}
 		}
 	});

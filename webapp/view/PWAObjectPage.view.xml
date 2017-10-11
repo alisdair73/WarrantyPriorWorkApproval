@@ -89,7 +89,18 @@
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
-			<ObjectPageSection id="results" title="RESULTS">
+			<ObjectPageSection id="results" title="RESULTS"
+				visible="{= ${PWA>/Status} !== 'X001' &amp;&amp; 
+							${PWA>/Status} !== 'X002' &amp;&amp;
+							${PWA>/Status} !== 'X012' &amp;&amp;
+							${PWA>/Status} !== 'X015' &amp;&amp;
+							${PWA>/Status} !== 'Y001' &amp;&amp;
+							${PWA>/Status} !== 'Y003' &amp;&amp;
+							${PWA>/Status} !== 'Y009' &amp;&amp;
+							${PWA>/Status} !== 'Y016' &amp;&amp;
+							${PWA>/Status} !== 'Y017' &amp;&amp;
+							${PWA>/Status} !== 'Y018' }"
+			>
 				<subSections>
 					<ObjectPageSubSection id="results_sub1" title="RESULTS" mode="Expanded">
 						<blocks>
@@ -118,6 +129,13 @@
 					type="Emphasized" 
 					press="openMessages"/>
 				<m:ToolbarSpacer/>
+				<m:Button 
+					text="New PWA" 
+					press="onNewPWA" 
+					visible="{= ${PWA>/StatusDescription} === 'In Progress'}"
+				/>
+				<m:Button text="Duplicate PWA" press="onDuplicatePWA" 
+					visible="{= ${PWA>/ProcessingStatus} === 'X009'}"/>
 				<m:Button text="Save Draft" press="onDraft" visible="{PWA>/CanEdit}"/>
 				<m:Button text="Cancel" press="onCancel"/>
 				<m:Button text="Validate" press="onValidate" visible="{PWA>/CanEdit}"/>
