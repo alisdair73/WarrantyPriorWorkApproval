@@ -43,23 +43,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		    	"URL": "/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('" + PWANumber + "')/Attachments('" + fileResponse.d.DocumentID + "')/$value"
 		    };
 		    
-		    attachments.push(attachment);
-
-		//	var uploadCollection = this.getView().byId("pwaAttachmentCollection");
-/*			var uploadCollection = oEvent.getSource();
+			var uploadCollection = oEvent.getSource();
 		    for (var i = 0; i < uploadCollection.getItems().length; i++) {
 			  	if (uploadCollection.getItems()[i].getFileName() === fileResponse.d.FileName) {
 			  		uploadCollection.removeItem(uploadCollection.getItems()[i]);
 			  		break;
 			  	}
-			}*/
+			}
+			
+			attachments.push(attachment);
 			this.getView().getModel("PWA").setProperty("/Attachments", attachments);
-		},
-		
-		onUploadTerminated: function(event) {
-		
-			var sFileName = event.getParameter("fileName");
-			var oRequestHeaders = event.getParameters().getHeaderParameter();
 		},
 		
 		onBeforeUploadStarts: function(oEvent){

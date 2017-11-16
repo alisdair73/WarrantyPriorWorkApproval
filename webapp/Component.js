@@ -2,8 +2,9 @@ sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
 	"hnd/dpe/warranty/prior_work_approval/model/models",
-	"hnd/dpe/warranty/prior_work_approval/model/PWA"
-], function(UIComponent, Device, models,PWA) {
+	"hnd/dpe/warranty/prior_work_approval/model/PWA",
+	"hnd/dpe/warranty/prior_work_approval/controller/ErrorHandler"
+], function(UIComponent, Device, models,PWA, ErrorHandler) {
 	"use strict";
 
 	return UIComponent.extend("hnd.dpe.warranty.prior_work_approval.Component", {
@@ -18,6 +19,10 @@ sap.ui.define([
 		 * @override
 		 */
 		init: function() {
+			
+			//Register the Error Handler
+			this._oErrorHandler = new ErrorHandler(this);
+			
 			// call the base component's init function
 			UIComponent.prototype.init.apply(this, arguments);
 

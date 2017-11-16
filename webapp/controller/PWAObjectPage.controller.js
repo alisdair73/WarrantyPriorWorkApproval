@@ -143,11 +143,6 @@ sap.ui.define([
 		_doPWAAction: function(actionName){
 			this.getModel("ViewHelper").setProperty("/busy", true);
 			
-			
-			//Are there any deleted documents
-/*				attachmentCollection._aDeletedItemForPendingUpload.forEach(function(documentToDelete){
-				}*/
-			
 			this.getView().getModel().create("/PriorWorkApprovalSet",
 				PWA.convertToODataForUpdate(), 
 				{
@@ -221,16 +216,29 @@ sap.ui.define([
 		
 		_determineCostsVisibility:function(){
 			
-			var requestedCosts = this.getModel("PWA").getProperty("/CanEdit") ||
+			
+			var showRequestedCosts = true;
+			var status = this.getModel("PWA").getProperty("/Status");
+			
+			if (status === 'Y004' || status === 'Y019'){
+				//Show Approved Costs
+				showRequestedCosts = false;
+			}
+			
+			this.getModel("ViewHelper").setProperty("/UI/showRequestedCosts", showRequestedCosts);
+			this.getModel("ViewHelper").setProperty("/UI/showApprovedCosts", !showRequestedCosts);
+				
+				
+/*			var requestedCosts = this.getModel("PWA").getProperty("/CanEdit") ||
 			(
 				!this.getModel("PWA").getProperty("/CanEdit") &&
-    			this.getModel("PWA").getProperty("/Status") === '0002'
+    			this.getModel("PWA").getProperty("/Status") === 'X002'
     		);
     		
     		this.getModel("ViewHelper").setProperty("/UI/showRequestedCosts", requestedCosts);
     		
     		var approvedCosts = !requestedCosts;
-    		this.getModel("ViewHelper").setProperty("/UI/showApprovedCosts", approvedCosts);
+    		this.getModel("ViewHelper").setProperty("/UI/showApprovedCosts", approvedCosts);*/
   
 		},
 		
@@ -255,14 +263,6 @@ sap.ui.define([
 			switch(error.statusCode){
 				case "400":
 					
-					MessageBox.error(
-						"An error occurred while processing the Warranty Claim.",
-						{
-							id : "errorMessageBox",
-							actions : [MessageBox.Action.CLOSE]
-						}	
-					);
-					
 					//REMOVE THE DUPLICATED LEAD MESSAGE - "SY/530"
 					var registeredMessages = sap.ui.getCore().getMessageManager().getMessageModel().getData().filter(
 		  				function(registeredMessage){
@@ -273,13 +273,21 @@ sap.ui.define([
 		    		if(registeredMessages.length > 0){
 		    			sap.ui.getCore().getMessageManager().removeMessages(registeredMessages[0]);
 		    		}  
-					//////////////
 					break;
 					
 				case "500":
 					//Technical Error
 					break;
 			}
+			
+			MessageBox.error(
+				"An error occurred while processing the PWA.",
+				{
+					id : "errorMessageBox",
+					actions : [MessageBox.Action.CLOSE]
+				}	
+			);
+			
 			this.getModel("ViewHelper").setProperty("/busy", false);
 		},
 
@@ -319,7 +327,7 @@ sap.ui.define([
 			}
 			
 			//Testing
-			//PWANumber = "1210000080";
+			//PWANumber = "1120000181";
 
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";
@@ -329,6 +337,19 @@ sap.ui.define([
 			}
     	},
     	
+    	
+		_showNoDealershipDialog: function() {
+
+			// Create the success dialog if it isn't already
+			if (!this._noDealershipDialog) {
+				this._noDealershipDialog = sap.ui.xmlfragment("hnd.dpe.warranty.prior_work_approval.fragment.NoDealershipAssignedDialog", this);
+				this.getView().addDependent(this._noDealershipDialog);
+			}
+
+			// Show the success dialog
+			this._noDealershipDialog.open();
+		},
+		
 		_bindView: function(entityPath) {
 			this.getView().bindElement({
 				path: entityPath,

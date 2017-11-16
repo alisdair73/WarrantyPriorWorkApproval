@@ -11,81 +11,80 @@
 					<sap.ui.layout.form:FormElement>
 						<sap.ui.layout.form:fields>
 							<l:VerticalLayout>
-							<UploadCollection
-								id="pwaAttachmentCollectionCreate"
-								uploadUrl="/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('Attachment')/Attachments"
-								multiple="false"
-								visible="{= ${PWA>PWANumber} === ''}"
-								instantUpload="false"
-								showSeparators="All"
-								uploadEnabled="{PWA>CanEdit}"
-								uploadComplete="onUploadComplete"
-								beforeUploadStarts="onBeforeUploadStarts"
-								uploadTerminated="onUploadTerminated"
-								filenameLengthExceed="onFileSizeExceed"
-								change="onChange"
-								maximumFileSize="25"
-								noDataText="No Attachments"
-								items="{path : 'PWA>Attachments'}"
-								mode="SingleSelectMaster">
-								<toolbar>
-									<OverflowToolbar>
-										<Title id="attachmentTitleCreate"/>
-										<ToolbarSpacer/>
-										<UploadCollectionToolbarPlaceholder/>
-									</OverflowToolbar>
-								</toolbar>
-								<items>
-									<UploadCollectionItem
-										documentId="{PWA>DocumentID}"
-										fileName="{PWA>FileName}"
-										mimeType="{PWA>MimeType}"
-										url="{PWA>URL}"
-										visibleEdit="false"
-										visibleDelete="{PWA>CanEdit}"
-										enableEdit="false"
-										enableDelete="{PWA>CanEdit}"
-									/>
-								</items>
-							</UploadCollection>	
-							<UploadCollection
-								id="pwaAttachmentCollectionMaintain"
-								uploadUrl="/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('Attachment')/Attachments"
-								multiple="false"
-								instantUpload="true"
-								showSeparators="All"
-								visible="{= ${PWA>PWANumber} !== ''}"
-								fileDeleted="onFileDeleted"
-								uploadEnabled="{PWA>CanEdit}"
-								uploadComplete="onUploadComplete"
-								beforeUploadStarts="onBeforeUploadStarts"
-								uploadTerminated="onUploadTerminated"
-								filenameLengthExceed="onFileSizeExceed"
-								change="onChange"
-								maximumFileSize="25"
-								noDataText="No Attachments"
-								items="{path : 'PWA>Attachments'}"
-								mode="SingleSelectMaster">
-								<toolbar>
-									<OverflowToolbar>
-										<Title id="attachmentTitleMaintain" text="MAINTAIN"/>
-										<ToolbarSpacer/>
-										<UploadCollectionToolbarPlaceholder/>
-									</OverflowToolbar>
-								</toolbar>
-								<items>
-									<UploadCollectionItem
-										documentId="{PWA>DocumentID}"
-										fileName="{PWA>FileName}"
-										mimeType="{PWA>MimeType}"
-										url="{PWA>URL}"
-										visibleEdit="false"
-										visibleDelete="{PWA>CanEdit}"
-										enableEdit="false"
-										enableDelete="{PWA>CanEdit}"
-									/>
-								</items>
-							</UploadCollection>	
+								<UploadCollection
+									id="pwaAttachmentCollectionCreate"
+									uploadUrl="/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('Attachment')/Attachments"
+									multiple="false"
+									visible="{= ${PWA>PWANumber} === ''}"
+									instantUpload="false"
+									showSeparators="All"
+									uploadEnabled="{PWA>CanEdit}"
+									uploadComplete="onUploadComplete"
+									beforeUploadStarts="onBeforeUploadStarts"
+									filenameLengthExceed="onFileSizeExceed"
+									change="onChange"
+									maximumFileSize="25"
+									noDataText="No Attachments"
+									items="{path : 'PWA>Attachments'}"
+									mode="SingleSelectMaster">
+									<toolbar>
+										<OverflowToolbar>
+											<Title id="attachmentTitleCreate"/>
+											<ToolbarSpacer/>
+											<UploadCollectionToolbarPlaceholder/>
+										</OverflowToolbar>
+									</toolbar>
+									<items>
+										<UploadCollectionItem
+											documentId="{PWA>DocumentID}"
+											fileName="{PWA>FileName}"
+											mimeType="{PWA>MimeType}"
+											url="{PWA>URL}"
+											visibleEdit="false"
+											visibleDelete="{PWA>CanEdit}"
+											enableEdit="false"
+											enableDelete="{PWA>CanEdit}"
+										/>
+									</items>
+								</UploadCollection>	
+								<UploadCollection
+									id="pwaAttachmentCollectionMaintain"
+									uploadUrl="/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('Attachment')/Attachments"
+									multiple="false"
+									instantUpload="true"
+									showSeparators="All"
+									visible="{= ${PWA>PWANumber} !== ''}"
+									fileDeleted="onFileDeleted"
+									uploadEnabled="{PWA>CanEdit}"
+									uploadComplete="onUploadComplete"
+									beforeUploadStarts="onBeforeUploadStarts"
+									uploadTerminated="onUploadTerminated"
+									filenameLengthExceed="onFileSizeExceed"
+									change="onChange"
+									maximumFileSize="25"
+									noDataText="No Attachments"
+									items="{path : 'PWA>Attachments'}"
+									mode="SingleSelectMaster">
+									<toolbar>
+										<OverflowToolbar>
+											<Title id="attachmentTitleMaintain" text="MAINTAIN"/>
+											<ToolbarSpacer/>
+											<UploadCollectionToolbarPlaceholder/>
+										</OverflowToolbar>
+									</toolbar>
+									<items>
+										<UploadCollectionItem
+											documentId="{PWA>DocumentID}"
+											fileName="{PWA>FileName}"
+											mimeType="{PWA>MimeType}"
+											url="{PWA>URL}"
+											visibleEdit="false"
+											visibleDelete="{PWA>CanEdit}"
+											enableEdit="false"
+											enableDelete="{PWA>CanEdit}"
+										/>
+									</items>
+								</UploadCollection>	
 							</l:VerticalLayout>
 						</sap.ui.layout.form:fields>
 					</sap.ui.layout.form:FormElement>

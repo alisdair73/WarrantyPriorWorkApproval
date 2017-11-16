@@ -119,8 +119,7 @@
 								maxFractionDigits: 2
 							}
 						}"
-						editable="false"
-	    	    		type="Number"/>
+						editable="false"/>
 	            	<Input
 	            		value="{
 							path: 'ViewHelper>/UI/approvedTotal',

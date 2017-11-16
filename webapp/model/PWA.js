@@ -131,6 +131,10 @@ sap.ui.define([
 			var sPath = oSource.getPath();
 			var oPWA = oODataModel.getObject(sPath);
 		
+			if(!oPWA){
+				return;
+			}
+		
 			this.PWA.PWANumber = oPWA.PWANumber;
 			this.PWA.PWAType = oPWA.PWAType;
 			this.PWA.ObjectType = oPWA.ObjectType;

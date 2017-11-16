@@ -103,11 +103,9 @@ sap.ui.define([
 				parseFloat(this.getView().getModel("PWA").getProperty("/ApprovedSubletCost"), 2);
 			
 			this.getView().getModel("ViewHelper").setProperty("/UI/approvedTotal", approvedTotal);
-			
 		},
 		
 		_sanitisePercentageInputs: function(fieldName){
-		
 		
 			//Convert to Integer
 			this.getView().getModel("PWA").setProperty(fieldName, Math.round(this.getView().getModel("PWA").getProperty(fieldName)));

@@ -43,12 +43,17 @@ sap.ui.define([
 		},
 		
 		navigateToLaunchpad: function() {
+			this.navigateToApp("#");
+		},
+		
+		navigateToApp: function(appNavigation){
+			
 			var crossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
 
 			// Navigate back to FLP home
 			crossAppNavigator.toExternal({
 				target: {
-					shellHash: "#"
+					shellHash: appNavigation
 				}
 			});
 		},
