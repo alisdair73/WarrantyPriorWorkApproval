@@ -123,6 +123,18 @@ sap.ui.define([
 			this.navigateToLaunchpad();
 		},
 		
+		viewMyDealerships: function() {
+			var crossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
+
+			// View the Sales Order Factsheet
+			crossAppNavigator.toExternal({
+				target: {
+					semanticObject: "Dealer",
+					action: "setDealership" 
+				}
+			});
+		},
+		
 		openMessages: function(event){
 			
 			if (!this._messagePopover)  {
@@ -183,20 +195,32 @@ sap.ui.define([
 					return message.severity === "warning";
 				});
 				
-				if(warningMessages.length > 0){
+				if(warningMessages.length > 0 && actionName !== "SubmitPWA"){
+
 					MessageBox.warning(
-						leadingMessage.message + "\n" + "Please review Warning messages before submitting claim.",
+						leadingMessage.message + "\n" + "Please review the Warning messages before submitting PWA.",
 						{
 							actions : [MessageBox.Action.CLOSE],
-							onClose: function(){ this.openMessages(); }.bind(this)
+							onClose: function(){ 
+								this.openMessages(); 
+							}.bind(this)
 						}	
 					);
 					
 				} else {
 					MessageBox.success(
-						leadingMessage.message + "\n" + "Please observe any additional notes provided.",
+						leadingMessage.message 
+							+ ( actionName === "SubmitPWA" ? "" : "\nPlease observe any additional notes provided." ),
 						{
-							actions : [MessageBox.Action.CLOSE]
+							actions : [MessageBox.Action.CLOSE],
+							onClose: function(){
+								if(actionName === "SubmitPWA"){
+									this.navigateToApp("#PriorWorkApproval-create?PriorWorkApproval=" + 
+										this.getView().getModel("PWA").getProperty("/PWANumber")
+									);
+								}
+							}.bind(this)
+							
 						}	
 					);
 				}
@@ -327,7 +351,7 @@ sap.ui.define([
 			}
 			
 			//Testing
-			//PWANumber = "1120000181";
+			//PWANumber = "1210000141";
 
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";

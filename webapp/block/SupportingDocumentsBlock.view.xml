@@ -15,13 +15,14 @@
 									id="pwaAttachmentCollectionCreate"
 									uploadUrl="/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('Attachment')/Attachments"
 									multiple="false"
-									visible="{= ${PWA>PWANumber} === ''}"
+									visible="{= ${AttachmentHelper>/attachmentMode} === 'create'}"
+									busy="{= ${AttachmentHelper>/busy}}"
 									instantUpload="false"
 									showSeparators="All"
 									uploadEnabled="{PWA>CanEdit}"
 									uploadComplete="onUploadComplete"
 									beforeUploadStarts="onBeforeUploadStarts"
-									filenameLengthExceed="onFileSizeExceed"
+									fileSizeExceed="onFileSizeExceed"
 									change="onChange"
 									maximumFileSize="25"
 									noDataText="No Attachments"
@@ -44,6 +45,7 @@
 											visibleDelete="{PWA>CanEdit}"
 											enableEdit="false"
 											enableDelete="{PWA>CanEdit}"
+											
 										/>
 									</items>
 								</UploadCollection>	
@@ -53,21 +55,22 @@
 									multiple="false"
 									instantUpload="true"
 									showSeparators="All"
-									visible="{= ${PWA>PWANumber} !== ''}"
+									visible="{= ${AttachmentHelper>/attachmentMode} === 'maintain'}"
 									fileDeleted="onFileDeleted"
 									uploadEnabled="{PWA>CanEdit}"
 									uploadComplete="onUploadComplete"
 									beforeUploadStarts="onBeforeUploadStarts"
 									uploadTerminated="onUploadTerminated"
-									filenameLengthExceed="onFileSizeExceed"
+									fileSizeExceed="onFileSizeExceed"
 									change="onChange"
 									maximumFileSize="25"
 									noDataText="No Attachments"
 									items="{path : 'PWA>Attachments'}"
-									mode="SingleSelectMaster">
+									mode="None"
+								>
 									<toolbar>
 										<OverflowToolbar>
-											<Title id="attachmentTitleMaintain" text="MAINTAIN"/>
+											<Title id="attachmentTitleMaintain"/>
 											<ToolbarSpacer/>
 											<UploadCollectionToolbarPlaceholder/>
 										</OverflowToolbar>
@@ -79,9 +82,9 @@
 											mimeType="{PWA>MimeType}"
 											url="{PWA>URL}"
 											visibleEdit="false"
-											visibleDelete="{PWA>CanEdit}"
+											visibleDelete="{PWA>/CanEdit}"
 											enableEdit="false"
-											enableDelete="{PWA>CanEdit}"
+											enableDelete="{PWA>/CanEdit}"
 										/>
 									</items>
 								</UploadCollection>	

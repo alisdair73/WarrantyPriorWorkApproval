@@ -8,7 +8,7 @@
 	    <items>
 	    	<ColumnListItem id="requestedCosts" visible="{ViewHelper>/UI/showRequestedCosts}">
 	    		<cells>
-	        		<Text text="REQUESTED (100%)"/>
+	        		<Text text="REQUESTED (Total)"/>
 					<Input 
 					    id="RequestedLabourHours"
 						value="{

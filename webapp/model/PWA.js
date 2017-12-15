@@ -110,8 +110,9 @@ sap.ui.define([
 				this.PWA.PartsItemId = jsonModel.PartsItemId;
 				this.PWA.LabourItemId = jsonModel.LabourItemId;
 				
-				this.PWA.Attachments = [];
-	            if(jsonModel.Attachments){
+	            if(jsonModel.Attachments && jsonModel.Attachments.length > 0){
+	            	this.PWA.Attachments = [];
+	            	
 					for (var i = 0; i < jsonModel.Attachments.results.length; i++) {
 						var attachment = jsonModel.Attachments.results[i];
 						attachment.URL = 

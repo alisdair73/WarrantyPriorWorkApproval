@@ -2,13 +2,15 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 "sap/m/MessageToast",
 "sap/ui/model/Filter",
 "sap/m/UploadCollectionParameter",
-"hnd/dpe/warranty/prior_work_approval/model/PWA"
-], function(Controller, MessageToast, Filter, UploadCollectionParameter,PWA) {
+"hnd/dpe/warranty/prior_work_approval/model/PWA",
+"sap/ui/model/json/JSONModel"
+], function(Controller, MessageToast, Filter, UploadCollectionParameter,PWA,JSONModel) {
 	"use strict";
 
 	return Controller.extend("hnd.dpe.warranty.prior_work_approval.block.SupportingDocumentsBlockController", {
 		
 		onInit: function () {
+
 			// Sets the text to the label
 /*			this.getView().byId("pwaAttachmentCollection").addEventDelegate({
 				onBeforeRendering : function () {
@@ -21,8 +23,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				}.bind(this)
 			});*/
 			
+			this.getView().setModel(new JSONModel({ "busy":false, "attachmentMode":"create", "attachments":[]}), "AttachmentHelper");
+			
 			//Set up Event Listener to Upload Files
 			sap.ui.getCore().getEventBus().subscribe("PWA","Saved",this._uploadAttachmentCollection,this);
+			this._attachmentCreateCount = 0;
+			this._attachmentCreateRemaining = 0;
+			
 		},
 
 		onExit: function () {
@@ -30,10 +37,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
 		
 		onUploadComplete: function(oEvent) {
-
+			
 			var fileResponse = JSON.parse( oEvent.getParameter("mParameters").responseRaw );
 			var PWANumber = this.getView().getModel("PWA").getProperty("/PWANumber");
-			var attachments = this.getView().getModel("PWA").getProperty("/Attachments");
 		    var attachment = {
 		    	"DocumentID": fileResponse.d.DocumentID,
 		    	"Content":"",
@@ -42,17 +48,42 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		    	"FileName": fileResponse.d.FileName,
 		    	"URL": "/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('" + PWANumber + "')/Attachments('" + fileResponse.d.DocumentID + "')/$value"
 		    };
-		    
-			var uploadCollection = oEvent.getSource();
-		    for (var i = 0; i < uploadCollection.getItems().length; i++) {
-			  	if (uploadCollection.getItems()[i].getFileName() === fileResponse.d.FileName) {
-			  		uploadCollection.removeItem(uploadCollection.getItems()[i]);
-			  		break;
-			  	}
+			    
+			if(this.getView().getModel("AttachmentHelper").getProperty("/attachmentMode") === 'create'){
+				
+	        	var createdAttachments = this.getView().getModel("AttachmentHelper").getProperty("/attachments");
+				createdAttachments.push(attachment);
+				this.getView().getModel("AttachmentHelper").setProperty("/attachments", createdAttachments); 				
+				
+				if (this._attachmentCreateRemaining > 1) {
+	                this._attachmentCreateRemaining -= 1;
+	            } else {
+					this.getView().getModel("AttachmentHelper").setProperty("/busy",false);
+					this.getView().getModel("AttachmentHelper").setProperty("/attachmentMode","maintain");
+					this._attachmentCreateRemaining = 0;
+					
+					this.getView().getModel("PWA").setProperty("/Attachments", createdAttachments);
+	            }
+	            
+	            MessageToast.show("Attachment " + 
+	            	( this._attachmentCreateCount - this._attachmentCreateRemaining ) +
+	            	" of " + this._attachmentCreateCount + " loaded."
+	        	);
+	        
+			} else {
+				
+				var uploadCollection = oEvent.getSource();
+			    for (var i = 0; i < uploadCollection.getItems().length; i++) {
+				  	if (uploadCollection.getItems()[i].getFileName() === fileResponse.d.FileName) {
+				  		uploadCollection.removeItem(uploadCollection.getItems()[i]);
+				  		break;
+				  	}
+				}
+				
+				var attachments = this.getView().getModel("PWA").getProperty("/Attachments");
+				attachments.push(attachment);
+				this.getView().getModel("PWA").setProperty("/Attachments", attachments);            
 			}
-			
-			attachments.push(attachment);
-			this.getView().getModel("PWA").setProperty("/Attachments", attachments);
 		},
 		
 		onBeforeUploadStarts: function(oEvent){
@@ -78,6 +109,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
 		},
  
+ 		onUploadTerminated : function(oEvent) {
+			
+		},
+		
 		onFileDeleted: function(oEvent) {
 		
 			var documentId = oEvent.getParameter("documentId");
@@ -118,7 +153,15 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			//Start the File Upload
 			var attachmentCollection = this.getView().byId("pwaAttachmentCollectionCreate");
 			if(attachmentCollection){
-				attachmentCollection.upload();
+				
+				this._attachmentCreateCount = attachmentCollection.getItems().length;
+				this._attachmentCreateRemaining = this._attachmentCreateCount;
+				if (this._attachmentCreateCount > 0){
+					this.getView().getModel("AttachmentHelper").setProperty("/busy",true);
+					attachmentCollection.upload();
+				} else {
+					this.getView().getModel("AttachmentHelper").setProperty("/attachmentMode","maintain");
+				}
 			}
 		}
 	});
