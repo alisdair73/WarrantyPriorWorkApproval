@@ -1,5 +1,4 @@
-<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" 
-	xmlns:l="sap.ui.layout" xmlns:honda="hnd.dpe.warranty.prior_work_approval.controls" xmlns:m="sap.m"
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" 
 	controllerName="hnd.dpe.warranty.prior_work_approval.block.SupportingDocumentsBlockController">
 	<sap.ui.layout.form:Form xmlns:sap.ui.layout.form="sap.ui.layout.form" editable="true" objectBindings="{PWA>/}">
 		<sap.ui.layout.form:layout>
@@ -15,8 +14,7 @@
 									id="pwaAttachmentCollectionCreate"
 									uploadUrl="/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('Attachment')/Attachments"
 									multiple="false"
-									visible="{= ${AttachmentHelper>/attachmentMode} === 'create'}"
-									busy="{= ${AttachmentHelper>/busy}}"
+									visible="{= ${ViewHelper>/UI/attachmentMode} === 'create'}"
 									instantUpload="false"
 									showSeparators="All"
 									uploadEnabled="{PWA>CanEdit}"
@@ -27,50 +25,17 @@
 									maximumFileSize="25"
 									noDataText="No Attachments"
 									items="{path : 'PWA>Attachments'}"
-									mode="SingleSelectMaster">
-									<toolbar>
-										<OverflowToolbar>
-											<Title id="attachmentTitleCreate"/>
-											<ToolbarSpacer/>
-											<UploadCollectionToolbarPlaceholder/>
-										</OverflowToolbar>
-									</toolbar>
-									<items>
-										<UploadCollectionItem
-											documentId="{PWA>DocumentID}"
-											fileName="{PWA>FileName}"
-											mimeType="{PWA>MimeType}"
-											url="{PWA>URL}"
-											visibleEdit="false"
-											visibleDelete="{PWA>CanEdit}"
-											enableEdit="false"
-											enableDelete="{PWA>CanEdit}"
-											
-										/>
-									</items>
-								</UploadCollection>	
-								<UploadCollection
-									id="pwaAttachmentCollectionMaintain"
-									uploadUrl="/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('Attachment')/Attachments"
-									multiple="false"
-									instantUpload="true"
-									showSeparators="All"
-									visible="{= ${AttachmentHelper>/attachmentMode} === 'maintain'}"
-									fileDeleted="onFileDeleted"
-									uploadEnabled="{PWA>CanEdit}"
-									uploadComplete="onUploadComplete"
-									beforeUploadStarts="onBeforeUploadStarts"
-									uploadTerminated="onUploadTerminated"
-									fileSizeExceed="onFileSizeExceed"
-									change="onChange"
-									maximumFileSize="25"
-									noDataText="No Attachments"
-									items="{path : 'PWA>Attachments'}"
-									mode="None"
+									mode="SingleSelectMaster"
+									sameFilenameAllowed="true"
+									fileType="{ViewHelper>/UI/docTypes}"
+									typeMissmatch="onFileTypeMismatch"
 								>
 									<toolbar>
 										<OverflowToolbar>
-											<Title id="attachmentTitleMaintain"/>
+											<Title 
+												id="attachmentTitleCreate"
+												text="{i18n>allowedFileTypes}"
+											/>
 											<ToolbarSpacer/>
 											<UploadCollectionToolbarPlaceholder/>
 										</OverflowToolbar>
@@ -83,8 +48,49 @@
 											url="{PWA>URL}"
 											visibleEdit="false"
 											visibleDelete="{PWA>/CanEdit}"
-											enableEdit="false"
-											enableDelete="{PWA>/CanEdit}"
+										/>
+									</items>
+								</UploadCollection>	
+								<UploadCollection
+									id="pwaAttachmentCollectionMaintain"
+									uploadUrl="/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('Attachment')/Attachments"
+									multiple="false"
+									instantUpload="true"
+									showSeparators="All"
+									visible="{= ${ViewHelper>/UI/attachmentMode} === 'maintain'}"
+									fileDeleted="onFileDeleted"
+									uploadEnabled="{PWA>CanEdit}"
+									uploadComplete="onUploadComplete"
+									beforeUploadStarts="onBeforeUploadStarts"
+									uploadTerminated="onUploadTerminated"
+									fileSizeExceed="onFileSizeExceed"
+									change="onChange"
+									maximumFileSize="25"
+									noDataText="No Attachments"
+									items="{path : 'PWA>Attachments'}"
+									mode="SingleSelectMaster"
+									sameFilenameAllowed="true"
+									fileType="{ViewHelper>/UI/docTypes}"
+									typeMissmatch="onFileTypeMismatch"
+								>
+									<toolbar>
+										<OverflowToolbar>
+											<Title 
+												id="attachmentTitleMaintain"
+												text="{i18n>allowedFileTypes}"
+											/>
+											<ToolbarSpacer/>
+											<UploadCollectionToolbarPlaceholder/>
+										</OverflowToolbar>
+									</toolbar>
+									<items>
+										<UploadCollectionItem
+											documentId="{PWA>DocumentID}"
+											fileName="{PWA>FileName}"
+											mimeType="{PWA>MimeType}"
+											url="{PWA>URL}"
+											visibleEdit="false"
+											visibleDelete="{PWA>/CanEdit}"
 										/>
 									</items>
 								</UploadCollection>	

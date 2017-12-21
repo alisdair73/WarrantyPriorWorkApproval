@@ -6,8 +6,7 @@
 	xmlns:m="sap.m"
 	xmlns:layout="sap.ui.layout"
 	xmlns:claimBlocks="hnd.dpe.warranty.prior_work_approval.block"
-	displayBlock="true" >
-	
+>
 	<ObjectPageLayout id="PWA" enableLazyLoading="false" showFooter="true" showHeaderContent="true" 
 		busy="{ViewHelper>/busy}" busyIndicatorDelay="{ViewHelper>/delay}">
 		<headerTitle>
@@ -15,6 +14,7 @@
 				id="PWAHeader"
 				objectTitle="Prior Work Approval"
 				isObjectIconAlwaysVisible = "true"
+				headerDesign="Light"
 				objectImageShape="Square"
 				objectImageURI="sap-icon://approvals"
 			/>

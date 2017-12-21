@@ -23,7 +23,9 @@ sap.ui.define([
 					"approvedTotal": 0,
 					"hasBeenValidated":false,
 					"showRequestedCosts":true,
-					"showApprovedCosts":false
+					"showApprovedCosts":false,
+					"attachmentMode":"create",
+					"docTypes":["AVI","DAT","DOC","DOCX","DPF","DTC","GIF","JPEG","JPG","M4V","MOV","MP4","PDF","PNG","PPT","PPTX","XLS","XLSX"]
 				}
 			});
 			this.setModel(oViewModel, "ViewHelper");
@@ -235,7 +237,7 @@ sap.ui.define([
 				this.getModel("ViewHelper").setProperty("/UI/hasBeenValidated", isValid);
 			}
 				
-			this.getModel("ViewHelper").setProperty("/busy", false);
+			//this.getModel("ViewHelper").setProperty("/busy", false);
 		},
 		
 		_determineCostsVisibility:function(){
@@ -351,7 +353,7 @@ sap.ui.define([
 			}
 			
 			//Testing
-			//PWANumber = "1210000141";
+			//PWANumber = "1210000175";
 
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";
@@ -401,6 +403,9 @@ sap.ui.define([
 			
 			//Update Total Cost
 			this._updateEstimatedTotal();
+			
+			//Set the Attachment Control Mode
+			this.getView().getModel("ViewHelper").setProperty("/UI/attachmentMode","maintain");
 		},
 		
 		_openPWATypeSelectDialog: function(){

@@ -1,10 +1,11 @@
 sap.ui.define(["sap/ui/core/mvc/Controller",
 "sap/m/MessageToast",
+"sap/m/MessageBox",
 "sap/ui/model/Filter",
 "sap/m/UploadCollectionParameter",
 "hnd/dpe/warranty/prior_work_approval/model/PWA",
 "sap/ui/model/json/JSONModel"
-], function(Controller, MessageToast, Filter, UploadCollectionParameter,PWA,JSONModel) {
+], function(Controller, MessageToast, MessageBox, Filter, UploadCollectionParameter,PWA,JSONModel) {
 	"use strict";
 
 	return Controller.extend("hnd.dpe.warranty.prior_work_approval.block.SupportingDocumentsBlockController", {
@@ -23,7 +24,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				}.bind(this)
 			});*/
 			
-			this.getView().setModel(new JSONModel({ "busy":false, "attachmentMode":"create", "attachments":[]}), "AttachmentHelper");
+			this.getView().setModel(new JSONModel({ "attachments":[]}), "AttachmentHelper");
 			
 			//Set up Event Listener to Upload Files
 			sap.ui.getCore().getEventBus().subscribe("PWA","Saved",this._uploadAttachmentCollection,this);
@@ -49,7 +50,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		    	"URL": "/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('" + PWANumber + "')/Attachments('" + fileResponse.d.DocumentID + "')/$value"
 		    };
 			    
-			if(this.getView().getModel("AttachmentHelper").getProperty("/attachmentMode") === 'create'){
+			if(this.getView().getModel("ViewHelper").getProperty("/UI/attachmentMode") === 'create'){
 				
 	        	var createdAttachments = this.getView().getModel("AttachmentHelper").getProperty("/attachments");
 				createdAttachments.push(attachment);
@@ -58,9 +59,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				if (this._attachmentCreateRemaining > 1) {
 	                this._attachmentCreateRemaining -= 1;
 	            } else {
-					this.getView().getModel("AttachmentHelper").setProperty("/busy",false);
-					this.getView().getModel("AttachmentHelper").setProperty("/attachmentMode","maintain");
+					this.getView().getModel("ViewHelper").setProperty("/busy", false);
+					this.getView().getModel("ViewHelper").setProperty("/UI/attachmentMode","maintain");
+					
 					this._attachmentCreateRemaining = 0;
+					oEvent.getSource().unbindItems(); //The Create Collection is no longer needed
 					
 					this.getView().getModel("PWA").setProperty("/Attachments", createdAttachments);
 	            }
@@ -72,13 +75,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 	        
 			} else {
 				
-				var uploadCollection = oEvent.getSource();
+/*				var uploadCollection = oEvent.getSource();
 			    for (var i = 0; i < uploadCollection.getItems().length; i++) {
 				  	if (uploadCollection.getItems()[i].getFileName() === fileResponse.d.FileName) {
 				  		uploadCollection.removeItem(uploadCollection.getItems()[i]);
 				  		break;
 				  	}
-				}
+				}*/
 				
 				var attachments = this.getView().getModel("PWA").getProperty("/Attachments");
 				attachments.push(attachment);
@@ -108,9 +111,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			});
 			oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
 		},
- 
- 		onUploadTerminated : function(oEvent) {
-			
+		
+		onFileTypeMismatch: function(event){
+			var docTypes = this.getView().getModel("ViewHelper").getProperty("/UI/docTypes");
+			MessageBox.error("The following Doc Types can be uploaded: \n" + docTypes.join());
 		},
 		
 		onFileDeleted: function(oEvent) {
@@ -151,18 +155,27 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		
 		_uploadAttachmentCollection: function(){
 			//Start the File Upload
-			var attachmentCollection = this.getView().byId("pwaAttachmentCollectionCreate");
-			if(attachmentCollection){
+			if (this.getView().getModel("ViewHelper").getProperty("/UI/attachmentMode") === "create"){
 				
-				this._attachmentCreateCount = attachmentCollection.getItems().length;
-				this._attachmentCreateRemaining = this._attachmentCreateCount;
-				if (this._attachmentCreateCount > 0){
-					this.getView().getModel("AttachmentHelper").setProperty("/busy",true);
-					attachmentCollection.upload();
-				} else {
-					this.getView().getModel("AttachmentHelper").setProperty("/attachmentMode","maintain");
+				var attachmentCollection = this.getView().byId("pwaAttachmentCollectionCreate");
+				if(attachmentCollection){
+					
+					this._attachmentCreateCount = attachmentCollection.getItems().length;
+					this._attachmentCreateRemaining = this._attachmentCreateCount;
+					if (this._attachmentCreateCount > 0){
+						MessageToast.show("Attachments uploading");
+						this.getView().getModel("ViewHelper").setProperty("/busy", true);
+						attachmentCollection.upload();
+					} else {
+						//Nothing to do - switch mode
+						this.getView().getModel("ViewHelper").setProperty("/busy", false);
+						this.getView().getModel("ViewHelper").setProperty("/UI/attachmentMode","maintain");
+						attachmentCollection.unbindItems(); //The Create Collection is no longer needed
+					}
 				}
-			}
+			} else {
+				this.getView().getModel("ViewHelper").setProperty("/busy", false);
+			}			
 		}
 	});
 
