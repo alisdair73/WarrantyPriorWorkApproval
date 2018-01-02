@@ -24,18 +24,18 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				}.bind(this)
 			});*/
 			
-			this.getView().setModel(new JSONModel({ "attachments":[]}), "AttachmentHelper");
+			//this.getView().setModel(new JSONModel({ "attachments":[]}), "AttachmentHelper");
 			
 			//Set up Event Listener to Upload Files
-			sap.ui.getCore().getEventBus().subscribe("PWA","Saved",this._uploadAttachmentCollection,this);
-			this._attachmentCreateCount = 0;
-			this._attachmentCreateRemaining = 0;
+			//sap.ui.getCore().getEventBus().subscribe("PWA","Saved",this._uploadAttachmentCollection,this);
+			//this._attachmentCreateCount = 0;
+			//this._attachmentCreateRemaining = 0;
 			
 		},
 
-		onExit: function () {
-			sap.ui.getCore().getEventBus().unsubscribe("PWA","Saved",this._uploadAttachmentCollection,this);
-		},
+		//onExit: function () {
+		//	sap.ui.getCore().getEventBus().unsubscribe("PWA","Saved",this._uploadAttachmentCollection,this);
+		//},
 		
 		onUploadComplete: function(oEvent) {
 			
@@ -50,7 +50,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		    	"URL": "/sap/opu/odata/sap/ZWTY_WARRANTY_CLAIMS_SRV/PriorWorkApprovalSet('" + PWANumber + "')/Attachments('" + fileResponse.d.DocumentID + "')/$value"
 		    };
 			    
-			if(this.getView().getModel("ViewHelper").getProperty("/UI/attachmentMode") === 'create'){
+/*			if(this.getView().getModel("ViewHelper").getProperty("/UI/attachmentMode") === 'create'){
 				
 	        	var createdAttachments = this.getView().getModel("AttachmentHelper").getProperty("/attachments");
 				createdAttachments.push(attachment);
@@ -73,7 +73,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 	            	" of " + this._attachmentCreateCount + " loaded."
 	        	);
 	        
-			} else {
+			} else {*/
 				
 /*				var uploadCollection = oEvent.getSource();
 			    for (var i = 0; i < uploadCollection.getItems().length; i++) {
@@ -86,14 +86,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				var attachments = this.getView().getModel("PWA").getProperty("/Attachments");
 				attachments.push(attachment);
 				this.getView().getModel("PWA").setProperty("/Attachments", attachments);            
-			}
+	//		}
 		},
 		
 		onBeforeUploadStarts: function(oEvent){
 			
     		oEvent.getParameters().addHeaderParameter(new sap.m.UploadCollectionParameter({
                 name: "slug",
-                value: this.getView().getModel("PWA").getProperty("/PWANumber") + "|" + oEvent.getParameter("fileName")
+                value: this.getView().getModel("PWA").getProperty("/PWANumber") + "|" + oEvent.getParameter("fileName").replace(/[^\x20-\x7E]/g, "")
             }));
             
     		oEvent.getParameters().addHeaderParameter(new sap.m.UploadCollectionParameter({
@@ -120,10 +120,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		onFileDeleted: function(oEvent) {
 		
 			var documentId = oEvent.getParameter("documentId");
-			
+
         	this.getView().getModel().remove(
-            	"/AttachmentSet(DocumentId='" + oEvent.getParameter("documentId") + "')/$value", 
+            	"/AttachmentSet(DocumentId='" + documentId + "')", ///$value", 
             	{
+            		"headers": {"objectkey": this.getView().getModel("PWA").getProperty("/PWANumber")},
             		"success":function(oData, Response) {
             			this._refreshAfterDelete(documentId);
             		}.bind(this),
@@ -151,9 +152,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		_getAttachmentTitleText: function(){
 			var aItems = this.getView().byId("pwaAttachmentCollection").getItems();
 			return "Uploaded (" + aItems.length + ")";
-		},
+		}
 		
-		_uploadAttachmentCollection: function(){
+/*		_uploadAttachmentCollection: function(){
 			//Start the File Upload
 			if (this.getView().getModel("ViewHelper").getProperty("/UI/attachmentMode") === "create"){
 				
@@ -168,7 +169,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						attachmentCollection.upload();
 					} else {
 						//Nothing to do - switch mode
-						this.getView().getModel("ViewHelper").setProperty("/busy", false);
+						//this.getView().getModel("ViewHelper").setProperty("/busy", false);
 						this.getView().getModel("ViewHelper").setProperty("/UI/attachmentMode","maintain");
 						attachmentCollection.unbindItems(); //The Create Collection is no longer needed
 					}
@@ -176,7 +177,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			} else {
 				this.getView().getModel("ViewHelper").setProperty("/busy", false);
 			}			
-		}
+		}*/
 	});
 
 });

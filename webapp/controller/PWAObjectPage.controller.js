@@ -24,7 +24,7 @@ sap.ui.define([
 					"hasBeenValidated":false,
 					"showRequestedCosts":true,
 					"showApprovedCosts":false,
-					"attachmentMode":"create",
+				//	"attachmentMode":"maintain", //NEW APPROACH
 					"docTypes":["AVI","DAT","DOC","DOCX","DPF","DTC","GIF","JPEG","JPG","M4V","MOV","MP4","PDF","PNG","PPT","PPTX","XLS","XLSX"]
 				}
 			});
@@ -65,7 +65,22 @@ sap.ui.define([
 		},	
 		
 		onNewPWA: function(){
+			
 			this.navigateToApp("#PriorWorkApproval-create");
+			
+/*			if (this.getOwnerComponent().getComponentData() && 
+				this.getOwnerComponent().getComponentData().startupParameters.PriorWorkApproval){
+				
+				this.navigateToApp("#PriorWorkApproval-create");
+			} else {
+				this.setModel(PWA.createPWAModel(),"PWA");
+				
+				this.getModel("ViewHelper").setProperty("/readOnly", false);
+				sap.ui.getCore().getMessageManager().removeAllMessages();
+				this._PWATypeSelection.destroy(true);
+				this._PWATypeSelection = null;
+				this._onPWAMainMatched();
+			}*/
 		},
 		
 		onDuplicatePWA: function(){
@@ -231,13 +246,14 @@ sap.ui.define([
 			PWA.updatePWAFromJSONModel(responseData, actionName === "ValidatePWA" );
 			this._determineCostsVisibility();
 			this._updateEstimatedTotal();
-			sap.ui.getCore().getEventBus().publish("PWA","Saved");
+			this.getModel("ViewHelper").setProperty("/busy", false);
 			
 			if(actionName === "ValidatePWA"){
 				this.getModel("ViewHelper").setProperty("/UI/hasBeenValidated", isValid);
-			}
-				
-			//this.getModel("ViewHelper").setProperty("/busy", false);
+			} 
+			//else {
+			//	sap.ui.getCore().getEventBus().publish("PWA","Saved");
+			//}
 		},
 		
 		_determineCostsVisibility:function(){
@@ -353,7 +369,7 @@ sap.ui.define([
 			}
 			
 			//Testing
-			//PWANumber = "1210000175";
+			//PWANumber = "1210000196";
 
 			if (PWANumber){
 				var entityPath = "/PriorWorkApprovalSet('" + PWANumber + "')";
