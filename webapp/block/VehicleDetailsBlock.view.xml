@@ -178,6 +178,21 @@
 		          </suggestionRows>  
 	        	</Input>
 	        	
+	        	<Label text=""/>
+	        	<FlexBox justifyContent="End">
+					<items>
+			        	<Button 
+			        		text="Check LON" 
+			        		press="onCheckLON"
+			        		enabled="{= ${PWA>ExternalObjectNumber/value} !== '' &amp;&amp; ${PWA>MCPN/value} !== ''}"
+			        	>
+			        		<layoutData>
+								<l:GridData span="XL2 L2 M2 S2" />
+							</layoutData>
+			        	</Button>
+					</items>
+				</FlexBox>
+				
 	        	<core:Title text="" />
 				<core:Title text="Failure Details" />
 				<Label id="DateOfFailure_label" text="Date of Failure" labelFor="dateOfFailure" required="true"/>

@@ -155,6 +155,35 @@ sap.ui.define([
 			event.getSource().getBinding("items").filter(this._partSearchFilter(event.getParameter("value")));
 		},
 		
+		onCheckLON: function(){
+			
+			// Create the dialog if it isn't already
+			if (!this._CheckLONDialog) {
+				this._CheckLONDialog = sap.ui.xmlfragment(
+					this.getView().getId(), "hnd.dpe.warranty.prior_work_approval.fragment.CheckLONDialog", this
+				);
+				this.getView().addDependent(this._CheckLONDialog);
+			}
+
+			var filters = [];
+			filters.push(new Filter("VIN",sap.ui.model.FilterOperator.EQ, 
+				this.getView().getModel("PWA").getProperty("/ExternalObjectNumber/value"))
+			);
+			
+			filters.push(new Filter("MCPN",sap.ui.model.FilterOperator.EQ, 
+				this.getView().getModel("PWA").getProperty("/MCPN/value"))
+			);
+
+			this.getView().byId("LONCodes").getBinding("items").filter(filters);
+
+			// Display the popup
+			this._CheckLONDialog.open();
+		},
+		
+		onCloseCheckLON: function(){
+			this._CheckLONDialog.close();
+		},
+		
 		_refreshValidationMessages: function(){
 			this.logValidationMessage("ExternalObjectNumber");
 			this.logValidationMessage("EngineNumber");

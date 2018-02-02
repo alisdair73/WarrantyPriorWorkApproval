@@ -12,7 +12,7 @@
 		<headerTitle>
 			<ObjectPageHeader 
 				id="PWAHeader"
-				objectTitle="Prior Work Approval"
+				objectTitle="Prior Work Approval {= ${PWA>/PWANumber}}"
 				isObjectIconAlwaysVisible = "true"
 				headerDesign="Light"
 				objectImageShape="Square"

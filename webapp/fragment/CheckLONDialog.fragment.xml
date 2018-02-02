@@ -1,0 +1,46 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+>
+	<Dialog title="LON Codes">
+		<content>
+			<Table 
+				id="LONCodes"
+				mode="None"
+				items="{/LabourOperationNumberSet}"
+				rememberSelections="false"
+				noDataText="No LON codes found for VIN and MCPN"
+			>
+			<items>
+	    		<ColumnListItem>
+	        		<cells>
+	            		<Text text="{LONCode}"/>
+	            		<Text text="{Description}"/>
+	            		<ObjectNumber number="{Hours}"/>
+	            	</cells>
+	    		</ColumnListItem>
+			</items>
+	    		<columns>
+	        		<Column width="10em">
+	            		<header>
+	                		<Label text="LON"/>
+	            		</header>
+	        		</Column>
+	        		<Column>
+	            		<header>
+	                		<Label text="Description"/>
+	            		</header>
+	        		</Column>
+	        		<Column width="5em" hAlign="End">
+	            		<header>
+	                		<Label text="Hours"/>
+	            		</header>
+	        		</Column>
+	    		</columns>
+			</Table>
+		</content>
+		<buttons>
+			<Button text="Close" press="onCloseCheckLON"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>
