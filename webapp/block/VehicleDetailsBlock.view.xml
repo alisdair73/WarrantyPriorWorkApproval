@@ -178,8 +178,8 @@
 		          </suggestionRows>  
 	        	</Input>
 	        	
-	        	<Label text=""/>
-	        	<FlexBox justifyContent="End">
+	        	<Label text="" visible="{= ${PWA>/ObjectType} === 'VELO'}"/>
+	        	<FlexBox justifyContent="End" visible="{= ${PWA>/ObjectType} === 'VELO'}">
 					<items>
 			        	<Button 
 			        		text="Check LON" 
