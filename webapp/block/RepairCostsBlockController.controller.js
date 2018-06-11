@@ -38,10 +38,10 @@ sap.ui.define([
 			this.logValidationMessage("RequestedLabourHours");
 		},
 		
-		partsChanged: function() {
+		partsChanged: function(event) {
 			
-			this._sanitisePercentageInputs("/RequestedPartsSplitOwner");
-			this._sanitisePercentageInputs("/RequestedPartsSplitDealer");
+			this._sanitisePercentageInputs("/RequestedPartsSplitOwner",event);
+			this._sanitisePercentageInputs("/RequestedPartsSplitDealer",event);
 
 			this.getView().getModel("PWA").setProperty("/RequestedPartsSplitHonda",
 				100 - ( 
@@ -51,10 +51,10 @@ sap.ui.define([
 			);
     	},
 		
-		subletChanged: function() {
+		subletChanged: function(event) {
 			
-			this._sanitisePercentageInputs("/RequestedSubletSplitOwner");
-			this._sanitisePercentageInputs("/RequestedSubletSplitDealer");
+			this._sanitisePercentageInputs("/RequestedSubletSplitOwner",event);
+			this._sanitisePercentageInputs("/RequestedSubletSplitDealer",event);
 			
 			this.getView().getModel("PWA").setProperty("/RequestedSubletSplitHonda",
 				100 - ( 
@@ -64,10 +64,10 @@ sap.ui.define([
 			);			
     	},
 		
-		labourChanged: function() {
+		labourChanged: function(event) {
 			
-			this._sanitisePercentageInputs("/RequestedLabourSplitOwner");
-			this._sanitisePercentageInputs("/RequestedLabourSplitDealer");
+			this._sanitisePercentageInputs("/RequestedLabourSplitOwner",event);
+			this._sanitisePercentageInputs("/RequestedLabourSplitDealer",event);
 			
 			this.getView().getModel("PWA").setProperty("/RequestedLabourSplitHonda",
 				100 - ( 
@@ -105,8 +105,14 @@ sap.ui.define([
 			this.getView().getModel("ViewHelper").setProperty("/UI/approvedTotal", approvedTotal);
 		},
 		
-		_sanitisePercentageInputs: function(fieldName){
+		_sanitisePercentageInputs: function(fieldName,event){
 		
+			//If a non-numeric is entered this will be blank - default to zero
+			var valueSource = "/" + event.getSource().getBindingPath("value");
+			if(valueSource === fieldName && event.getSource().getValue() === "" ){
+				this.getView().getModel("PWA").setProperty(fieldName,0);
+			}
+			
 			//Convert to Integer
 			this.getView().getModel("PWA").setProperty(fieldName, Math.round(this.getView().getModel("PWA").getProperty(fieldName)));
 		
@@ -117,7 +123,6 @@ sap.ui.define([
 			if (this.getView().getModel("PWA").getProperty(fieldName) < 0){
 				this.getView().getModel("PWA").setProperty(fieldName,0);
 			}
-			
 		},
 		
 		_refreshValidationMessages: function(){

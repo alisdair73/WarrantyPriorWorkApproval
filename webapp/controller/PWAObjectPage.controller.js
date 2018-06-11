@@ -11,6 +11,7 @@ sap.ui.define([
  
     	onInit: function() {
     		
+    		sap.ui.getCore().getMessageManager().removeAllMessages();
     		this.getView().setModel(sap.ui.getCore().getMessageManager().getMessageModel(), "message");
     	
 			var oViewModel = new JSONModel({
